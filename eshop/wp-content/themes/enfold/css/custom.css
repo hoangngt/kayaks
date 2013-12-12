@@ -1,0 +1,100 @@
+/* Have fun adding your style here :) - PS: At all times this file should contain a comment or a rule, otherwise opera might act buggy :( */
+
+/* General Custom CSS */
+/* Layout for Shop Page */
+.widget_layered_nav , .widget_price_filter{
+	display:none;
+}
+div.product-sorting ul.sort-param.sort-param-shop {
+	width: 133px;
+
+}
+div.product-sorting ul.sort-param.sort-param-shop li span.shop-yellow {
+	text-align: center;
+	padding-right: 10px;
+	background: rgb(251,208,38);	
+}
+#top .inner_product_header {
+	min-height: 88px;
+}
+div.inner_product a .inner_product_header .avia-arrow {
+	display: none;
+}
+#top .inner_product_header {
+	border-top-style: hidden;
+}
+#top .main_color .price {
+	color: rgb(70,114,158);
+}
+/*
+div.inner_product {
+	width: 402px;
+	height: 295px;
+}
+div.inner_product a {
+	overflow: hidden;
+	float: left;
+	position: relative;
+	width: 402px;
+	height: 248px;
+}
+div.inner_product a .thumbnail_container {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+div.inner_product a .inner_product_header {
+	border: none;
+	position: absolute;
+	top: 166px;
+	left: 0px;
+}
+*/
+/* Layout for Category Post Plugin */
+div.widget_ultimate_posts h3.widgettitle {
+	font-size: 150%;
+	text-transform: none;
+	font-weight: 900;
+}
+div.upw-content {
+	color: black;
+	font-weight: bold;
+}
+div.upw-content  p.post-title a{
+	margin : 1.2em 0 0 0;
+	display: block;
+	color: black;
+	font-size: 110%;
+	font-weight: bold;
+}
+div.upw-content  .post-excerpt {
+	display: inline;
+}
+div.upw-content p .more-link {
+	display: block;
+	text-align: right;
+	color: black;
+}
+
+/*
+Desktop Styles
+================================================== */
+/* Note: Add new css to the media query below that you want to only effect the desktop view of your site */
+
+@media only screen and (min-width: 768px) {
+  /* Add your Desktop Styles here */
+
+}
+
+
+
+/*
+Mobile Styles
+================================================== */
+/* Note: Add new css to the media query below that you want to only effect the Mobile and Tablet Portrait view */
+
+@media only screen and (max-width: 767px) {
+  /* Add your Mobile Styles here */
+
+}
