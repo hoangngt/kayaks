@@ -6,7 +6,6 @@
 if(!function_exists('hoang_show_filter_options'))
 {
 	add_action( 'woocommerce_before_shop_loop', 'hoang_show_filter_options', 20);
-
 	function hoang_show_filter_options()
 	{
 		global $avia_config;

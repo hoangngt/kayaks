@@ -127,12 +127,12 @@ class WC_Gallery_Display_Class
             echo '<style>
 			#TB_window{width:auto !important;}
                 .ad-gallery {
-                        width: '.$g_width.'px;
+                        width: '.$g_width.'%;
 						position:relative;
                 }
                 .ad-gallery .ad-image-wrapper {
 					background:#'.$bg_image_wrapper.';
-                    width: '.($g_width-2).'px;
+                    width: '.($g_width-2).'%;
                     height: '.($g_height-2).'px;
                     margin: 0px;
                     position: relative;
