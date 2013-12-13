@@ -2,8 +2,10 @@
 
 /* General Custom CSS */
 /* Layout change for Homepage */
-.avia_ajax_form fieldset p:first-child {
-	width: 70%;
+.avia_ajax_form .form_element_half {
+	width:65.5%; 
+	float:left; 
+	margin-right:1%; 
 }
 .avia_ajax_form fieldset p:last-child {
 	width: 30%;
