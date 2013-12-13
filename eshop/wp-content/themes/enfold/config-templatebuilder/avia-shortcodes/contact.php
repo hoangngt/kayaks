@@ -225,7 +225,7 @@ if ( !class_exists( 'avia_sc_contact' ) )
 
 				$form_args = array(
 					"heading" 				=> $title ? "<h3>".$title."</h3>" : "",
-					"description"			=> $description ? "<h2>".$description."</h2>" : "",
+					"description"			=> $description ? "<p>".$description."</p>" : "",
 					"success" 				=> "<h3 class='avia-form-success'>".$sent."</h3>",
 					"submit"  				=> $button,
 					"myemail" 				=> $email,
