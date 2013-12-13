@@ -2,7 +2,7 @@
 
 /* General Custom CSS */
 /* Layout change for Homepage */
-#avia_e-mail_1 {
+.avia_ajax_form {
 	display : none;
 }
 form.avia_ajax_form fieldset p input.button {
