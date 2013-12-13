@@ -135,7 +135,14 @@ if ( !class_exists( 'avia_sc_contact' ) )
 						"id" 	=> "title",
 						"std" 	=> __("Send us mail", 'avia_framework' ),
 						"type" 	=> "input"),
-
+						
+						array(
+						"name" 	=> __("Form Description", 'avia_framework' ),
+						"desc" 	=> __("Enter a form description that is displayed under the form title", 'avia_framework' ),
+						"id" 	=> "description",
+						"std" 	=> __("This is contact form", 'avia_framework' ),
+						"type" 	=> "input"),
+						
 						array(
 						"name" 	=> __("Message Sent label", 'avia_framework' ),
 						"desc" 	=> __("What should be displayed once the message is sent?", 'avia_framework' ),
@@ -210,6 +217,7 @@ if ( !class_exists( 'avia_sc_contact' ) )
 			                                 'subject'		=> '',
 			                                 'sent'			=> __("Your message has been sent!", 'avia_framework' ),
 			                                 'title'		=> __("Send us mail", 'avia_framework' ),
+											 'description'	=> __("This is a contact form", 'avia_framework'),
 			                                 ), $atts);
 				extract($atts);
 
@@ -217,6 +225,7 @@ if ( !class_exists( 'avia_sc_contact' ) )
 
 				$form_args = array(
 					"heading" 				=> $title ? "<h3>".$title."</h3>" : "",
+					"description"			=> $description ? "<h2>".$description."</h2>" : "",
 					"success" 				=> "<h3 class='avia-form-success'>".$sent."</h3>",
 					"submit"  				=> $button,
 					"myemail" 				=> $email,
