@@ -10,9 +10,7 @@
 .avia_ajax_form fieldset p:last-child {
 	width: 30%;
 }
-form.avia_ajax_form fieldset p input.button {
-	
-}
+
 /* Layout for Shop Page */
 .widget_layered_nav , .widget_price_filter{
 	display:none;
