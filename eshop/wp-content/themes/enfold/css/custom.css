@@ -5,7 +5,7 @@
 .avia_ajax_form fieldset p:first-child {
 	width: 70%;
 }
-.avia_ajax_form fieldset p {
+.avia_ajax_form fieldset p:last-child {
 	width: 30%;
 }
 form.avia_ajax_form fieldset p input.button {
