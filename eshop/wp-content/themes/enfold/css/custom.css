@@ -2,10 +2,10 @@
 
 /* General Custom CSS */
 /* Layout change for Homepage */
-#top .avia_ajax_form .text_input {
+.avia_ajax_form fieldset p:first-child {
 	width: 70%;
 }
-.avia_ajax_form .button {
+.avia_ajax_form fieldset p {
 	width: 30%;
 }
 form.avia_ajax_form fieldset p input.button {
