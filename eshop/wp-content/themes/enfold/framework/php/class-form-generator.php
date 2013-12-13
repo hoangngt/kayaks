@@ -101,6 +101,7 @@ if( ! class_exists( 'avia_form' ) )
 
 			$this->output  = '<form action="'.$params['action'].'" method="post" class="'.$form_class.' '.$extraClass.'" data-avia-form-id="'.$this->formID.'"><fieldset>';
 			$this->output .=  $params['heading'];
+			$this->output .=  $params['description'];
 
 			$this->length = apply_filters('avf_form_el_name_length', 30, $this->formID, $this->form_params);
 			$this->length = (int)$this->length;
