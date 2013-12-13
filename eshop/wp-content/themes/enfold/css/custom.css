@@ -2,8 +2,11 @@
 
 /* General Custom CSS */
 /* Layout change for Homepage */
-.avia_ajax_form {
-	display : none;
+#top .avia_ajax_form .text_input {
+	width: 70%;
+}
+.avia_ajax_form .button {
+	width: 30%;
 }
 form.avia_ajax_form fieldset p input.button {
 	
