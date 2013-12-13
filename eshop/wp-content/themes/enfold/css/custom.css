@@ -1,6 +1,13 @@
 /* Have fun adding your style here :) - PS: At all times this file should contain a comment or a rule, otherwise opera might act buggy :( */
 
 /* General Custom CSS */
+/* Layout change for Homepage */
+#avia_e-mail_1 {
+	display : none;
+}
+form.avia_ajax_form fieldset p input.button {
+	
+}
 /* Layout for Shop Page */
 .widget_layered_nav , .widget_price_filter{
 	display:none;
