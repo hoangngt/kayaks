@@ -125,3 +125,151 @@ function filter_build_query_string($params = array(), $overwrite_key, $overwrite
 			}
 		return "?" . http_build_query($params);
 	}
+	
+
+##################################################################
+# helper functions for product pages
+##################################################################
+
+/* Add "Technische Daten - Tab" to product page */
+remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20);
+remove_action( 'woocommerce_before_single_product_summary', 'avia_add_image_div', 2);
+remove_action( 'woocommerce_before_single_product_summary',  'avia_close_image_div', 20);
+remove_action( 'woocommerce_before_single_product_summary', 'avia_add_summary_div', 25);
+remove_action( 'woocommerce_after_single_product_summary',  'avia_close_div', 3);
+remove_action( 'woocommerce_after_single_product_summary','woocommerce_output_product_data_tabs',1);
+add_action( 'woocommerce_after_single_product_summary', 'woo_add_technik_tab', 1);
+add_action( 'woocommerce_after_single_product_summary',  'avia_close_div', 3);
+
+function woo_add_technik_tab()
+{
+	global $product;
+	$tabs = apply_filters( 'woocommerce_product_tabs', array() );
+
+	if ( ! empty( $tabs ) ) : ?>
+	<div class='six units single-product-main-image alpha'>
+		<div class="woocommerce-tabs">
+			<ul class="tabs">
+				<li class="technik_tab">
+					<a href="#tab-technik"><?php echo apply_filters( 'woocommerce_product_additional_information_tab_title', "Technische Daten") ?></a>
+				</li>
+
+			</ul>
+
+
+				<div class="panel entry-content" id="tab-technik">
+					<?php 
+					$heading = apply_filters( 'woocommerce_product_additional_information_heading', __( 'Technische Daten', 'woocommerce' ) );
+					echo '<h2>'.$heading.'</h2>';
+					$product->list_attributes();
+					?>
+				</div>
+
+
+		</div>	
+	</div>
+	<div class='six units single-product-summary'>
+	<div class="woocommerce-tabs">
+		<ul class="tabs">
+			<?php foreach ( $tabs as $key => $tab ) {
+					if ($key!="additional_information") {
+			?>
+
+				<li class="<?php echo $key ?>_tab">
+					<a href="#tab-<?php echo $key ?>"><?php echo apply_filters( 'woocommerce_product_' . $key . '_tab_title', $tab['title'], $key ) ?></a>
+				</li>
+
+			<?php } } ?>
+		</ul>
+		<?php foreach ( $tabs as $key => $tab ) { if ($key!="additional_information") {?>
+
+			<div class="panel entry-content" id="tab-<?php echo $key ?>">
+				<?php call_user_func( $tab['callback'], $key, $tab ) ?>
+			</div>
+
+		<?php } } ?>
+	</div>
+<?php
+	endif;
+}
+/* dont need this anymore
+add_action( 'woocommerce_product_write_panel_tabs','add_technik_tab_admin');
+add_action( 'woocommerce_product_write_panels','product_write_technik_panel');
+add_action( 'woocommerce_process_product_meta','product_save_data', 10, 2 );
+function add_technik_tab_admin() {
+		echo "<li class=\"product_tabs_technik\"><a href=\"#woocommerce_product_tabs_technik\">" . __( 'Technische Daten' ) . "</a></li>";
+}
+function product_write_technik_panel() {
+		global $post;
+		// the product
+
+		$tab_data =  get_post_meta( $post->ID, 'hoang_woo_product_technik_tab', true );
+		echo '<div id="woocommerce_product_tabs_technik" class="panel wc-metaboxes-wrapper woocommerce_options_panel">';
+		if ( empty($tab_data) ) {
+			$tab_data[0]['content']='Es liegt noch keine technische Daten für dieses Produkt vor';
+		}
+		wp_textarea_input (array( 'id' => '_wc_technik_product_tabs_tab_content', 'label' => __( 'Technische Daten' ), 'placeholder' => __( 'HTML and text to display.' ), 'value' => $tab_data[0]['content'], 'style' => 'width:70%;height:21.5em;' ));
+		echo '</div>';
+	}
+function wp_textarea_input( $field ) {
+		global $thepostid, $post;
+
+		if ( ! $thepostid ) $thepostid = $post->ID;
+		if ( ! isset( $field['placeholder'] ) ) $field['placeholder'] = '';
+		if ( ! isset( $field['class'] ) ) $field['class'] = 'short';
+		if ( ! isset( $field['value'] ) ) $field['value'] = get_post_meta( $thepostid, $field['id'], true );
+
+		echo '<p class="form-field ' . $field['id'] . '_field"><label style="display:block;" for="' . $field['id'] . '">' . $field['label'] . '</label><textarea class="' . $field['class'] . '" name="' . $field['id'] . '" id="' . $field['id'] . '" placeholder="' . $field['placeholder'] . '" rows="2" cols="20"' . (isset( $field['style'] ) ? ' style="' . $field['style'] . '"' : '') . '>' . esc_textarea( $field['value'] ) . '</textarea> ';
+
+		if ( isset( $field['description'] ) && $field['description'] )
+			echo '<span class="description">' . $field['description'] . '</span>';
+
+		echo '</p>';
+	}
+function product_save_data( $post_id, $post ) {
+		$tab_content = stripslashes( $_POST['_wc_technik_product_tabs_tab_content'] );
+
+		if (empty( $tab_content )) {
+			// clean up if the custom tabs are removed
+			$tab_content = "Es liegt noch keine technische Daten für dieses Produkt vor";
+		}
+			$tab_data = array();
+			$tab_title = "Technische Daten";
+			$tab_id = '';
+			if ( $tab_title ) {
+				if ( strlen( $tab_title ) != strlen( utf8_encode( $tab_title ) ) ) {
+					// can't have titles with utf8 characters as it breaks the tab-switching javascript
+					$tab_id = "tab-custom";
+				} else {
+					// convert the tab title into an id string
+					$tab_id = strtolower( $tab_title );
+					$tab_id = preg_replace( "/[^\w\s]/", '', $tab_id );
+					// remove non-alphas, numbers, underscores or whitespace
+					$tab_id = preg_replace( "/_+/", ' ', $tab_id );
+					// replace all underscores with single spaces
+					$tab_id = preg_replace( "/\s+/", '-', $tab_id );
+					// replace all multiple spaces with single dashes
+					$tab_id = 'tab-' . $tab_id;
+					// prepend with 'tab-' string
+				}
+			}
+
+			// save the data to the database
+			$tab_data[] = array( 'title' => $tab_title, 'id' => $tab_id, 'content' => $tab_content );
+			update_post_meta( $post_id, 'hoang_woo_product_technik_tab', $tab_data );
+}
+*/
+/* Change default product gallery to Enfold gallery */
+remove_action('woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20);
+add_action('woocommerce_before_single_product_summary', 'hoang_show_enfold_product_images', 20);
+function hoang_show_enfold_product_images() {
+	global $product;
+	$attachment_ids = $product->get_gallery_attachment_ids();
+	$attachment_ids = implode(',',$attachment_ids);
+	$featured_img_id = get_post_thumbnail_id($product->id);
+	$shortcode = "[av_gallery ids='".$featured_img_id.",".$attachment_ids."' style='big_thumb' preview_size='portfolio' thumb_size='portfolio' columns='5' imagelink='avianolink noLightbox' lazyload='avia_lazyload']";
+	echo do_shortcode($shortcode);
+}
+function header_slider() {
+	layerslider(4);
+}

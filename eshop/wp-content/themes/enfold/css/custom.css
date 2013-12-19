@@ -1,6 +1,41 @@
 /* Have fun adding your style here :) - PS: At all times this file should contain a comment or a rule, otherwise opera might act buggy :( */
 
 /* General Custom CSS */
+/* Layout for Product pages */
+
+div.summary.entry-summary h1.product_title.entry-title {
+	float: left;
+	width: 65%;
+}
+div.summary.entry-summary * {
+	display: inline;
+
+}
+div.summary.entry-summary div p.price {
+	float: left;
+	width: 5%;
+	height: 38px;
+	margin : 0;
+}
+div.summary.entry-summary form.cart {
+	clear: none;
+	float: right;
+	width: 24.1%;
+}
+
+div.summary.entry-summary form.cart button {
+	margin : 0;
+	height: 43px;
+}
+
+#top .price span {
+	line-height: 1.1em;
+	font-size: 34px;
+	font-weight: 800;
+}
+div.summary.entry-summary div.product_meta {
+	display: none;
+}
 /* Layout change for Homepage */
 .avia_ajax_form .form_element_half {
 	width:65.5%; 
