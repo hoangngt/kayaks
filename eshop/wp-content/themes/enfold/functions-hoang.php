@@ -273,3 +273,311 @@ function hoang_show_enfold_product_images() {
 function header_slider() {
 	layerslider(4);
 }
+
+// create a shortcode to show all Subcategories of Kayak-Cat
+add_shortcode("hoang_woo_sub_cat", "hoang_woo_sub_cat");
+function hoang_woo_sub_cat($atts) {
+	extract(shortcode_atts(array(  
+        'cat_id' => '33',  
+        'columns' => '4'
+    ), $atts)); 
+ // get list of subcategories of $cat_id
+ 	$args = array(
+	  'child_of'     => $cat_id,
+	  'menu_order'   => 'ASC',
+	  'hide_empty'   => 1,
+	  'hierarchical' => 1,
+	  'taxonomy'     => 'product_cat',
+	  'pad_counts'   => 1
+	);
+	$product_categories = get_categories($args);
+	if (count($product_categories)<1) return;
+// make html output for shortcode
+	$container_id = 1;
+	$extraClass 		= 'first';
+	$grid 				= 'one_fourth';
+	if($preview_mode == 'auto') $image_size = 'portfolio';
+	$post_loop_count 	= 1;
+	$loop_counter		= 1;
+	$output				= '';
+	$style_class		= empty($style) ? 'no_margin' : $style;
+	$total				= count($product_categories) % 2 ? "odd" : "even";
+	switch($columns)
+	{
+		case "1": $grid = 'av_fullwidth';  if($preview_mode == 'auto') $image_size = 'featured'; break;
+		case "2": $grid = 'av_one_half';   break;
+		case "3": $grid = 'av_one_third';  break;
+		case "4": $grid = 'av_one_fourth'; if($preview_mode == 'auto') $image_size = 'portfolio_small'; break;
+		case "5": $grid = 'av_one_fifth';  if($preview_mode == 'auto') $image_size = 'portfolio_small'; break;
+	}
+	$output .= "<div class='grid-sort-container isotope {$style_class}-container with-excerpt-container grid-total-{$total} grid-col-{$columns} grid-links-{$linking}' data-portfolio-id='{$container_id}'>";
+	foreach ($product_categories as $cat) {
+		$the_id 	= $cat->term_id;
+		$parity		= $post_loop_count % 2 ? 'odd' : 'even';
+		$last       = count($product_categories) == $post_loop_count ? " post-entry-last " : "";
+		$post_class = "post-entry post-entry-{$the_id} grid-entry-overview grid-loop-{$post_loop_count} grid-parity-{$parity} {$last}";
+		$title_link = $link = home_url()."/?product_cat=".$cat->slug;
+		$title 		= $cat->name;
+		$custom_overlay = apply_filters('avf_portfolio_custom_overlay', "", $cat);
+		$link_markup 	= apply_filters('avf_portfolio_custom_image_container', array("a href='{$link}' title='".esc_attr(strip_tags($title))."' ",'a'), $cat);
+
+		$title 			= apply_filters('avf_portfolio_title', $title, $cat);
+		$title_link     = apply_filters('avf_portfolio_title_link', $title_link, $cat);
+		if($columns == "1" && $one_column_template == 'special')
+        {
+            $extraClass .= ' special_av_fullwidth ';
+
+            $output .= "<div data-ajax-id='{$the_id}' class=' grid-entry flex_column isotope-item all_sort {$style_class} {$post_class} {$sort_class} {$grid} {$extraClass}'>";
+            $output .= "<article class='main_color inner-entry' ".avia_markup_helper(array('context' => 'entry','echo'=>false)).">";
+            $output .= apply_filters('avf_portfolio_extra', "", $cat);
+
+            $output .= "<div class='av_table_col first portfolio-entry grid-content'>";
+
+            if(!empty($title))
+            {
+                $markup = avia_markup_helper(array('context' => 'entry_title','echo'=>false));
+                $output .= '<header class="entry-content-header">';
+                $output .= "<h2 class='portfolio-grid-title entry-title' $markup><a href='{$title_link}'>".$title."</a></h2>";
+                $output .= '</header>';
+            }
+
+            if(!empty($excerpt))
+            {
+                $markup = avia_markup_helper(array('context' => 'entry_content','echo'=>false));
+
+                $output .= "<div class='entry-content-wrapper'>";
+                $output .= "<div class='grid-entry-excerpt entry-content' $markup>".$excerpt."</div>";
+                $output .= "</div>";
+            }
+            $output .= '<div class="avia-arrow"></div>';
+            $output .= "</div>";
+            $thumbnail_id = get_woocommerce_term_meta($the_id , 'thumbnail_id', true);
+         	$img_src = wp_get_attachment_image_src($thumbnail_id, $image_size );
+            $img_src = $img_src[0];
+            $image = "<img width='260' height='185' src='".$img_src."' class='attachment-portfolio_small wp-post-image' alt='013'>";
+            if(!empty($image))
+            {
+                $output .= "<div class='av_table_col portfolio-grid-image'>";
+                $output .= "<".$link_markup[0]." data-rel='grid-1' class='grid-image avia-hover-fx'>".$custom_overlay.$image."</".$link_markup[1].">";
+                $output .= "</div>";
+            }
+            $output .= '<footer class="entry-footer"></footer>';
+            $output .= "</article>";
+            $output .= "</div>";
+        }
+        else
+        {
+            $extraClass .= ' default_av_fullwidth ';
+            $thumbnail_id = get_woocommerce_term_meta($the_id , 'thumbnail_id', true);
+            $img_src = wp_get_attachment_image_src($thumbnail_id, $image_size );
+            $img_src = $img_src[0];
+            $image = "<img width='260' height='185' src='".$img_src."' class='attachment-portfolio_small wp-post-image' alt='013'>";
+            $output .= "<div data-ajax-id='{$the_id}' class=' grid-entry flex_column isotope-item all_sort {$style_class} {$post_class} {$sort_class} {$grid} {$extraClass}'>";
+            $output .= "<article class='main_color inner-entry' ".avia_markup_helper(array('context' => 'entry','echo'=>false)).">";
+            $output .= apply_filters('avf_portfolio_extra', "", $cat);
+            $output .= "<".$link_markup[0]." data-rel='grid-".avia_post_grid::$grid."' class='grid-image avia-hover-fx'>".$custom_overlay. $image."</".$link_markup[1].">";
+            $output .= !empty($title) || !empty($excerpt) ? "<div class='grid-content'><div class='avia-arrow'></div>" : '';
+
+            if(!empty($title))
+            {
+                $markup = avia_markup_helper(array('context' => 'entry_title','echo'=>false));
+                $output .= '<header class="entry-content-header">';
+                $output .= "<h3 class='grid-entry-title entry-title' $markup><a href='{$title_link}' title='".esc_attr(strip_tags($title))."'>".$title."</a></h3>";
+                $output .= '</header>';
+            }
+            $output .= !empty($excerpt) ? "<div class='grid-entry-excerpt entry-content' ".avia_markup_helper(array('context'=>'entry_content','echo'=>false)).">".$excerpt."</div>" : '';
+            $output .= !empty($title) || !empty($excerpt) ? "</div>" : '';
+            $output .= '<footer class="entry-footer"></footer>';
+            $output .= "</article>";
+            $output .= "</div>";
+        }
+
+
+		$loop_counter ++;
+		$post_loop_count ++;
+		$extraClass = "";
+
+		if($loop_counter > $columns)
+		{
+			$loop_counter = 1;
+			$extraClass = 'first';
+		}
+	}
+
+	$output .= "</div>";
+
+		//append pagination
+
+	return $output;
+
+}
+function html()
+		{
+			if(empty($this->entries) || empty($this->entries->posts)) return;
+
+			avia_post_grid::$grid ++;
+			extract($this->atts);
+
+			$container_id 		= avia_post_grid::$grid;
+			$extraClass 		= 'first';
+			$grid 				= 'one_fourth';
+			if($preview_mode == 'auto') $image_size = 'portfolio';
+			$post_loop_count 	= 1;
+			$loop_counter		= 1;
+			$output				= "";
+			$style_class		= empty($style) ? 'no_margin' : $style;
+			$total				= $this->entries->post_count % 2 ? "odd" : "even";
+
+			if($set_breadcrumb && is_page())
+			{
+				$_SESSION["avia_{$post_type}"] = get_the_ID();
+			}
+
+			switch($columns)
+			{
+				case "1": $grid = 'av_fullwidth';  if($preview_mode == 'auto') $image_size = 'featured'; break;
+				case "2": $grid = 'av_one_half';   break;
+				case "3": $grid = 'av_one_third';  break;
+				case "4": $grid = 'av_one_fourth'; if($preview_mode == 'auto') $image_size = 'portfolio_small'; break;
+				case "5": $grid = 'av_one_fifth';  if($preview_mode == 'auto') $image_size = 'portfolio_small'; break;
+			}
+
+			$output .= $sort == "yes" ? $this->sort_buttons($this->entries->posts, $this->atts) : "";
+
+			if($linking == "ajax")
+			{
+			global $avia_config;
+
+			$output .= "<div class='portfolio_preview_container' data-portfolio-id='{$container_id}'>
+							<div class='ajax_controlls iconfont'>
+								<a href='#prev' class='ajax_previous' 	".av_icon_string('prev')."></a>
+								<a href='#next' class='ajax_next'		".av_icon_string('next')."></a>
+								<a class='avia_close' href='#close'		".av_icon_string('close')."></a>
+							</div>
+							<div class='portfolio-details-inner'></div>
+						</div>";
+			}
+			$output .= "<div class='{$class} grid-sort-container isotope {$style_class}-container with-{$contents}-container grid-total-{$total} grid-col-{$columns} grid-links-{$linking}' data-portfolio-id='{$container_id}'>";
+
+			foreach ($this->entries->posts as $entry)
+			{
+				$the_id 	= $entry->ID;
+				$parity		= $post_loop_count % 2 ? 'odd' : 'even';
+				$last       = $this->entries->post_count == $post_loop_count ? " post-entry-last " : "";
+				$post_class = "post-entry post-entry-{$the_id} grid-entry-overview grid-loop-{$post_loop_count} grid-parity-{$parity} {$last}";
+				$sort_class = $this->sort_cat_string($the_id, $this->atts);
+
+				switch($linking)
+				{
+					case "lightbox":  $link = wp_get_attachment_image_src(get_post_thumbnail_id($the_id), 'large'); $link = $link[0];	break;
+					default: 		  $link = get_permalink($the_id); break;
+				}
+
+				$title_link  = get_permalink($the_id);
+				$custom_link = get_post_meta( $the_id ,'_portfolio_custom_link', true) != "" ? get_post_meta( $the_id ,'_portfolio_custom_link_url', true) : false;
+
+				if($custom_link)
+				{
+					$title_link = $link = $custom_link;
+				}
+
+				$excerpt 	= '';
+				$title 		= '';
+
+				switch($contents)
+				{
+					case "excerpt": $excerpt = $entry->post_excerpt; $title = $entry->post_title; break;
+					case "title": $excerpt = ''; $title = $entry->post_title;  break;
+					case "only_excerpt": $excerpt = $entry->post_excerpt; $title = ''; break;
+					case "no": $excerpt = ''; $title = ''; break;
+				}
+
+				$custom_overlay = apply_filters('avf_portfolio_custom_overlay', "", $entry);
+				$link_markup 	= apply_filters('avf_portfolio_custom_image_container', array("a href='{$link}' title='".esc_attr(strip_tags($title))."' ",'a'), $entry);
+
+				$title 			= apply_filters('avf_portfolio_title', $title, $entry);
+				$title_link     = apply_filters('avf_portfolio_title_link', $title_link, $entry);
+
+                if($columns == "1" && $one_column_template == 'special')
+                {
+                    $extraClass .= ' special_av_fullwidth ';
+
+                    $output .= "<div data-ajax-id='{$the_id}' class=' grid-entry flex_column isotope-item all_sort {$style_class} {$post_class} {$sort_class} {$grid} {$extraClass}'>";
+                    $output .= "<article class='main_color inner-entry' ".avia_markup_helper(array('context' => 'entry','echo'=>false)).">";
+                    $output .= apply_filters('avf_portfolio_extra', "", $entry);
+
+                    $output .= "<div class='av_table_col first portfolio-entry grid-content'>";
+
+                    if(!empty($title))
+                    {
+                        $markup = avia_markup_helper(array('context' => 'entry_title','echo'=>false));
+                        $output .= '<header class="entry-content-header">';
+                        $output .= "<h2 class='portfolio-grid-title entry-title' $markup><a href='{$title_link}'>".$title."</a></h2>";
+                        $output .= '</header>';
+                    }
+
+                    if(!empty($excerpt))
+                    {
+                        $markup = avia_markup_helper(array('context' => 'entry_content','echo'=>false));
+
+                        $output .= "<div class='entry-content-wrapper'>";
+                        $output .= "<div class='grid-entry-excerpt entry-content' $markup>".$excerpt."</div>";
+                        $output .= "</div>";
+                    }
+                    $output .= '<div class="avia-arrow"></div>';
+                    $output .= "</div>";
+
+                    $image = get_the_post_thumbnail( $the_id, $image_size );
+                    if(!empty($image))
+                    {
+                        $output .= "<div class='av_table_col portfolio-grid-image'>";
+                        $output .= "<".$link_markup[0]." data-rel='grid-".avia_post_grid::$grid."' class='grid-image avia-hover-fx'>".$custom_overlay.$image."</".$link_markup[1].">";
+                        $output .= "</div>";
+                    }
+                    $output .= '<footer class="entry-footer"></footer>';
+                    $output .= "</article>";
+                    $output .= "</div>";
+                }
+                else
+                {
+                    $extraClass .= ' default_av_fullwidth ';
+
+                    $output .= "<div data-ajax-id='{$the_id}' class=' grid-entry flex_column isotope-item all_sort {$style_class} {$post_class} {$sort_class} {$grid} {$extraClass}'>";
+                    $output .= "<article class='main_color inner-entry' ".avia_markup_helper(array('context' => 'entry','echo'=>false)).">";
+                    $output .= apply_filters('avf_portfolio_extra', "", $entry);
+                    $output .= "<".$link_markup[0]." data-rel='grid-".avia_post_grid::$grid."' class='grid-image avia-hover-fx'>".$custom_overlay.get_the_post_thumbnail( $the_id, $image_size )."</".$link_markup[1].">";
+                    $output .= !empty($title) || !empty($excerpt) ? "<div class='grid-content'><div class='avia-arrow'></div>" : '';
+
+                    if(!empty($title))
+                    {
+                        $markup = avia_markup_helper(array('context' => 'entry_title','echo'=>false));
+                        $output .= '<header class="entry-content-header">';
+                        $output .= "<h3 class='grid-entry-title entry-title' $markup><a href='{$title_link}' title='".esc_attr(strip_tags($title))."'>".$title."</a></h3>";
+                        $output .= '</header>';
+                    }
+                    $output .= !empty($excerpt) ? "<div class='grid-entry-excerpt entry-content' ".avia_markup_helper(array('context'=>'entry_content','echo'=>false)).">".$excerpt."</div>" : '';
+                    $output .= !empty($title) || !empty($excerpt) ? "</div>" : '';
+                    $output .= '<footer class="entry-footer"></footer>';
+                    $output .= "</article>";
+                    $output .= "</div>";
+                }
+
+
+				$loop_counter ++;
+				$post_loop_count ++;
+				$extraClass = "";
+
+				if($loop_counter > $columns)
+				{
+					$loop_counter = 1;
+					$extraClass = 'first';
+				}
+			}
+
+			$output .= "</div>";
+
+			//append pagination
+			if($paginate == "yes" && $avia_pagination = avia_pagination($this->entries->max_num_pages, 'nav')) $output .= "<div class='pagination-wrap pagination-{$post_type}'>{$avia_pagination}</div>";
+
+			return $output;
+		}
