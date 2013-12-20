@@ -416,10 +416,9 @@ function hoang_woo_sub_cat($atts) {
 	  'menu_order'   => 'ASC',
 	  'hide_empty'   => 1,
 	  'hierarchical' => 1,
-	  'taxonomy'	 => $product_cat,
 	  'pad_counts'   => 1
 	);
-	$count = count (get_categories(args));		// get total amount of subcat
+	$count = count (get_terms($product_cat,$args));		// get total amount of subcat
 	$avia_pagination = hoang_pagination(ceil($count/$columns), 'nav');
 	$output .= $avia_pagination;
 	return $output;
