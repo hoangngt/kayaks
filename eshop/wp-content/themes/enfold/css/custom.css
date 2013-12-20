@@ -2,50 +2,50 @@
 
 /* General Custom CSS */
 /* Layout for Product pages */
+@media all and (min-width: 700px) {
+	div.summary.entry-summary h1.product_title.entry-title {
+		float: left;
+		width: 65%;
+	}
+	div.summary.entry-summary * {
+		display: inline;
 
-div.summary.entry-summary h1.product_title.entry-title {
-	float: left;
-	width: 65%;
-}
-div.summary.entry-summary * {
-	display: inline;
+	}
+	div.summary.entry-summary div p.price {
+		float: left;
+		width: 5%;
+		height: 38px;
+		margin : 0;
+	}
+	div.summary.entry-summary form.cart {
+		clear: none;
+		float: right;
+		width: 24.1%;
+	}
 
-}
-div.summary.entry-summary div p.price {
-	float: left;
-	width: 5%;
-	height: 38px;
-	margin : 0;
-}
-div.summary.entry-summary form.cart {
-	clear: none;
-	float: right;
-	width: 24.1%;
-}
+	div.summary.entry-summary form.cart button {
+		margin : 0;
+		height: 43px;
+	}
 
-div.summary.entry-summary form.cart button {
-	margin : 0;
-	height: 43px;
+	#top .price span {
+		line-height: 1.1em;
+		font-size: 34px;
+		font-weight: 800;
+	}
+	div.summary.entry-summary div.product_meta {
+		display: none;
+	}
+	/* Layout change for Homepage */
+	.avia_ajax_form .form_element_half {
+		width:65.5%; 
+		float:left; 
+		margin-right:1%; 
+	}
+	.avia_ajax_form fieldset p:last-child {
+		width: 30%;
+	}
 }
-
-#top .price span {
-	line-height: 1.1em;
-	font-size: 34px;
-	font-weight: 800;
-}
-div.summary.entry-summary div.product_meta {
-	display: none;
-}
-/* Layout change for Homepage */
-.avia_ajax_form .form_element_half {
-	width:65.5%; 
-	float:left; 
-	margin-right:1%; 
-}
-.avia_ajax_form fieldset p:last-child {
-	width: 30%;
-}
-
 /* Layout for Shop Page */
 .widget_layered_nav , .widget_price_filter{
 	display:none;
