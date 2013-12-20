@@ -277,20 +277,24 @@ function header_slider() {
 // create a shortcode to show all Subcategories of Kayak-Cat
 add_shortcode("hoang_woo_sub_cat", "hoang_woo_sub_cat");
 function hoang_woo_sub_cat($atts) {
+	$product_cat = "product_cat";
 	extract(shortcode_atts(array(  
         'cat_id' => '33',  
         'columns' => '4'
     ), $atts)); 
+    $catpage = get_query_var( 'page' ) ? get_query_var( 'page' ) : 1;
+    $offset = ($catpage - 1) * $columns;
  // get list of subcategories of $cat_id
  	$args = array(
 	  'child_of'     => $cat_id,
 	  'menu_order'   => 'ASC',
 	  'hide_empty'   => 1,
 	  'hierarchical' => 1,
-	  'taxonomy'     => 'product_cat',
+	  'number'		 => $columns,
+	  'offset'		 => $offset,
 	  'pad_counts'   => 1
 	);
-	$product_categories = get_categories($args);
+	$product_categories = get_terms($product_cat,$args);
 	if (count($product_categories)<1) return;
 // make html output for shortcode
 	$container_id = 1;
@@ -407,7 +411,77 @@ function hoang_woo_sub_cat($atts) {
 	$output .= "</div>";
 
 		//append pagination
-
+	$args = array(
+	  'child_of'     => $cat_id,
+	  'menu_order'   => 'ASC',
+	  'hide_empty'   => 1,
+	  'hierarchical' => 1,
+	  'taxonomy'	 => $product_cat,
+	  'pad_counts'   => 1
+	);
+	$count = count (get_categories(args));		// get total amount of subcat
+	$avia_pagination = hoang_pagination(ceil($count/$columns), 'nav');
+	$output .= $avia_pagination;
 	return $output;
-
 }
+function hoang_pagination($pages = '', $wrapper = 'div')
+	{
+		global $paged;
+
+		if(get_query_var('paged')) {
+		     $paged = get_query_var('paged');
+		} elseif(get_query_var('page')) {
+		     $paged = get_query_var('page');
+		} else {
+		     $paged = 1;
+		}
+
+		$output = "";
+		$prev = $paged - 1;
+		$next = $paged + 1;
+		$range = 2; // only edit this if you want to show more page-links
+		$showitems = ($range * 2)+1;
+
+
+
+		if($pages == '')
+		{
+			global $wp_query;
+			//$pages = ceil(wp_count_posts($post_type)->publish / $per_page);
+			$pages = $wp_query->max_num_pages;
+			if(!$pages)
+			{
+				$pages = 1;
+			}
+		}
+
+		$method = "get_pagenum_link";
+		if(is_single())
+		{
+			$method = "avia_post_pagination_link";
+		}
+
+
+
+		if(1 != $pages)
+		{
+			$output .= "<$wrapper class='pagination'>";
+			$output .= ($paged > 2 && $paged > $range+1 && $showitems < $pages)? "<a href='".$method(1)."'>&laquo;</a>":"";
+			$output .= ($paged > 1 && $showitems < $pages)? "<a href='".$method($prev)."'>&lsaquo;</a>":"";
+
+			$output .= "<span class='pagination-meta'>";
+			for ($i=1; $i <= $pages; $i++)
+			{
+				if (1 != $pages &&( !($i >= $paged+$range+1 || $i <= $paged-$range-1) || $pages <= $showitems ))
+				{
+					$output .= ($paged == $i)? "<span class='current'>".$i."</span>":"<a href='".$method($i)."' class='inactive' >".$i."</a>";
+				}
+			}
+			$output .= "</span>";
+			$output .= ($paged < $pages && $showitems < $pages) ? "<a href='".$method($next)."'>&rsaquo;</a>" :"";
+			$output .= ($paged < $pages-1 &&  $paged+$range-1 < $pages && $showitems < $pages) ? "<a href='".$method($pages)."'>&raquo;</a>":"";
+			$output .= "</$wrapper>\n";
+		}
+
+		return $output;
+	}
