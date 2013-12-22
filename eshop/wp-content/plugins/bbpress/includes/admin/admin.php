@@ -124,14 +124,15 @@ class BBP_Admin {
 
 		/** General Actions ***************************************************/
 
-		add_action( 'bbp_admin_menu',              array( $this, 'admin_menus'                ) ); // Add menu item to settings menu
-		add_action( 'bbp_admin_head',              array( $this, 'admin_head'                 ) ); // Add some general styling to the admin area
-		add_action( 'bbp_admin_notices',           array( $this, 'activation_notice'          ) ); // Add notice if not using a bbPress theme
-		add_action( 'bbp_register_admin_style',    array( $this, 'register_admin_style'       ) ); // Add green admin style
-		add_action( 'bbp_register_admin_settings', array( $this, 'register_admin_settings'    ) ); // Add settings
-		add_action( 'bbp_activation',              array( $this, 'new_install'                ) ); // Add menu item to settings menu
-		add_action( 'admin_enqueue_scripts',       array( $this, 'enqueue_scripts'            ) ); // Add enqueued JS and CSS
-		add_action( 'wp_dashboard_setup',          array( $this, 'dashboard_widget_right_now' ) ); // Forums 'Right now' Dashboard widget
+		add_action( 'bbp_admin_menu',              array( $this, 'admin_menus'                )     ); // Add menu item to settings menu
+		add_action( 'bbp_admin_head',              array( $this, 'admin_head'                 )     ); // Add some general styling to the admin area
+		add_action( 'bbp_admin_notices',           array( $this, 'activation_notice'          )     ); // Add notice if not using a bbPress theme
+		add_action( 'bbp_register_admin_style',    array( $this, 'register_admin_style'       )     ); // Add green admin style
+		add_action( 'bbp_register_admin_settings', array( $this, 'register_admin_settings'    )     ); // Add settings
+		add_action( 'bbp_activation',              array( $this, 'new_install'                )     ); // Add menu item to settings menu
+		add_action( 'admin_enqueue_scripts',       array( $this, 'enqueue_scripts'            )     ); // Add enqueued JS and CSS
+		add_action( 'wp_dashboard_setup',          array( $this, 'dashboard_widget_right_now' )     ); // Forums 'Right now' Dashboard widget
+		add_action( 'admin_bar_menu',              array( $this, 'admin_bar_about_link'       ), 15 ); // Add a link to bbPress about page to the admin bar
 
 		/** Ajax **************************************************************/
 
@@ -487,14 +488,25 @@ class BBP_Admin {
 	public static function modify_plugin_action_links( $links, $file ) {
 
 		// Return normal links if not bbPress
-		if ( plugin_basename( bbpress()->file ) !== $file )
+		if ( plugin_basename( bbpress()->file ) !== $file ) {
 			return $links;
+		}
+
+		// New links to merge into existing links
+		$new_links = array();
+
+		// Settings page link
+		if ( current_user_can( 'bbp_settings_page' ) ) {
+			$new_links['settings'] = '<a href="' . add_query_arg( array( 'page' => 'bbpress'   ), admin_url( 'options-general.php' ) ) . '">' . esc_html__( 'Settings', 'bbpress' ) . '</a>';
+		}
+
+		// About page link
+		if ( current_user_can( 'bbp_about_page' ) ) {
+			$new_links['about']    = '<a href="' . add_query_arg( array( 'page' => 'bbp-about' ), admin_url( 'index.php'           ) ) . '">' . esc_html__( 'About',    'bbpress' ) . '</a>';
+		}
 
 		// Add a few links to the existing links array
-		return array_merge( $links, array(
-			'settings' => '<a href="' . add_query_arg( array( 'page' => 'bbpress'   ), admin_url( 'options-general.php' ) ) . '">' . esc_html__( 'Settings', 'bbpress' ) . '</a>',
-			'about'    => '<a href="' . add_query_arg( array( 'page' => 'bbp-about' ), admin_url( 'index.php'           ) ) . '">' . esc_html__( 'About',    'bbpress' ) . '</a>'
-		) );
+		return array_merge( $links, $new_links );
 	}
 
 	/**
@@ -509,8 +521,28 @@ class BBP_Admin {
 	}
 
 	/**
+	 * Add a link to bbPress about page to the admin bar
+	 *
+	 * @since bbPress (r5136)
+	 *
+	 * @param WP_Admin_Bar $wp_admin_bar
+	 */
+	public function admin_bar_about_link( $wp_admin_bar ) {
+
+		if ( is_user_logged_in() ) {
+
+			$wp_admin_bar->add_menu( array(
+				'parent' => 'wp-logo',
+				'id'     => 'bbp-about',
+				'title'  => esc_html__( 'About bbPress', 'bbpress' ),
+				'href'   => add_query_arg( array( 'page' => 'bbp-about' ), admin_url( 'index.php' ) )
+			) );
+		}
+	}
+
+	/**
 	 * Enqueue any admin scripts we might need
-	 * @since bbPress (4260)
+	 * @since bbPress (r4260)
 	 */
 	public function enqueue_scripts() {
 		wp_enqueue_script( 'suggest' );
@@ -1330,7 +1362,7 @@ class BBP_Admin {
 	 */
 	public function suggest_topic() {
 
-		// TRy to get some topics
+		// Try to get some topics
 		$topics = get_posts( array(
 			's'         => like_escape( $_REQUEST['q'] ),
 			'post_type' => bbp_get_topic_post_type()
@@ -1382,7 +1414,7 @@ class BBP_Admin {
 
 		<div class="wrap about-wrap">
 			<h1><?php printf( esc_html__( 'Welcome to bbPress %s', 'bbpress' ), $display_version ); ?></h1>
-			<div class="about-text"><?php printf( esc_html__( 'Thank you for updating! bbPress %s is waxed, polished, and ready for you to take it for a lap or two around the block!', 'bbpress' ), $display_version ); ?></div>
+			<div class="about-text"><?php printf( esc_html__( 'Thank you for updating! bbPress %s is bundled up and ready to weather the storm of users in your community!', 'bbpress' ), $display_version ); ?></div>
 			<div class="bbp-badge"><?php printf( esc_html__( 'Version %s', 'bbpress' ), $display_version ); ?></div>
 
 			<h2 class="nav-tab-wrapper">
@@ -1394,55 +1426,44 @@ class BBP_Admin {
 			</h2>
 
 			<div class="changelog">
-				<h3><?php esc_html_e( 'Hierarchical Replies', 'bbpress' ); ?></h3>
+				<h3><?php esc_html_e( 'Forum Subscriptions', 'bbpress' ); ?></h3>
 
 				<div class="feature-section col two-col">
 					<div class="last-feature">
-						<h4><?php esc_html_e( 'Reply to replies', 'bbpress' ); ?></h4>
-						<p><?php esc_html_e( 'Now your users can reply to specific replies, providing context to each inidividual post.', 'bbpress' ); ?></p>
+						<h4><?php esc_html_e( 'Subscribe to Forums', 'bbpress' ); ?></h4>
+						<p><?php esc_html_e( 'Now your users can subscribe to new topics in specific forums.', 'bbpress' ); ?></p>
 					</div>
 
 					<div>
-						<h4><?php esc_html_e( 'Choose your own discussion style', 'bbpress' ); ?></h4>
-						<p><?php esc_html_e( 'Stay flat or go threaded, and seamlessly switch between the two.', 'bbpress' ); ?></p>
+						<h4><?php esc_html_e( 'Manage Subscriptions', 'bbpress' ); ?></h4>
+						<p><?php esc_html_e( 'Your users can manage all of their subscriptions in one convenient location.', 'bbpress' ); ?></p>
 					</div>
 				</div>
 			</div>
 
 			<div class="changelog">
-				<h3><?php esc_html_e( 'Under the Hood', 'bbpress' ); ?></h3>
+				<h3><?php esc_html_e( 'Converters', 'bbpress' ); ?></h3>
 
-				<div class="feature-section col three-col">
-					<div>
-						<h4><?php esc_html_e( 'Preformatted text', 'bbpress' ); ?></h4>
-						<p><?php esc_html_e( 'Forum users can post code snippets with confidence.', 'bbpress' ); ?></p>
-					</div>
-
-					<div>
-						<h4><?php esc_html_e( 'Polyglot support', 'bbpress' ); ?></h4>
-						<p><?php esc_html_e( 'bbPress is ready for future translation API improvements.', 'bbpress' ); ?></p>
-					</div>
-
+				<div class="feature-section col one-col">
 					<div class="last-feature">
-						<h4><?php esc_html_e( 'User capabilities', 'bbpress' ); ?></h4>
-						<p><?php esc_html_e( 'Roles and capabilities have been swept through, cleaned up, and simplified.', 'bbpress' ); ?></p>
+						<p><?php esc_html_e( 'We&#8217;re all abuzz about the hive of new importers, AEF, Drupal, FluxBB, Kunena Forums for Joomla, MyBB, Phorum, PHPFox, PHPWind, PunBB, SMF, Xenforo and XMB. Existing importers are now sweeter than honey with improved importing stickies, topic tags, forum categories and the sting is now gone if you need to remove imported users.', 'bbpress' ); ?></p>
 					</div>
 				</div>
 
 				<div class="feature-section col three-col">
 					<div>
-						<h4><?php esc_html_e( 'Search', 'bbpress' ); ?></h4>
-						<p><?php esc_html_e( 'Search results use pretty permalinks, and have a dedicated output page.', 'bbpress' ); ?></p>
+						<h4><?php esc_html_e( 'Theme Compatibility', 'bbpress' ); ?></h4>
+						<p><?php esc_html_e( 'Better handling of styles and scripts in the template stack.', 'bbpress' ); ?></p>
 					</div>
 
 					<div>
-						<h4><?php esc_html_e( 'Settings', 'bbpress' ); ?></h4>
-						<p><?php esc_html_e( 'Fields and sections have been reordered and reorganized.', 'bbpress' ); ?></p>
+						<h4><?php esc_html_e( 'Polyglot support', 'bbpress' ); ?></h4>
+						<p><?php esc_html_e( 'bbPress fully supports automatic translation updates.', 'bbpress' ); ?></p>
 					</div>
 
 					<div class="last-feature">
-						<h4><?php esc_html_e( 'BuddyPress', 'bbpress' ); ?></h4>
-						<p><?php esc_html_e( 'Forums are now fully and seamlessly integrated into BuddyPress Groups.', 'bbpress' ); ?></p>
+						<h4><?php esc_html_e( 'User capabilities', 'bbpress' ); ?></h4>
+						<p><?php esc_html_e( 'Roles and capabilities have been swept through, cleaned up, and simplified.', 'bbpress' ); ?></p>
 					</div>
 				</div>
 			</div>
@@ -1500,15 +1521,15 @@ class BBP_Admin {
 					<a class="web" href="http://profiles.wordpress.org/jmdodd">Jennifer M. Dodd</a>
 					<span class="title"><?php esc_html_e( 'Feature Developer', 'bbpress' ); ?></span>
 				</li>
-			</ul>
-
-			<h4 class="wp-people-group"><?php esc_html_e( 'Contributing Developers', 'bbpress' ); ?></h4>
-			<ul class="wp-people-group " id="wp-people-group-contributing-developers">
 				<li class="wp-person" id="wp-person-netweb">
 					<a href="http://profiles.wordpress.org/netweb"><img src="http://0.gravatar.com/avatar/97e1620b501da675315ba7cfb740e80f?s=60" class="gravatar" alt="Stephen Edgar" /></a>
 					<a class="web" href="http://profiles.wordpress.org/netweb">Stephen Edgar</a>
 					<span class="title"><?php esc_html_e( 'Converter Specialist', 'bbpress' ); ?></span>
 				</li>
+			</ul>
+
+			<h4 class="wp-people-group"><?php esc_html_e( 'Contributing Developers', 'bbpress' ); ?></h4>
+			<ul class="wp-people-group " id="wp-people-group-contributing-developers">
 				<li class="wp-person" id="wp-person-jaredatch">
 					<a href="http://profiles.wordpress.org/jaredatch"><img src="http://0.gravatar.com/avatar/e341eca9e1a85dcae7127044301b4363?s=60" class="gravatar" alt="Jared Atchison" /></a>
 					<a class="web" href="http://profiles.wordpress.org/jaredatch">Jared Atchison</a>
@@ -1521,7 +1542,7 @@ class BBP_Admin {
 				</li>
 			</ul>
 
-			<h4 class="wp-people-group"><?php esc_html_e( 'Core Contributors to bbPress 2.4', 'bbpress' ); ?></h4>
+			<h4 class="wp-people-group"><?php esc_html_e( 'Core Contributors to bbPress 2.5', 'bbpress' ); ?></h4>
 			<p class="wp-credits-list">
 				<a href="http://profiles.wordpress.org/alex-ye">alex-ye</a>,
 				<a href="http://profiles.wordpress.org/alexvorn2">alexvorn2</a>,
@@ -1645,8 +1666,6 @@ class BBP_Admin {
 
 					<p><?php esc_html_e( 'All done!', 'bbpress' ); ?></p>
 					<a class="button" href="update-core.php?page=bbpress-update"><?php esc_html_e( 'Go Back', 'bbpress' ); ?></a>
-
-					<?php break; ?>
 
 				<?php
 
