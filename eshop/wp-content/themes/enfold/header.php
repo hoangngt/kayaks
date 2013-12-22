@@ -198,11 +198,3 @@ if( strpos($responsive, 'responsive') !== false ) echo '<meta name="viewport" co
 
 	<?php } //end blank check ?>
 	<div id='main'>
-	<?php
-	if (!is_front_page()) {?>
-		<div id='header_slider'>
-		<?php
-			header_slider();	// locate in functions-hoang.php
-		?>
-		</div>	<!-- End header_slider -->
-	<?php }

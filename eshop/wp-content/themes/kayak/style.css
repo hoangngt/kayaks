@@ -1,0 +1,120 @@
+/*
+Theme Name: Kayak
+Description: Theme for kayakstogo.de
+Version: 1.0
+Author: Hoang Ta
+Author URI: http://talamhoang.com
+Template: enfold
+*/
+
+
+
+/*Add your own styles here:*/
+/*		##################################################################
+		# custom layout for homepage
+		##################################################################	*/
+/*header with social icons: */
+.social_header #header_main .container, .social_header .main_menu ul:first-child > li a { height: 61px; line-height: 61px; }
+
+/*		##################################################################
+		# custom layout for product pages
+		##################################################################	*/
+@media all and (min-width: 700px) {
+	div.summary.entry-summary h1.product_title.entry-title {
+		float: left;
+		width: 65%;
+	}
+	div.summary.entry-summary * {
+		display: inline;
+
+	}
+	div.summary.entry-summary div p.price {
+		float: left;
+		width: 5%;
+		height: 38px;
+		margin : 0;
+	}
+	div.summary.entry-summary form.cart {
+		clear: none;
+		float: right;
+		width: 24.1%;
+	}
+
+	div.summary.entry-summary form.cart button {
+		margin : 0;
+		height: 43px;
+	}
+
+	#top .price span {
+		line-height: 1.1em;
+		font-size: 34px;
+		font-weight: 800;
+	}
+	div.summary.entry-summary div.product_meta {
+		display: none;
+	}
+	/* Layout change for Homepage */
+	.avia_ajax_form .form_element_half {
+		width:65.5%; 
+		float:left; 
+		margin-right:1%; 
+	}
+	.avia_ajax_form fieldset p:last-child {
+		width: 30%;
+	}
+}
+/*		##################################################################
+		# custom layout for Shop-page
+		##################################################################	*/
+.widget_layered_nav , .widget_price_filter{
+	display:none;
+}
+div.product-sorting ul.sort-param.sort-param-shop {
+	width: 133px;
+
+}
+div.product-sorting ul.sort-param.sort-param-shop li span.shop-yellow {
+	text-align: center;
+	padding-right: 10px;
+	background: rgb(251,208,38);	
+}
+#top .inner_product_header {
+	min-height: 88px;
+}
+div.inner_product a .inner_product_header .avia-arrow {
+	display: none;
+}
+#top .inner_product_header {
+	border-top-style: hidden;
+}
+#top .main_color .price {
+	color: rgb(70,114,158);
+}
+
+/*		##################################################################
+		# custom layout for Category Post Plugin
+		##################################################################	*/
+div.widget_ultimate_posts h3.widgettitle {
+	font-size: 150%;
+	text-transform: none;
+	font-weight: 900;
+}
+div.upw-content {
+	color: black;
+	font-weight: bold;
+}
+div.upw-content  p.post-title a{
+	margin : 1.2em 0 0 0;
+	display: block;
+	color: black;
+	font-size: 110%;
+	font-weight: bold;
+}
+div.upw-content  .post-excerpt {
+	display: inline;
+}
+div.upw-content p .more-link {
+	display: block;
+	text-align: right;
+	color: black;
+}

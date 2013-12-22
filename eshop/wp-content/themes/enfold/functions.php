@@ -467,4 +467,3 @@ add_theme_support('force-post-thumbnails-in-widget');
  */
 
 require_once( 'functions-enfold.php');
-require_once( 'functions-hoang.php');
