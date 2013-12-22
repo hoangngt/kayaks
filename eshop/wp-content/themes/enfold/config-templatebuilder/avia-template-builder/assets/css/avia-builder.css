@@ -117,7 +117,7 @@ display: block;
 .avia-expand-button{
 position: absolute;
 right:10px;
-bottom: -37px;
+bottom: -17px;
 background: #333;
 overflow: hidden;
 text-indent: 200%;
@@ -262,7 +262,7 @@ display:none;
 .avia-template-save-button-container {
 position: absolute;
 right: 39px;
-bottom: -38px;
+bottom: -18px;
 z-index: 30;
 
 }
@@ -447,6 +447,9 @@ overflow: hidden;
 
 
 .avia-hotkey-info{
+-webkit-transition-duration: 0s;
+-moz-transition-duration: 0s;
+transition-duration: 0s;
 width:24px;
 height:24px;
 display: block; 
@@ -577,7 +580,7 @@ border: 1px solid #E1E1E1;
 float:left;
 position: relative;
 width: 100%;
-left: -11px;
+left: -12px;
 top: 9px;
 }
 
@@ -595,7 +598,7 @@ line-height: 30px;
 width: 100%;
 position: absolute;
 top: 9px;
-left: -11px;
+left: -12px;
 z-index: 8;
 color: #333;
 display: block;
@@ -773,6 +776,7 @@ background: transparent url(../../images/icon-cut.png) bottom left no-repeat;
 .menu-item-handle .avia-edit-element{
 height:24px;
 width:24px;
+line-height: 24px;
 position: absolute;
 top:1px;
 left:25px;
@@ -793,6 +797,7 @@ background: transparent url(../../images/icon-edit.png) bottom center no-repeat;
 .menu-item-handle .avia-clone{
 height:24px;
 width:24px;
+line-height: 24px;
 position: absolute;
 top:0px;
 left:1px;
@@ -800,6 +805,7 @@ background: transparent url(../../images/icon-clone.png) top center no-repeat;
 overflow: hidden;
 text-indent: 200%;
 opacity: 0;
+
 }
 
 .avia_layout_column>.menu-item-handle .avia-clone{
@@ -822,13 +828,14 @@ opacity: 0.6;
 .avia-change-col-size{
 height:24px;
 width:24px;
+line-height: 24px;
 float:left;
 display: block;
 overflow: hidden;
 text-indent: 200%;
 background: transparent url(../../images/icon-grow.png) top left no-repeat;
 position: relative;
-left:-10px;
+left:0px;
 opacity: 0;
 }
 
@@ -844,15 +851,15 @@ background-position-y: bottom;
 height:24px;
 width:24px;
 float:left;
-line-height: 28px;
+line-height: 26px;
 text-align: center;
 position: relative;
-left:-30px;
+left:-20px;
 color:#999;
 }
 
 .avia_layout_column:hover .avia-col-size{
-left:-10px;
+left:0px;
 color:#333;
 }
 
@@ -921,6 +928,9 @@ border:none;
 .avia-modal-group-element textarea{display:none;}
 
 .avia-modal-group-element .avia-move-handle{
+-webkit-transition-duration: 0s;
+-moz-transition-duration: 0s;
+transition-duration: 0s;
 cursor: move;
 position: absolute;
 height:24px;
@@ -945,6 +955,9 @@ background: #ddd;
 }
 
 .avia-modal-group-element .avia-delete{
+-webkit-transition-duration: 0s;
+-moz-transition-duration: 0s;
+transition-duration: 0s;
 opacity: 1;
 top:50%;
 right:4px;
@@ -965,7 +978,9 @@ background: #fff url(../../images/icon-add.png) top left no-repeat;
 border: 1px solid #E1E1E1;
 border-top: none;
 z-index: 10;
-
+-webkit-transition-duration: 0s;
+-moz-transition-duration: 0s;
+transition-duration: 0s;
 }
 
 .avia-add:hover, .avia-add:active{
@@ -981,6 +996,17 @@ top: 6px;
 position: relative;
 }
 
+
+.avia-add.avia-custom-label {
+float: left;
+width: auto;
+text-indent: 0;
+padding-left: 25px;
+padding-right: 9px;
+line-height: 25px;
+color: #AAA;
+font-size: 11px;
+}
 
 /*elements with hidden bg, like images or buttons*/
 div .avia_sortable_element .avia_hidden_bg_box img{
@@ -1077,8 +1103,16 @@ div .avia-element-tiny_mce iframe{background: #fff;}
 
 
 /*heading*/
-.avia_sortable_element .avia-special-heading{font-size: 17px; padding: 25px 20px; line-height: 1.4em;}
+.avia_sortable_element .avia-special-heading{font-size: 25px; padding: 25px 20px; line-height: 1.4em; border-color: transparent; background-color: transparent; font-weight: 300; }
+.avia-special-heading .avia-style-blockquote.modern-quote.modern-centered, .avia-special-heading .avia-style-blockquote_modern-quote_modern-centered{text-align: center;}
+.avia-special-heading .avia-style-blockquote_classic-quote, .avia-special-heading  .avia-style-blockquote.classic-quote{text-align: center; font-family: "Georgia", serif; font-style: italic; }
+.avia_sortable_element .avia-special-heading .av-subheading{font-size: 15px; line-height: 1.4em; text-transform: none; padding:10px 0; display: none;}
+.avia_sortable_element .avia-special-heading .subheading_active-subheading_above .av-subheading-top,
+.avia_sortable_element .avia-special-heading .avia-subheading_active-subheading_above .av-subheading-top{display:block}
+.avia_sortable_element .avia-special-heading .subheading_active-subheading_below .av-subheading-bottom,
+.avia_sortable_element .avia-special-heading .avia-subheading_active-subheading_below .av-subheading-bottom{display:block}
 
+#aviaLayoutBuilder .avia-style- .av-subheading{display:none;}
 
 /*sections*/
 
@@ -1096,6 +1130,7 @@ padding:6px;
 }
 
 .avia-element-title{
+margin-left:10px;
 height: 27px;
 float: left;
 line-height: 26px;
@@ -1134,6 +1169,28 @@ font-style: italic;
 color:#aaa;
 }
 
+
+/*icon element*/
+
+.avia_icon_element .avia_icon_char{
+display: inline-block;
+width: 2em;
+line-height: 2em;
+font-size: 22px;
+border-radius: 100px;
+-moz-border-radius: 100px;
+-webkit-border-radius: 100px;
+text-align: center;
+}
+
+.avia_icon_element .avia-style-border .avia_icon_char{
+border: 2px solid #e1e1e1;
+}
+
+.avia_icon_element .avia-position-right{ text-align: right;}
+.avia_icon_element .avia-position-center{text-align: center;}
+.avia_icon_element .av_icon_caption{display: none;}
+.avia_icon_element .avia-style-border .av_icon_caption{display: block;}
 
 /*iconbox element*/
 

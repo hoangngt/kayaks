@@ -245,6 +245,7 @@ if(defined('ICL_SITEPRESS_VERSION') && defined('ICL_LANGUAGE_CODE'))
 	{
 		function avia_wpml_language_switch()
 		{
+			global $sitepress;
 			$languages = icl_get_languages('skip_missing=0&orderby=custom');
 			$output = "";
 
@@ -256,6 +257,8 @@ if(defined('ICL_SITEPRESS_VERSION') && defined('ICL_LANGUAGE_CODE'))
 				{
 					$currentlang = (ICL_LANGUAGE_CODE == $lang['language_code']) ? 'avia_current_lang' : '';
 
+					if(is_home() || is_front_page()) $lang['url'] = $sitepress->language_url($lang['language_code']);
+					         
 					$output .= "<li class='language_".$lang['language_code']." $currentlang'><a href='".$lang['url']."'>";
 					$output .= "	<span class='language_flag'><img title='".$lang['native_name']."' src='".$lang['country_flag_url']."' /></span>";
 					$output .= "	<span class='language_native'>".$lang['native_name']."</span>";
@@ -463,7 +466,49 @@ if(defined('ICL_SITEPRESS_VERSION') && defined('ICL_LANGUAGE_CODE'))
                 return $prepare_sql;
             }
         }
+        
+        
+        
+        if(!function_exists('avia_change_wpml_home_link'))
+	{
+		add_filter('WPML_filter_link','avia_change_wpml_home_link', 10, 2);
+		function avia_change_wpml_home_link($url, $lang)
+		{
+		    global $sitepress;
+		    if(is_home() || is_front_page()) $url = $sitepress->language_url($lang['language_code']);
+		    return $url;
+		}
+	}
 
+
+	if(!function_exists('avia_wpml_slideshow_slide_id_check'))
+	{
+		add_filter( 'avf_avia_builder_slideshow_filter', 'avia_wpml_slideshow_slide_id_check', 10, 1);
+		function avia_wpml_slideshow_slide_id_check($slideshow_data)
+		{
+		    $id_array = $slideshow_data['id_array'];
+		    $slides = $slideshow_data['slides'];
+		
+		    if(empty($id_array) || empty($slides)) return $slideshow_data;
+		
+		    foreach($id_array as $key => $id)
+		    {
+		        if(!isset($slides[$id]))
+		        {
+		            $id_of_translated_attachment = icl_object_id($id, "attachment", true);
+		
+		            if($id_of_translated_attachment && isset($slides[$id_of_translated_attachment]))
+		            {
+		                $slides[$id] = $slides[$id_of_translated_attachment];
+		                unset($slides[$id_of_translated_attachment]);
+		            }
+		        }
+		    }
+		
+		    $slideshow_data['slides'] = $slides;
+		    return $slideshow_data;
+		}
+	}
 
 
 

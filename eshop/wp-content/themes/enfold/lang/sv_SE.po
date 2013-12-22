@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Enfold v1.3.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-06-24 16:02+0100\n"
-"PO-Revision-Date: 2013-08-20 23:15+0100\n"
-"Last-Translator: Björn Sennbrink <konsult@sennbrink.se>\n"
+"PO-Revision-Date: 2013-10-21 15:42-0800\n"
+"Last-Translator: Fredrik Ahnell <fredrik@webzoot.se>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
@@ -306,7 +306,7 @@ msgstr ""
 #: config-layerslider/LayerSlider/edit.php:75
 #: config-layerslider/LayerSlider/edit.php:1057
 msgid "top"
-msgstr ""
+msgstr "topp"
 
 # @ LayerSlider
 #: config-layerslider/LayerSlider/add.php:68
@@ -314,7 +314,7 @@ msgstr ""
 #: config-layerslider/LayerSlider/edit.php:76
 #: config-layerslider/LayerSlider/edit.php:1058
 msgid "right"
-msgstr ""
+msgstr "höger"
 
 # @ LayerSlider
 #: config-layerslider/LayerSlider/add.php:69
@@ -322,7 +322,7 @@ msgstr ""
 #: config-layerslider/LayerSlider/edit.php:77
 #: config-layerslider/LayerSlider/edit.php:1059
 msgid "bottom"
-msgstr ""
+msgstr "botten"
 
 # @ LayerSlider
 # @ avia_framework
@@ -341,7 +341,7 @@ msgstr "vänster"
 #: config-layerslider/LayerSlider/edit.php:1062
 msgid ""
 "You can select your desired slide transitions by clicking on this button."
-msgstr ""
+msgstr "Du kan välja önskad övergång genom att klicka på denna knapp."
 
 # @ LayerSlider
 #: config-layerslider/LayerSlider/add.php:74
@@ -349,7 +349,7 @@ msgstr ""
 #: config-layerslider/LayerSlider/edit.php:82
 #: config-layerslider/LayerSlider/edit.php:1064
 msgid "Time shift"
-msgstr ""
+msgstr "Tidsfördröjning"
 
 # @ LayerSlider
 #: config-layerslider/LayerSlider/add.php:75
@@ -367,7 +367,7 @@ msgstr ""
 #: config-layerslider/LayerSlider/edit.php:86
 #: config-layerslider/LayerSlider/edit.php:1068
 msgid "Slide in"
-msgstr ""
+msgstr "Slide inn"
 
 # @ LayerSlider
 #: config-layerslider/LayerSlider/add.php:79
@@ -395,7 +395,7 @@ msgstr ""
 #: config-layerslider/LayerSlider/edit.php:1334
 #: config-layerslider/LayerSlider/edit.php:1401
 msgid "Duration"
-msgstr ""
+msgstr "Varaktighet"
 
 # @ LayerSlider
 #: config-layerslider/LayerSlider/add.php:80
@@ -406,6 +406,8 @@ msgid ""
 "The duration of the slide in animation. This value is in millisecs, so the "
 "value 1000 means 1 second."
 msgstr ""
+"Varaktigheten av slide animeringen. Värdet är i millisekunder, så 1000 "
+"betyger 1 sek."
 
 # @ LayerSlider
 #: config-layerslider/LayerSlider/add.php:81
@@ -433,7 +435,7 @@ msgstr ""
 #: config-layerslider/LayerSlider/edit.php:1336
 #: config-layerslider/LayerSlider/edit.php:1403
 msgid "Easing"
-msgstr ""
+msgstr "Easing"
 
 # @ LayerSlider
 #: config-layerslider/LayerSlider/add.php:83
@@ -449,6 +451,8 @@ msgid ""
 "movement. Please click on the link next to this select field to open easings."
 "net for more information and real-time examples."
 msgstr ""
+"Kan manipulera hur sliden rör sig. Klicka på länken bredvid för att öppna "
+"easings.net för mer information och exempel."
 
 # @ LayerSlider
 #: config-layerslider/LayerSlider/add.php:118
@@ -456,7 +460,7 @@ msgstr ""
 #: config-layerslider/LayerSlider/edit.php:126
 #: config-layerslider/LayerSlider/edit.php:1108
 msgid "Delay in"
-msgstr ""
+msgstr "Fördröj inn"
 
 # @ LayerSlider
 #: config-layerslider/LayerSlider/add.php:119
@@ -467,6 +471,8 @@ msgid ""
 "Delay before the animation start when the slide slides in. This value is in "
 "millisecs, so the value 1000 means 1 second."
 msgstr ""
+"Fördröjning innan animeringen startar att dlina inn. Värdet är i "
+"millisekunder, så 100 betyder 1 sek."
 
 # @ LayerSlider
 #: config-layerslider/LayerSlider/add.php:122
@@ -474,7 +480,7 @@ msgstr ""
 #: config-layerslider/LayerSlider/edit.php:130
 #: config-layerslider/LayerSlider/edit.php:1112
 msgid "Slide out"
-msgstr ""
+msgstr "Slide ut"
 
 # @ LayerSlider
 #: config-layerslider/LayerSlider/add.php:124
@@ -485,6 +491,8 @@ msgid ""
 "The duration of the slide out animation. This value is in millisecs, so the "
 "value 1000 means 1 second."
 msgstr ""
+"Varaktigheten av slide animeringen. Värdet är i millisekunder, så 1000 "
+"betyger 1 sek."
 
 # @ LayerSlider
 #: config-layerslider/LayerSlider/add.php:162
@@ -503,6 +511,8 @@ msgid ""
 "Delay before the animation start when the slide slides out. This value is in "
 "millisecs, so the value 1000 means 1 second."
 msgstr ""
+"Fördröjning innan animeringen startar att dlina inn. Värdet är i "
+"millisekunder, så 100 betyder 1 sek."
 
 # @ LayerSlider
 #: config-layerslider/LayerSlider/add.php:166
@@ -2934,7 +2944,7 @@ msgstr ""
 #: config-layerslider/LayerSlider/layerslider.php:1435
 #: framework/php/class-framework-widgets.php:1085
 msgid "Title:"
-msgstr ""
+msgstr "Titel:"
 
 # @ LayerSlider
 #: config-layerslider/LayerSlider/list.php:24
@@ -2985,7 +2995,7 @@ msgstr ""
 #: config-woocommerce/admin-import.php:237
 #: config-woocommerce/admin-import.php:294
 msgid "Edit"
-msgstr ""
+msgstr "Ändra:"
 
 # @ LayerSlider
 #: config-layerslider/LayerSlider/list.php:51
@@ -2997,7 +3007,7 @@ msgstr ""
 #: config-layerslider/LayerSlider/list.php:52
 #: framework/php/class-megamenu.php:587
 msgid "Remove"
-msgstr ""
+msgstr "Ta bort"
 
 # @ LayerSlider
 #: config-layerslider/LayerSlider/list.php:61
@@ -4376,9 +4386,8 @@ msgstr ""
 #: config-templatebuilder/avia-shortcodes/icon.php:50
 #: config-templatebuilder/avia-shortcodes/iconbox.php:64
 #: config-templatebuilder/avia-shortcodes/iconlist.php:65
-#, fuzzy
 msgid "Title Link?"
-msgstr "Website Link"
+msgstr "Titel länk"
 
 #: config-templatebuilder/avia-shortcodes/icon.php:51
 msgid "Where should your title link to?"
@@ -6646,17 +6655,17 @@ msgstr "Information"
 #: config-woocommerce/admin-import.php:61
 #: config-woocommerce/admin-import.php:62
 msgid "Parent"
-msgstr ""
+msgstr "Förälder"
 
 # @ woothemes
 #: config-woocommerce/admin-import.php:64
 msgid "Update"
-msgstr ""
+msgstr "Uppdatera"
 
 # @ woothemes
 #: config-woocommerce/admin-import.php:66
 msgid "New"
-msgstr ""
+msgstr "Ny"
 
 # @ woothemes
 # @ avia_framework
@@ -6669,37 +6678,37 @@ msgstr "Kategorien"
 # @ woothemes
 #: config-woocommerce/admin-import.php:117
 msgid "Product Category"
-msgstr ""
+msgstr "Produktkategori"
 
 # @ woothemes
 #: config-woocommerce/admin-import.php:118
 msgid "Search Product Categories"
-msgstr ""
+msgstr "Sök produktkategori"
 
 # @ woothemes
 #: config-woocommerce/admin-import.php:119
 msgid "All Product Categories"
-msgstr ""
+msgstr "Alla produktkategorier"
 
 # @ woothemes
 #: config-woocommerce/admin-import.php:120
 msgid "Parent Product Category"
-msgstr ""
+msgstr "Huvud produktgrupp:"
 
 # @ woothemes
 #: config-woocommerce/admin-import.php:121
 msgid "Parent Product Category:"
-msgstr ""
+msgstr "Huvudproduktgrupp:"
 
 # @ woothemes
 #: config-woocommerce/admin-import.php:122
 msgid "Edit Product Category"
-msgstr ""
+msgstr "Redigera produktgrupp"
 
 # @ woothemes
 #: config-woocommerce/admin-import.php:123
 msgid "Update Product Category"
-msgstr ""
+msgstr "Uppdatera produktgrupp"
 
 # @ woothemes
 #: config-woocommerce/admin-import.php:124
@@ -6723,7 +6732,7 @@ msgstr ""
 #: config-woocommerce/admin-import.php:139
 #: framework/php/class-framework-widgets.php:879
 msgid "Tags"
-msgstr "Schlagworte"
+msgstr "Taggar"
 
 # @ woothemes
 #: config-woocommerce/admin-import.php:140
@@ -6928,7 +6937,7 @@ msgstr ""
 #: config-woocommerce/admin-import.php:240
 #: config-woocommerce/admin-import.php:241 config-woocommerce/config.php:266
 msgid "View Order"
-msgstr "Bestellung Ansehen"
+msgstr "Visa Order"
 
 # @ woothemes
 #: config-woocommerce/admin-import.php:242
@@ -7079,7 +7088,7 @@ msgstr "Product Hover"
 # @ avia_framework
 #: config-woocommerce/config.php:181
 msgid "Select options"
-msgstr "Wähle Optionen"
+msgstr "Välj alternativ"
 
 # @ avia_framework
 #: config-woocommerce/config.php:186
@@ -7127,17 +7136,17 @@ msgstr "Sökresultat för:"
 # @ avia_framework
 #: config-woocommerce/config.php:457
 msgid "Tag"
-msgstr "Schlagwort"
+msgstr "Tagg"
 
 # @ avia_framework
 #: config-woocommerce/config.php:510
 msgid "Shop"
-msgstr "Shop"
+msgstr "Butik"
 
 # @ avia_framework
 #: config-woocommerce/config.php:752
 msgid "was added to the cart"
-msgstr "wurde zum Warenkorb hinzugefügt"
+msgstr "är tillagt i kundvagnen"
 
 # @ avia_framework
 #: config-woocommerce/config.php:939
@@ -7162,12 +7171,12 @@ msgstr "Popularitet"
 # @ avia_framework
 #: config-woocommerce/config.php:945
 msgid "Click to order products ascending"
-msgstr ""
+msgstr "Sortera produkter stigande"
 
 # @ avia_framework
 #: config-woocommerce/config.php:946
 msgid "Click to order products descending"
-msgstr "Klicken Sie um die Produkte in absteigender Reihenfolge zu sortieren"
+msgstr "Sortera produkter fallande"
 
 # @ avia_framework
 #: config-woocommerce/config.php:948
@@ -7193,7 +7202,7 @@ msgstr "Du är här:"
 # @ avia_framework
 #: framework/php/class-breadcrumb.php:121
 msgid "404 - Page not Found"
-msgstr "404 - Seite konnte nicht gefunden werden"
+msgstr "404 - Sidan kunde inte hittas"
 
 # @ avia_framework
 #: framework/php/class-breadcrumb.php:189
@@ -7244,7 +7253,7 @@ msgstr "j"
 #: framework/php/class-breadcrumb.php:417
 #, php-format
 msgid "Week %1$s"
-msgstr "Week %1$s"
+msgstr "Vecka %1$s"
 
 # @ avia_framework
 #: framework/php/class-breadcrumb.php:433
@@ -7255,12 +7264,12 @@ msgstr "Sökresultat för &quot;%1$s&quot;"
 # @ avia_framework
 #: framework/php/class-breadcrumb.php:437
 msgid "404 Not Found"
-msgstr "404 Nichts Gefunden"
+msgstr "404 Borta"
 
 # @ avia_framework
 #: framework/php/class-form-generator.php:439
 msgid "New Message"
-msgstr "Neue Nachricht"
+msgstr "Nytt Meddelande"
 
 # @ avia_framework
 #: framework/php/class-form-generator.php:487
@@ -7270,7 +7279,7 @@ msgstr "skickat med kontaktforumlär på"
 # @ avia_framework
 #: framework/php/class-form-generator.php:540
 msgid "Your Message:"
-msgstr "Ihre Nachricht:"
+msgstr "Ditt Meddelande:"
 
 # @ avia_framework
 #: framework/php/class-framework-widgets.php:600
@@ -7285,33 +7294,33 @@ msgstr "Followers"
 # @ avia_framework
 #: framework/php/class-framework-widgets.php:614
 msgid "Subscribers"
-msgstr "Abonnenten"
+msgstr "Prenumeranter"
 
 # @ avia_framework
 #: framework/php/class-framework-widgets.php:618
 msgid "Subscribe"
-msgstr "Abonnieren"
+msgstr "Prenumerera"
 
 # @ avia_framework
 #: framework/php/class-framework-widgets.php:619
 msgid "to RSS Feed"
-msgstr "den RSS Feed"
+msgstr "till RSS Feed"
 
 # @ avia_framework
 #: framework/php/class-framework-widgets.php:751
 #: framework/php/class-framework-widgets.php:753
 msgid "Advertise here"
-msgstr "Werben Sie hier"
+msgstr "Annonsera här"
 
 # @ avia_framework
 #: framework/php/class-framework-widgets.php:864
 msgid "Popular"
-msgstr "Beliebt"
+msgstr "Populär"
 
 # @ avia_framework
 #: framework/php/class-framework-widgets.php:869
 msgid "Recent"
-msgstr "Kürzlich"
+msgstr "Nyligen"
 
 # @ avia_framework
 #: framework/php/class-framework-widgets.php:1007 includes/loop-index.php:153
@@ -7456,7 +7465,7 @@ msgstr ""
 # @ avia_framework
 #: framework/php/class-sidebar-generator.php:34
 msgid "Custom Widget Area"
-msgstr "Benutzerdefinierte Widget Area"
+msgstr "Anpassat Widget Area"
 
 # @ default
 #: framework/php/class-sidebar-generator.php:64
@@ -7886,7 +7895,7 @@ msgstr "Sida %d av %d"
 # @ avia_framework
 #: framework/php/function-set-avia-frontend.php:829
 msgid "Archive for category:"
-msgstr "Archiv für die Kategorie:"
+msgstr "Arkiv för kategorier:"
 
 # @ avia_framework
 #: framework/php/function-set-avia-frontend.php:833
@@ -7896,12 +7905,12 @@ msgstr "Archiv für das Datum:"
 # @ avia_framework
 #: framework/php/function-set-avia-frontend.php:837
 msgid "Archive for month:"
-msgstr "Archiv für das Monat:"
+msgstr "Arkiv för månad:"
 
 # @ avia_framework
 #: framework/php/function-set-avia-frontend.php:841
 msgid "Archive for year:"
-msgstr "Archiv für das Jahr:"
+msgstr "Arkiv för år:"
 
 # @ avia_framework
 #: framework/php/function-set-avia-frontend.php:850
@@ -7921,32 +7930,32 @@ msgstr "För att söka på webbplatsen, ange ett giltigt nyckelord"
 # @ avia_framework
 #: framework/php/function-set-avia-frontend.php:873
 msgid "Author Archive"
-msgstr "Autorenarchiv"
+msgstr "Författararkiv"
 
 # @ avia_framework
 #: framework/php/function-set-avia-frontend.php:875
 msgid "for:"
-msgstr "für:"
+msgstr "för:"
 
 # @ avia_framework
 #: framework/php/function-set-avia-frontend.php:880
 msgid "Tag Archive for:"
-msgstr "Schlagwortarchiv für:"
+msgstr "Taggarkiv:"
 
 # @ avia_framework
 #: framework/php/function-set-avia-frontend.php:885
 msgid "Archive for:"
-msgstr "Archiv für:"
+msgstr "Arkiv för:"
 
 # @ avia_framework
 #: framework/php/function-set-avia-frontend.php:889
 msgid "Archives"
-msgstr "Archive"
+msgstr "Arkiv"
 
 # @ avia_framework
 #: framework/php/function-set-avia-frontend.php:894
 msgid "Page"
-msgstr "Seite"
+msgstr "Sida"
 
 # @ wordpress-importer
 #: framework/php/wordpress-importer/parsers.php:42
@@ -8210,28 +8219,28 @@ msgstr ""
 msgid ""
 "This post is password protected. Enter the password to view any comments."
 msgstr ""
-"Dieser Beitrag ist passwortgeschützt. Bitte geben Sie das Passwort ein, um "
-"Zugang zu diesen Beitrag zu erhalten."
+"Detta inlägg är lösenordsskyddat. Ange lösenordet för att se eventuella "
+"kommentarer."
 
 # @ avia_framework
 #: includes/comments.php:46
 msgid "replies"
-msgstr "Antworten"
+msgstr "Kommentarer"
 
 # @ avia_framework
 #: includes/comments.php:47
 msgid "reply"
-msgstr "Antwort"
+msgstr "svara"
 
 # @ avia_framework
 #: includes/comments.php:74 includes/comments.php:130
 msgid "&laquo; Older Comments"
-msgstr "&laquo; Ältere Kommentare"
+msgstr "&laquo; Äldre Kommentarer"
 
 # @ avia_framework
 #: includes/comments.php:77 includes/comments.php:133
 msgid "Newer Comments &raquo;"
-msgstr "Neuere Kommentare &raquo;"
+msgstr "Nyare Kommentarer &raquo;"
 
 # @ avia_framework
 #: includes/comments.php:109
@@ -8241,19 +8250,17 @@ msgstr "Trackbacks &amp; Pingbacks"
 # @ avia_framework
 #: includes/comments.php:167
 msgid "Leave a Reply"
-msgstr "Hinterlassen Sie einen Kommentar"
+msgstr "Lämna en kommentar"
 
 # @ avia_framework
 #: includes/comments.php:168
 msgid "Want to join the discussion? <br/>Feel free to contribute!"
-msgstr ""
-"Wollen Sie an der Diskussion teilnehmen? <br/>Wir freuen uns über ihren "
-"Beitrag!"
+msgstr "Vill du vara med i diskussionen? <br/>Lämna gärna ett ord!"
 
 # @ avia_framework
 #: includes/comments.php:178
 msgid "Comments are closed."
-msgstr "Kommentare sind deaktiviert."
+msgstr "Kommentering är stängd."
 
 # @ avia_framework
 #: includes/error404.php:3 includes/loop-archive.php:75
@@ -8261,7 +8268,7 @@ msgstr "Kommentare sind deaktiviert."
 #: includes/loop-page.php:48 includes/loop-portfolio-single.php:55
 #: includes/loop-search.php:105
 msgid "Nothing Found"
-msgstr "Es konnte leider nichts gefunden werden"
+msgstr "Hittade inga inlägg"
 
 # @ avia_framework
 #: includes/error404.php:5
@@ -8275,44 +8282,42 @@ msgstr ""
 # @ avia_framework
 #: includes/error404.php:24
 msgid "For best search results, mind the following suggestions:"
-msgstr ""
-"Um die besten Suchergebnisse zu bekommen beachten Sie bitte folgende "
-"Hinweise:"
+msgstr "För bästa resultat, ta följande i hänsyn:"
 
 # @ avia_framework
 #: includes/error404.php:26
 msgid "Always double check your spelling."
-msgstr "Überprüfen Sie die Rechtschreibung immer sorgfältig."
+msgstr "Dubbelkolla alltid stavningen"
 
 # @ avia_framework
 #: includes/error404.php:27
 msgid "Try similar keywords, for example: tablet instead of laptop."
-msgstr "Probieren Sie auch ähnliche Suchbegriffe, z.B. Notebook anstatt Laptop"
+msgstr "Prova liknande sökord."
 
 # @ avia_framework
 #: includes/error404.php:28 includes/loop-search.php:115
 msgid "Try using more than one keyword."
-msgstr "Versuchen Sie mehr als einen Suchbegriff zu verwenden."
+msgstr "Använd gärna mer än ett sökord."
 
 # @ avia_framework
 #: includes/error404.php:33 includes/loop-search.php:119
 msgid "Feel like browsing some posts instead?"
-msgstr "Wollen Sie sich lieber andere Artikel oder Seiten ansehen?"
+msgstr "Vill du hellre leta bland några inlägg?"
 
 # @ avia_framework
 #: includes/helper-post-format.php:199
 msgid "Link to:"
-msgstr "Link zu:"
+msgstr "Länk till:"
 
 # @ avia_framework
 #: includes/loop-about-author.php:8
 msgid "About"
-msgstr "Über"
+msgstr "Om"
 
 # @ avia_framework
 #: includes/loop-about-author.php:13
 msgid "This author has yet to write their bio."
-msgstr "Dieser Autor hatt noch keine Biografie hinzugefügt."
+msgstr "Författaren har inte skrivit något ännu."
 
 # @ default
 #: includes/loop-about-author.php:14
@@ -8330,24 +8335,24 @@ msgstr ""
 # @ avia_framework
 #: includes/loop-archive.php:21
 msgid "Comments<br/>Off"
-msgstr "Kommentare<br/>sind deaktiviert"
+msgstr "Kommentering<br/>Avstängt"
 
 # @ avia_framework
 #: includes/loop-archive.php:42
 msgid "Categories:"
-msgstr "Kategorien:"
+msgstr "Kategori:"
 
 # @ avia_framework
 #: includes/loop-archive.php:50 includes/loop-index.php:170
 #: includes/loop-portfolio-single.php:36
 msgid "Tags:"
-msgstr "Schlagworte:"
+msgstr "Taggar:"
 
 # @ avia_framework
 #: includes/loop-author.php:80 includes/loop-index.php:124
 #: includes/loop-search.php:51
 msgid "Comments Disabled"
-msgstr "Kommentare sind deaktiviert"
+msgstr "Kommentarer Avaktiverad"
 
 # @ avia_framework
 #: includes/loop-author.php:103 includes/loop-index.php:147
@@ -8366,125 +8371,119 @@ msgstr ""
 # @ avia_framework
 #: includes/loop-comments.php:27
 msgid "(Edit)"
-msgstr "(Bearbeiten)"
+msgstr "(Ändra)"
 
 # @ avia_framework
 #: includes/loop-comments.php:31
 #, php-format
 msgid "%1$s at %2$s"
-msgstr "%1$s um %2$s"
+msgstr "%1$s den %2$s"
 
 # @ avia_framework
 #: includes/loop-comments.php:38
 msgid "Your comment is awaiting moderation."
-msgstr "Ihr Kommentar muss noch vom Moderator freigeschaltet werden."
+msgstr "Din kommentar väntar godkännande."
 
 # @ avia_framework
 #: includes/loop-search.php:106
 msgid "Sorry, no posts matched your criteria. Please try another search"
 msgstr ""
-"Entschuldigung, aber kein Eintrag erfüllt ihre Suchkriterien. Bitte starten "
-"Sie eine neue Suche"
 
 # @ avia_framework
 #: includes/loop-search.php:111
 msgid ""
 "You might want to consider some of our suggestions to get better results:"
 msgstr ""
-"Bitte beachten Sie folgende Hinweise, um bessere Suchergebnisse zu bekommen:"
 
 # @ avia_framework
 #: includes/loop-search.php:113
 msgid "Check your spelling."
-msgstr "Überprüfen Sie die Rechtschreibung."
+msgstr ""
 
 # @ avia_framework
 #: includes/loop-search.php:114
 msgid "Try a similar keyword, for example: tablet instead of laptop."
 msgstr ""
-"Suchen Sie nach ähnliche Suchbegriffe, z.B. Notebook statt Laptop, etc."
 
 # @ avia_framework
 #: includes/related-posts.php:53
 msgid "You might also like"
-msgstr "Möglicherweise interessiert Sie:"
+msgstr ""
 
 # @ avia_framework
 #: includes/admin/register-portfolio.php:9
 msgctxt "post type general name"
 msgid "Portfolio Items"
-msgstr "Portfolio Einträge"
+msgstr ""
 
 # @ avia_framework
 #: includes/admin/register-portfolio.php:10
 msgctxt "post type singular name"
 msgid "Portfolio Entry"
-msgstr "Portfolio Eintrag"
+msgstr ""
 
 # @ avia_framework
 #: includes/admin/register-portfolio.php:11
 msgctxt "portfolio"
 msgid "Add New"
-msgstr "Hinzufügen"
+msgstr ""
 
 # @ avia_framework
 #: includes/admin/register-portfolio.php:12
 msgid "Add New Portfolio Entry"
-msgstr "Neuen Portfolio Eintrag Hinzufügen"
+msgstr ""
 
 # @ avia_framework
 #: includes/admin/register-portfolio.php:13
 msgid "Edit Portfolio Entry"
-msgstr "Portfolio Eintrag Bearbeiten"
+msgstr ""
 
 # @ avia_framework
 #: includes/admin/register-portfolio.php:14
 msgid "New Portfolio Entry"
-msgstr "Neuer Portfolio Eintrag"
+msgstr ""
 
 # @ avia_framework
 #: includes/admin/register-portfolio.php:15
 msgid "View Portfolio Entry"
-msgstr "Portfolio Eintrag Ansehen"
+msgstr ""
 
 # @ avia_framework
 #: includes/admin/register-portfolio.php:16
 msgid "Search Portfolio Entries"
-msgstr "Portfolio Einträge Durchsuchen"
+msgstr ""
 
 # @ avia_framework
 #: includes/admin/register-portfolio.php:17
 msgid "No Portfolio Entries found"
-msgstr "Es wurden keine Portfolio Einträge gefunden"
+msgstr ""
 
 # @ avia_framework
 #: includes/admin/register-portfolio.php:18
 msgid "No Portfolio Entries found in Trash"
-msgstr "Es wurden keine Portfolio Einträge im Papierkorb gefunden"
+msgstr ""
 
 # @ avia_framework
 #: includes/admin/register-widget-area.php:93
 msgid "Interesting links"
-msgstr "Interessante Links"
+msgstr ""
 
 # @ avia_framework
 #: includes/admin/register-widget-area.php:98
 msgid "Besides are some interesting links for you! Enjoy your stay :)"
 msgstr ""
-"Nebenan finden Sie ein paar interessante Links! Viel Spaß beim Betrachten "
-"dieser Webseite :)"
 
 # @ avia_framework
 #: includes/admin/register-widget-area.php:105
 msgid "Archive"
-msgstr "Archiv"
+msgstr ""
 
 # @ avia_framework
 #: includes/admin/register-widget-area.php:127
 msgid "Pages"
-msgstr "Seiten"
+msgstr ""
 
 # @ avia_framework
 #: includes/admin/register-widget-area.php:138
 msgid "Bookmarks"
-msgstr "Lesezeichen"
+msgstr ""

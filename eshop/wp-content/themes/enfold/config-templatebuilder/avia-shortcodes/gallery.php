@@ -37,7 +37,7 @@ if ( !class_exists( 'avia_sc_gallery' ) )
 			function popup_elements()
 			{
 				$this->elements = array(
-			
+
 					array(
 							"name" 	=> __("Edit Gallery",'avia_framework' ),
 							"desc" 	=> __("Create a new Gallery by selecting existing or uploading new images",'avia_framework' ),
@@ -70,6 +70,15 @@ if ( !class_exists( 'avia_sc_gallery' ) )
 							),
 
 					array(
+							"name" 	=> __("Force same size for all big preview images?", 'avia_framework' ),
+							"desc" 	=> __("Depending on the size you selected above, preview images might differ in size. Should the theme force them to display at exactly the same size?", 'avia_framework' ),
+							"id" 	=> "crop_big_preview_thumbnail",
+							"type" 	=> "select",
+							"std" 	=> "yes",
+							"required" 	=> array('style','equals','big_thumb'),
+							"subtype" =>  array(__('Yes, force same size on all Big Preview images, even if they use a different aspect ratio', 'avia_framework') => 'avia-gallery-big-crop-thumb', __('No, do not force the same size', 'avia_framework') => 'avia-gallery-big-no-crop-thumb')),
+
+					array(
                         "name" 	=> __("Gallery Preview Image Size", 'avia_framework' ),
                         "desc" 	=> __("Choose image size for the small preview thumbnails", 'avia_framework' ),
                         "id" 	=> "thumb_size",
@@ -99,7 +108,7 @@ if ( !class_exists( 'avia_sc_gallery' ) )
 	                            __('No, open the images in a new browser window/tab', 'avia_framework' ) =>'aviaopeninbrowser aviablank noLightbox',
 	                            __('No, don\'t add a link to the images at all', 'avia_framework' ) =>'avianolink noLightbox')
 	                    	),
-	                    	
+
 	                    array(
 		                        "name" 	=> __("Thumbnail fade in effect", 'avia_framework' ),
 		                        "desc" 	=> __("You can set when the gallery thumbnail animation starts", 'avia_framework' ),
@@ -155,7 +164,8 @@ if ( !class_exists( 'avia_sc_gallery' ) )
 				'imagelink'     => 'lightbox',
 				'style'			=> 'thumbnails',
 				'columns'		=> 5,
-                		'lazyload'      => 'avia_lazyload'
+                'lazyload'      => 'avia_lazyload',
+                'crop_big_preview_thumbnail' => 'avia-gallery-big-crop-thumb'
 				), $atts));
 
 
@@ -184,7 +194,7 @@ if ( !class_exists( 'avia_sc_gallery' ) )
 						$class	 = $counter++ % $columns ? "class='$imagelink'" : "class='first_thumb $imagelink'";
 
 						$img  	 = wp_get_attachment_image_src($attachment->ID, $thumb_size);
-						$link	 = wp_get_attachment_image_src($attachment->ID, $lightbox_size);
+						$link	 =  apply_filters('avf_avia_builder_gallery_image_link', wp_get_attachment_image_src($attachment->ID, $lightbox_size), $attachment, $atts, $meta);
 						$prev	 = wp_get_attachment_image_src($attachment->ID, $preview_size);
 
 						$caption = trim($attachment->post_excerpt) ? wptexturize($attachment->post_excerpt) : "";
@@ -199,7 +209,7 @@ if ( !class_exists( 'avia_sc_gallery' ) )
 
 						if($style == "big_thumb" && $first)
 						{
-							$output .= "<a class='avia-gallery-big fakeLightbox $imagelink' href='".$link[0]."' data-onclick='1' title='".$description."' ><span class='avia-gallery-big-inner' $markup_url>";
+							$output .= "<a class='avia-gallery-big fakeLightbox $imagelink $crop_big_preview_thumbnail' href='".$link[0]."' data-onclick='1' title='".$description."' ><span class='avia-gallery-big-inner' $markup_url>";
 							$output .= "	<img src='".$prev[0]."' title='".$title."' alt='".$alt."' />";
 			   if($caption) $output .= "	<span class='avia-gallery-caption'>{$caption}</span>";
 							$output .= "</span></a>";
@@ -216,7 +226,7 @@ if ( !class_exists( 'avia_sc_gallery' ) )
 					$this->extra_style .= "<style type='text/css'>";
 					$this->extra_style .= "#top #wrap_all .avia-gallery-".self::$gallery." .avia-gallery-thumb a{width:{$thumb_width}%;}";
 					$this->extra_style .= "</style>";
-					
+
 					if(!empty($this->extra_style))
 					{
 						if(!empty($atts['ajax_request']))
@@ -234,8 +244,8 @@ if ( !class_exists( 'avia_sc_gallery' ) )
 
 				return $output;
 			}
-			
-			
+
+
 			function print_extra_style()
 			{
 				echo $this->extra_style;

@@ -17,7 +17,7 @@
 		$t_sub =  avia_post_meta($new, 'subtitle');
 	}
 
-	if( get_post_meta(get_the_ID(), 'header', true) != 'no') echo avia_title(array('title' => $title, 'link' => $t_link, 'subtitle' => $t_sub));
+	if( get_post_meta(get_the_ID(), 'header', true) != 'no') echo avia_title(array('heading'=>'strong', 'title' => $title, 'link' => $t_link, 'subtitle' => $t_sub));
 
 ?>
 

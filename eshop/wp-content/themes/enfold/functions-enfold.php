@@ -66,7 +66,7 @@ if(!function_exists('avia_append_search_nav'))
 	        get_search_form();
 	        $form =  htmlspecialchars(ob_get_clean()) ;
 
-	        $items .= '<li id="menu-item-search" class="noMobile menu-item menu-item-search-dropdown"><a href="?s=" data-avia-search-tooltip="'.$form.'" '.av_icon_string('search').'></a></li>';
+	        $items .= '<li id="menu-item-search" class="noMobile menu-item menu-item-search-dropdown"><a href="?s=" rel="nofollow" data-avia-search-tooltip="'.$form.'" '.av_icon_string('search').'></a></li>';
 	    }
 	    return $items;
 	}
@@ -324,24 +324,40 @@ if(!function_exists('avia_title'))
 
 if(!function_exists('avia_post_nav'))
 {
-	function avia_post_nav($same_category = false)
+	function avia_post_nav($same_category = false, $taxonomy = 'category')
 	{
+		global $wp_version;
+	        $settings = array();
+	        $settings['same_category'] = $same_category;
+	        $settings['excluded_terms'] = '';
+		$settings['wpversion'] = $wp_version;
+        
 		//dont display if a fullscreen slider is available since they overlap 
 		if((class_exists('avia_sc_layerslider') && !empty(avia_sc_layerslider::$slide_count)) || 
-			class_exists('avia_sc_slider_full') && !empty(avia_sc_slider_full::$slide_count) ) return;
-		
-		$type = get_post_type();
+			class_exists('avia_sc_slider_full') && !empty(avia_sc_slider_full::$slide_count) ) $settings['is_fullwidth'] = true;
+
+		$settings['type'] = get_post_type();
+		$settings['taxonomy'] = ($settings['type'] == 'portfolio') ? 'portfolio_entries' : $taxonomy;
+
+		if(!is_singular() || is_post_type_hierarchical($settings['type'])) $settings['is_hierarchical'] = true;
+		if($settings['type'] === 'topic' || $settings['type'] === 'reply') $settings['is_bbpress'] = true;
+
+	        $settings = apply_filters('avia_post_nav_settings', $settings);
+	        if(!empty($settings['is_bbpress']) || !empty($settings['is_hierarchical']) || !empty($settings['is_fullwidth'])) return;
 	
-		if(!is_singular() || is_post_type_hierarchical($type)) return;
-		if($type === 'topic' || $type === 'reply') return;
-
-	    global $avia_config;
-
-	    $same_category   = apply_filters('avia_post_nav_categories', $same_category);
-        $entries['prev'] = get_previous_post($same_category);
-        $entries['next'] = get_next_post($same_category);
-		$entries = apply_filters('avia_post_nav_entries', $entries, $same_category);
-        $output = "";
+	        if(version_compare($settings['wpversion'], '3.8', '>=' ))
+	        {
+	            $entries['prev'] = get_previous_post($settings['same_category'], $settings['excluded_terms'], $settings['taxonomy']);
+	            $entries['next'] = get_next_post($settings['same_category'], $settings['excluded_terms'], $settings['taxonomy']);
+	        }
+	        else
+	        {
+	            $entries['prev'] = get_previous_post($settings['same_category']);
+	            $entries['next'] = get_next_post($settings['same_category']);
+	        }
+	        
+		$entries = apply_filters('avia_post_nav_entries', $entries, $settings);
+        	$output = "";
 
 
 		foreach ($entries as $key => $entry)
@@ -429,8 +445,20 @@ if(!function_exists('avia_ampersand'))
 
 	function avia_ampersand($content)
 	{
+		//ampersands
 		$content = str_replace(" &amp; "," <span class='special_amp'>&amp;</span> ",$content);
 		$content = str_replace(" &#038; "," <span class='special_amp'>&amp;</span> ",$content);
+	
+		
+		// quotes
+		$content = str_replace("“","<span class='special_amp'>“</span>",$content); // left double quotation mark “
+		$content = str_replace("”","<span class='special_amp'>”</span>",$content); // right double quotation mark ”
+		$content = str_replace("„","<span class='special_amp'>„</span>",$content); // double low-9 quotation mark „
+		
+		
+		$content = str_replace("&#8220;","<span class='special_amp'>&#8220;</span>",$content); // left double quotation mark “
+		$content = str_replace("&#8221;","<span class='special_amp'>&#8221;</span>",$content); // right double quotation mark ”
+		$content = str_replace("&#8222;","<span class='special_amp'>&#8222;</span>",$content); // double low-9 quotation mark „
 
 		return $content;
 	}
@@ -801,4 +829,3 @@ if(!function_exists('avia_generate_stylesheet'))
 	    }
 	}
 }
-

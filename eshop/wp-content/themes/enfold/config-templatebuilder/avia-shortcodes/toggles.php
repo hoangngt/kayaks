@@ -177,7 +177,7 @@ if ( !class_exists( 'avia_sc_toggle' ) )
             avia_sc_toggle::$tags 	 = array();
 
             $content  = ShortcodeHelper::avia_remove_autop($content, true);
-            $sortlist = !empty($sort) ? $this->sort_list() : "";
+            $sortlist = !empty($sort) ? $this->sort_list($atts) : "";
 
             $output .= $sortlist.$content.'</div>';
 
@@ -238,7 +238,7 @@ if ( !class_exists( 'avia_sc_toggle' ) )
 
                 foreach($tags as $tag)
                 {
-                    $tag = trim($tag);
+                    $tag = esc_html(trim($tag));
                     if(!empty($tag))
                     {
                         $tag_string .= "{".$tag."} ";
@@ -253,13 +253,12 @@ if ( !class_exists( 'avia_sc_toggle' ) )
 
 
 
-        function sort_list()
+        function sort_list($toggle_atts)
         {
             $output = "";
             $first = "activeFilter";
             if(!empty(avia_sc_toggle::$tags))
             {
-
                 ksort(avia_sc_toggle::$tags);
                 $first_item_text = apply_filters('avf_toggle_sort_first_label', __('All','avia_framework'), $toggle_atts);
                 $start = array($first_item_text => true);
@@ -267,7 +266,7 @@ if ( !class_exists( 'avia_sc_toggle' ) )
 
                 foreach(avia_sc_toggle::$tags as $key => $value)
                 {
-                    $output .= "<a href='#' data-tag='{{$key}}' class='{$first}'>{$key}</a>";
+                    $output .= '<a href="#" data-tag="{'.$key.'}" class="'.$first.'">'.$key.'</a>';
                     $output .= "<span class='tag-seperator'>/</span>";
                     $first = "";
                 }

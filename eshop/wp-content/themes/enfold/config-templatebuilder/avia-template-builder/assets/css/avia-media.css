@@ -152,6 +152,9 @@ top:0;
 }
 
 .avia-delete-image {
+-webkit-transition-duration: 0s;
+-moz-transition-duration: 0s;
+transition-duration: 0s;
 height: 24px;
 display: block;
 width: 24px;

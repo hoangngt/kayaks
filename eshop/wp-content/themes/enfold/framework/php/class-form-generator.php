@@ -101,7 +101,6 @@ if( ! class_exists( 'avia_form' ) )
 
 			$this->output  = '<form action="'.$params['action'].'" method="post" class="'.$form_class.' '.$extraClass.'" data-avia-form-id="'.$this->formID.'"><fieldset>';
 			$this->output .=  $params['heading'];
-			$this->output .=  $params['description'];
 
 			$this->length = apply_filters('avf_form_el_name_length', 30, $this->formID, $this->form_params);
 			$this->length = (int)$this->length;
@@ -140,7 +139,7 @@ if( ! class_exists( 'avia_form' ) )
 			{
 				if(isset($element['type']) && method_exists($this, $element['type']))
 				{
-					$element_id = avia_backend_safe_string('avia_'.$key);
+					$element_id = avia_backend_safe_string('avia_'.$key, '_', true);
 					if($element_id == "avia_")
 					{
 						$iterations ++;
@@ -622,7 +621,7 @@ if( ! class_exists( 'avia_form' ) )
 
 			foreach($this->form_elements as $key => $element)
 			{
-				$key = avia_backend_safe_string($key);
+				$key = avia_backend_safe_string($key, '_', true);
 
 				if(empty($key))
 				{
@@ -641,7 +640,7 @@ if( ! class_exists( 'avia_form' ) )
 					{
 						if($element['type'] == 'textarea') $message .= "<br/>";
 						$field_value = apply_filters("avf_form_mail_field_values", nl2br(urldecode($new_post[$key])), $new_post, $this->form_elements, $this->form_params);
-						$message .= $element['label'].": ".$field_value."<br/>";
+						$message .= $element['label'].": ".$field_value." <br/>";
 						if($element['type'] == 'textarea') $message .= "<br/>";
 					}
 				}

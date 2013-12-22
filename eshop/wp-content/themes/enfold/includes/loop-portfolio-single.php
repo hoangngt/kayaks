@@ -28,10 +28,15 @@ if (have_posts()) :
 				echo '</div>';
 
                 echo '<footer class="entry-footer">';
-				wp_link_pages(array('before' =>'<div class="pagination_split_post">',
-				    					'after'  =>'</div>',
-				    					'pagelink' => '<span>%</span>'
-				    					));
+			
+				$avia_wp_link_pages_args = apply_filters('avf_wp_link_pages_args', array(
+																						'before' =>'<nav class="pagination_split_post">'.__('Pages:','avia_framework'),
+																	                    'after'  =>'</nav>',
+																	                    'pagelink' => '<span>%</span>',
+																	                    'separator'        => ' ',
+																	                    ));
+
+				wp_link_pages($avia_wp_link_pages_args);
 
 				if(has_tag() && is_single())
 				{

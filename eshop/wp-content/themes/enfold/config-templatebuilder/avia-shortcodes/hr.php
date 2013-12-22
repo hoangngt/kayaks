@@ -26,6 +26,7 @@ if ( !class_exists( 'avia_sc_hr' ) )
 				$this->config['shortcode'] 	= 'av_hr';
 				$this->config['modal_data'] = array('modal_class' => 'flexscreen');
 				$this->config['tooltip'] 	= __('Creates a delimiter/whitespace to separate elements', 'avia_framework' );
+				$this->config['tinyMCE']    = array('tiny_always'=>true);
 			}
 			
 			

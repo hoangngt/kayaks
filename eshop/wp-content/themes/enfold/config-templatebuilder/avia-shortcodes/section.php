@@ -170,7 +170,23 @@ if ( !class_exists( 'avia_sc_section' ) )
 						"subtype" => array(__('Scroll','avia_framework' )=>'scroll',__('Fixed','avia_framework' ) =>'fixed')
 						),
 
-
+				
+					
+					array(
+						"name" 	=> __("Section Minimum Height",'avia_framework' ),
+						"id" 	=> "min_height",
+						"desc"  => __("Define a minimum height for the section. Content within the section will be centered vertically within the section",'avia_framework' ),
+						"type" 	=> "select",
+						"std" 	=> "",
+						"subtype" => array(   __('No minimum height, use content within section to define Section height','avia_framework' )	=>'',
+						                      __('At least 100% of Browser Window height','avia_framework' )=>'100',
+						                      __('At least 75% of Browser Window height','avia_framework' )	=>'75',
+											  __('At least 50% of Browser Window height','avia_framework' )	=>'50',
+											  __('At least 25% of Browser Window height','avia_framework' )	=>'25',
+						                  )
+				    ),
+					
+				
 				    array(
 						"name" 	=> __("Section Padding",'avia_framework' ),
 						"id" 	=> "padding",
@@ -217,7 +233,7 @@ if ( !class_exists( 'avia_sc_section' ) )
 			function shortcode_handler($atts, $content = "", $shortcodename = "", $meta = "")
 			{
 				avia_sc_section::$section_count++;
-			    extract(shortcode_atts(array('src' => '', 'position' => 'top left', 'repeat' => 'no-repeat', 'attach' => 'scroll', 'color' => 'main_color', 'custom_bg' => '', 'padding'=>'default' , 'shadow'=>'shadow', 'id'=>''), $atts));
+			    extract(shortcode_atts(array('src' => '', 'position' => 'top left', 'repeat' => 'no-repeat', 'attach' => 'scroll', 'color' => 'main_color', 'custom_bg' => '', 'padding'=>'default' , 'shadow'=>'shadow', 'id'=>'', 'min_height' => ''), $atts));
 
 			    $output      = "";
 			    $class       = "avia-section ".$color." avia-section-".$padding." avia-".$shadow;
@@ -251,7 +267,8 @@ if ( !class_exists( 'avia_sc_section' ) )
 			    $params['class'] = $class." ".$meta['el_class'];
 			    $params['bg']    = $background;
 			    $params['id']	 = !empty($id) ? AviaHelper::save_string($id,'-') :"av_section_".avia_sc_section::$section_count;
-
+				$params['min_height'] = $min_height;
+				
 			    if(isset($meta['index']))
 			    {
 			    	if($meta['index'] == 0) 
@@ -296,7 +313,7 @@ function avia_new_section($params = array())
 {
 	global $avia_section_markup;
 
-    $defaults = array('class'=>'main_color', 'bg'=>'', 'close'=>true, 'open'=>true, 'open_structure' => true, 'open_color_wrap' => true, 'data'=>'', "style"=>'', 'id' => "", 'main_container' => false);
+    $defaults = array('class'=>'main_color', 'bg'=>'', 'close'=>true, 'open'=>true, 'open_structure' => true, 'open_color_wrap' => true, 'data'=>'', "style"=>'', 'id' => "", 'main_container' => false, 'min_height' => '');
     
     $defaults = array_merge($defaults, $params);
     extract($defaults);
@@ -318,6 +335,8 @@ function avia_new_section($params = array())
 
         if($open_color_wrap)
         {
+        	if(!empty($min_height)) $class .= " av-minimum-height av-minimum-height-".$min_height;
+        
         	$output .= "<div {$id} class='{$class} container_wrap ".avia_layout_class( 'main' , false )."' {$bg} {$data} {$style}>";
         	$output .= apply_filters('avf_section_container_add','',$defaults);
         }

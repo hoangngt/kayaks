@@ -126,8 +126,8 @@ cursor:pointer;
 .avia-style .wp-picker-input-wrap input{display:inline-block !important; width: 69px; padding: 6px 4px 6px 4px;}
 .avia-style .wp-color-result{top: 0px; display:block; white-space: nowrap; overflow: hidden; float:left; height:27px; min-width: 79px;}
 .avia-style .wp-color-result:after{line-height:27px; }
-.avia-style .wp-picker-input-wrap .button{ line-height:29px; height:29px; margin-left: 0px; padding:0;}
-.avia-style .wp-picker-input-wrap .colorpicker{margin-right:6px;}
+.avia-style .wp-picker-input-wrap .button{ line-height:29px; height:29px; margin-left: 5px; padding:0;}
+.avia-style .wp-picker-input-wrap .colorpicker{margin-right:6px; position: relative; }
 
 .avia-style .iris-picker, .avia-style .wp-color-result, .avia-style .wp-color-result:after, .avia-style .wp-picker-input-wrap .button{
 border-color: #e1e1e1; color: #444; border-radius: 0; -moz-border-radius: 0; -webkit-border-radius:0;
@@ -260,6 +260,9 @@ bottom: 50px;
 
 
 .avia-modal-close{
+-webkit-transition-duration: 0s;
+-moz-transition-duration: 0s;
+transition-duration: 0s;
 height:24px;
 width:24px;
 position: absolute;

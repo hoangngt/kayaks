@@ -2,7 +2,7 @@
 ##################################################################
 # helper functions to show filter menus
 ##################################################################
-
+remove_action( 'woocommerce_before_shop_loop', 'avia_woocommerce_frontend_search_params', 20);
 if(!function_exists('hoang_show_filter_options'))
 {
 	add_action( 'woocommerce_before_shop_loop', 'hoang_show_filter_options', 20);
@@ -273,6 +273,9 @@ function hoang_show_enfold_product_images() {
 function header_slider() {
 	layerslider(4);
 }
+##################################################################
+# helper functions for Homepage
+##################################################################
 
 // create a shortcode to show all Subcategories of Kayak-Cat
 add_shortcode("hoang_woo_sub_cat", "hoang_woo_sub_cat");
@@ -455,10 +458,7 @@ function hoang_pagination($pages = '', $wrapper = 'div')
 		}
 
 		$method = "get_pagenum_link";
-		if(is_single())
-		{
-			$method = "avia_post_pagination_link";
-		}
+	
 
 
 

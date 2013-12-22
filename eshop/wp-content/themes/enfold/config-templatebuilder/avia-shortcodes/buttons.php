@@ -20,7 +20,7 @@ if ( !class_exists( 'avia_sc_button' ) )
 				$this->config['target']		= 'avia-target-insert';
 				$this->config['shortcode'] 	= 'av_button';
 				$this->config['tooltip'] 	= __('Creates a colored button', 'avia_framework' );
-
+				$this->config['tinyMCE']    = array('tiny_always'=>true);
 			}
 		
 			/**

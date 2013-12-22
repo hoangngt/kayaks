@@ -31,44 +31,52 @@
                         }
                     }
 
-                    if(avia_get_option('blog_style','multi-big') == 'blog-grid')
+                    $blog_layout = apply_filters('avf_blog_style', avia_get_option('blog_style','multi-big'), 'tag');
+                    if($blog_layout == 'blog-grid')
                     {
                         $output = '';
                         $post_ids = array();
                         foreach($posts as $post) $post_ids[] = $post->ID;
 
-                        echo "<div class='entry-content-wrapper'>";
-
-                        foreach($sorted as $key => $post_type)
+                        if(!empty($post_ids))
                         {
-                            if(isset($post_type_obj[$key]->labels->name))
+                            echo "<div class='entry-content-wrapper'>";
+
+                            foreach($sorted as $key => $post_type)
                             {
-                                $label = apply_filters('avf_tag_label_names', $post_type_obj[$key]->labels->name);
-                                $output .= "<h3 class='post-title tag-page-post-type-title'>".$label."</h3>";
+                                if(isset($post_type_obj[$key]->labels->name))
+                                {
+                                    $label = apply_filters('avf_tag_label_names', $post_type_obj[$key]->labels->name);
+                                    $output .= "<h3 class='post-title tag-page-post-type-title'>".$label."</h3>";
+                                }
+                                else
+                                {
+                                    $output .= "<hr />";
+                                }
+
+
+                                $atts   = array(
+                                    'type' => 'grid',
+                                    'items' => get_option('posts_per_page'),
+                                    'columns' => 3,
+                                    'class' => 'avia-builder-el-no-sibling',
+                                    'paginate' => 'yes',
+                                    'use_main_query_pagination' => 'yes',
+                                    'custom_query' => array( 'post__in'=>$post_ids, 'post_type'=> $key )
+                                );
+
+                                $blog = new avia_post_slider($atts);
+                                $blog->query_entries();
+                                $output .= $blog->html();
                             }
-                            else
-                            {
-                                $output .= "<hr />";
-                            }
 
-
-                            $atts   = array(
-                                'type' => 'grid',
-                                'items' => get_option('posts_per_page'),
-                                'columns' => 3,
-                                'class' => 'avia-builder-el-no-sibling',
-                                'paginate' => 'yes',
-                                'use_main_query_pagination' => 'yes',
-                                'custom_query' => array( 'post__in'=>$post_ids, 'post_type'=> $key )
-                            );
-
-                            $blog = new avia_post_slider($atts);
-                            $blog->query_entries();
-                            $output .= $blog->html();
+                            echo $output;
+                            echo '</div>';
                         }
-
-                        echo $output;
-                        echo '</div>';
+                        else
+                        {
+                            get_template_part( 'includes/loop', 'index' );
+                        }
                     }
                     else
                     {

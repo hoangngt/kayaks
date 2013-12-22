@@ -442,6 +442,8 @@ if(!function_exists('avia_logo'))
 			if($use_image) $logo = "<img src='{$use_image}' alt='{$alt}' title='{$logo}'/>";
 			$logo = "<$headline_type class='logo bg-logo'><a href='".$link."'>".$logo."$sub</a></$headline_type>";
 		}
+		
+		$logo = apply_filters('avf_logo_final_output', $logo, $use_image, $headline_type, $sub, $alt, $link);
 
 		return $logo;
 	}
@@ -1104,7 +1106,7 @@ if(!function_exists('avia_favicon'))
 {
 	function avia_favicon($url = "")
 	{
-		$icon_link = "";
+		$icon_link = $type = "";
 		if($url)
 		{
 			$type = "image/x-icon";
@@ -1113,6 +1115,8 @@ if(!function_exists('avia_favicon'))
 
 			$icon_link = '<link rel="icon" href="'.$url.'" type="'.$type.'">';
 		}
+		
+        	$icon_link = apply_filters('avf_favicon_final_output', $icon_link, $url, $type);
 
 		return $icon_link;
 	}

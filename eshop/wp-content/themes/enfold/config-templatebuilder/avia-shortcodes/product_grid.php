@@ -138,7 +138,9 @@ if ( !class_exists( 'avia_sc_productgrid' ) )
 			$atts['class'] = $meta['el_class'];
 			$atts['autoplay'] = "no";
 			$atts['type'] = "grid";
-
+			
+			//fix for seo plugins which execute the do_shortcode() function before the WooCommerce plugin is loaded
+			if(!class_exists('WC_Query')) return;
 
 			$slider = new avia_product_slider($atts);
 			$slider->query_entries();

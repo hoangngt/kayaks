@@ -15,12 +15,15 @@ if ( !class_exists( 'av_font_icon' ) )
          */
         function shortcode_insert_button()
         {
-            $this->config['name']       = 'Font Icon';
-            $this->config['order']      = 100;
+            $this->config['name']       = __('Icon', 'avia_framework' );
+			$this->config['tab']		= __('Content Elements', 'avia_framework' );
+			$this->config['icon']		= AviaBuilder::$path['imagesURL']."sc-icon.png";
+            $this->config['order']      = 90;
             $this->config['shortcode']  = 'av_font_icon';
-            $this->config['inline']     = true;
-            $this->config['html_renderer']  = false;
-            $this->config['tinyMCE']    = array('tiny_only'=>true, 'templateInsert'=>'[av_font_icon color="{{color}}" font="{{font}}" icon="{{icon}}" size="{{size}}" position="{{position}}" link="{{link}}" linktarget="{{linktarget}}"]');
+            $this->config['tooltip'] 	    = __('Display an icon with optional hover effect', 'avia_framework' );
+			$this->config['target']		= 'avia-target-insert';
+            //$this->config['inline']   = true;
+            $this->config['tinyMCE']    = array('tiny_always'=>true);
         }
 
         /**
@@ -42,6 +45,30 @@ if ( !class_exists( 'av_font_icon' ) )
                     "type"  => "iconfont",
                     "std"   => ""),
 
+				 array(
+                    "name"  => __("Icon Style", 'avia_framework' ),
+                    "desc"  => __("Here you can set the  style of the icon. Either display it inline as part of some text or let it stand alone with border and optional caption", 'avia_framework' ),
+                    "id"    => "style",
+                    "type" 	=> "select",
+					"std" 	=> "left",
+					
+					"subtype" => array(
+						__('Default inline style',   'avia_framework' ) =>'',
+						__('Standalone Icon with border and optional caption',  'avia_framework' ) =>'border',
+					)),	
+
+				
+				 array(
+                    "name"  => __("Icon Caption", 'avia_framework' ),
+                    "desc"  => __("A small caption bellow the icon", 'avia_framework' ),
+                    "id"    => "caption",
+                    "type" 	=> "input",
+					"std" 	=> "",
+					"required" 	=> array('style', 'not', ''),
+
+					),	
+				
+				
 
                 array(
                     "name" 	=> __("Title Link?", 'avia_framework' ),
@@ -94,8 +121,59 @@ if ( !class_exists( 'av_font_icon' ) )
 						__('Align Right',   'avia_framework' ) =>'right',
 					)),	
 					
+					
+				array(
+						"name" 	=> __("Optional Tooltip",'avia_framework' ),
+						"desc" 	=> __("Add a tooltip for this Icon. The tooltip will appear on mouse over",'avia_framework' ),
+						"id" 	=> "content",
+						"type" 	=> "textarea",
+						"std" 	=> __("", "avia_framework" )),
+					
 				);
         }
+        
+        /**
+			 * Editor Element - this function defines the visual appearance of an element on the AviaBuilder Canvas
+			 * Most common usage is to define some markup in the $params['innerHtml'] which is then inserted into the drag and drop container
+			 * Less often used: $params['data'] to add data attributes, $params['class'] to modify the className
+			 *
+			 *
+			 * @param array $params this array holds the default values for $content and $args.
+			 * @return $params the return array usually holds an innerHtml key that holds item specific markup.
+			 */
+			function editor_element($params)
+			{
+				extract(av_backend_icon($params)); // creates $font and $display_char if the icon was passed as param "icon" and the font as "font" 
+				extract(shortcode_atts(array(
+                'color'    => '',
+                'size'     => '',
+                'style'     => '',
+                'caption'	=> '',
+                'use_link' => 'no',
+                'position' => 'left',
+                'link' =>'',
+                'linktarget' => 'no',
+            	), $params['args']));
+				
+			
+				$inner  = "<div class='avia_icon_element avia_textblock avia_textblock_style'>";
+				$inner .= "		<div ".$this->class_by_arguments('position' ,$params['args']).">";
+				$inner .= "		<div ".$this->class_by_arguments('style' ,$params['args']).">";
+				$inner .= "			<span ".$this->class_by_arguments('font' ,$font).">";
+				$inner .= "				<span data-update_with='icon_fakeArg' class='avia_icon_char'>".$display_char."</span>";
+				$inner .= "			</span>";
+				$inner .= "			<div class='avia_icon_content_wrap'>";
+				$inner .= "				<h4  class='av_icon_caption' data-update_with='caption'>".html_entity_decode($caption)."</h4>";
+				$inner .= "			</div>";
+				$inner .= "		</div>";
+				$inner .= "		</div>";
+				$inner .= "</div>";
+
+				$params['innerHtml'] = $inner;
+				$params['class'] = "";
+
+				return $params;
+			}
 
 
         /**
@@ -124,6 +202,8 @@ if ( !class_exists( 'av_font_icon' ) )
                 'font'     => '',
                 'color'    => '',
                 'size'     => '',
+                'style'     => '',
+                'caption'	=> '',
                 'use_link' => 'no',
                 'position' => 'left',
                 'link' =>'',
@@ -131,30 +211,41 @@ if ( !class_exists( 'av_font_icon' ) )
                 'font' => ''
             ), $atts));
 
-            $display_char = av_icon($icon, $font);
+            $char = av_icon($icon, $font);
 
-            $color = !empty($color) ? "color:{$color};" : '';
-
+            $color = !empty($color) ? "color:{$color}; border-color:{$color};" : '';
+			
+			if(empty($color)) $custom_class .= " av-no-color";
+			
             if(!empty($size) && is_numeric($size)) $size .= 'px';
-            $size = !empty($size) ? "font-size:{$size};line-height:{$size};" : '';
-
+            $size_string = !empty($size) ? "font-size:{$size};line-height:{$size};" : '';
+			
+			if(!empty($style))
+			{
+				$size_string   .= "width:{$size};";
+				if(!empty($caption)) $caption = "<span class='av_icon_caption av-special-font'>{$caption}</span>";
+			}
+			else
+			{
+				$caption = "";
+			}
+			
+			
             $blank = (strpos($linktarget, '_blank') !== false || $linktarget == 'yes') ? ' target="_blank" ' : "";
             $blank .= strpos($linktarget, 'nofollow') !== false ? ' rel="nofollow" ' : "";
+           
             $link = aviaHelper::get_url($link);
-            if(!empty($link))
-            {
-                $display_char = "<a href='$link' $blank $display_char> </a>";
-                $output  = $add_p.'<span class="'.$shortcodename.' '.$custom_class.' avia-icon-pos-'.$position.'" style="'.$color.$size.'">'.$display_char;
-            }
-            else
-            {
-            	//this is the actual shortcode
-            	$output  = $add_p.'<span class="'.$shortcodename.' '.$custom_class.' avia-icon-pos-'.$position.'" style="'.$color.$size.'" '.$display_char.'>';
-            }
+            
+            $tags = !empty($link) ? array("a href='{$link}' {$blank} ",'a') : array('span','span');
+            
+            $tooltip = empty($content) ? '' : 'data-avia-icon-tooltip="'.htmlspecialchars(do_shortcode($content)).'"';
+            
+            $display_char = "<{$tags[0]} class='av-icon-char' style='{$size_string}' {$char} {$tooltip}></{$tags[1]}>";
+            
+            $output = '<span class="'.$shortcodename.' avia_animate_when_visible av-icon-style-'.$style.' '.$custom_class.' avia-icon-pos-'.$position.' " style="'.$color.'">'.$display_char.$caption.'</span>';
 
-            $output .= '</span>';
-
-
+			
+			
             return $output;
         }
 

@@ -135,7 +135,7 @@ execute a function after change event was fired
 					}
 					else
 					{
-						insert = '<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family='+cssValue+'" /> <style type="text/css">.webfont_'+this.id+'{font-family:'+value.replace(/:(\d+)$/,"")+';}</style>';
+						insert = '<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family='+cssValue+'" /> <style type="text/css">.webfont_'+this.id+'{font-family:'+value.replace(/:(\d+)$/,"")+';}</style>';
 					}
 					
 					cssRule = $('<div class="webfont_'+this.id+'">'+insert+'</div>');

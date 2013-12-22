@@ -70,7 +70,7 @@ if(!class_exists('avia_social_media_icons'))
 			
 			$html  = "";
 			$html .= "<".$this->args['inside']." class='".$this->args['class']."_".$icon['social_icon']." social_icon_".$this->counter."'>";
-			$html .= "<a {$blank} href='".$icon['social_icon_link']."' ".av_icon_string($icon['social_icon'])."></a>";
+			$html .= "<a {$blank} href='".$icon['social_icon_link']."' ".av_icon_string($icon['social_icon'])." title='".ucfirst($icon['social_icon'])."'></a>";
 			$html .= "</".$this->args['inside'].">";
 
 			return $html;

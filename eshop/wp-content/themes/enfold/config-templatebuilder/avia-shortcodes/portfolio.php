@@ -151,6 +151,20 @@ if ( !class_exists( 'avia_sc_portfolio' ) )
 								__('no',  'avia_framework' ) =>'no')),
 
 				);
+				
+				
+			        if(current_theme_supports('avia_template_builder_custom_post_type_grid'))
+			        {
+			            $this->elements[0] = array(
+			                    "name" 	=> __("Which Entries?", 'avia_framework' ),
+			                    "desc" 	=> __("Select which entries should be displayed by selecting a taxonomy", 'avia_framework' ),
+			                    "id" 	=> "link",
+			                    "fetchTMPL"	=> true,
+			                    "type" 	=> "linkpicker",
+			                    "subtype"  => array( __('Display Entries from:',  'avia_framework' )=>'taxonomy'),
+			                    "multiple"	=> 6,
+			                    "std" 	=> "category");
+			        }
 
 			}
 
@@ -187,6 +201,24 @@ if ( !class_exists( 'avia_sc_portfolio' ) )
 			function shortcode_handler($atts, $content = "", $shortcodename = "", $meta = "")
 			{
 				$atts['class'] = !empty($meta['custom_class']) ? $meta['custom_class'] : "";
+				
+				if(current_theme_supports('avia_template_builder_custom_post_type_grid'))
+				{
+				    if(isset($atts['link']))
+				    {
+				        $atts['link'] = explode(',', $atts['link'], 2 );
+				        $atts['taxonomy'] = $atts['link'][0];
+				
+				        if(isset($atts['link'][1]))
+				        {
+				            $atts['categories'] = $atts['link'][1];
+				        }
+				    }
+				
+				    $post_types = get_post_types();
+				    $atts['post_type'] = $post_types;
+				}
+
 
 				$grid = new avia_post_grid($atts);
 				$grid->query_entries();
@@ -448,20 +480,21 @@ if ( !class_exists( 'avia_post_grid' ) )
 			$first_item_name = apply_filters('avf_portfolio_sort_first_label', __('All','avia_framework' ), $params);
 			$output .= apply_filters('avf_portfolio_sort_heading', "", $params);
 			$output .= "<div class='sort_by_cat {$hide} '>";
-			$output .= "<a href='#' data-filter='all_sort' class='all_sort_button active_sort'><span class='inner_sort_button'><span>".$first_item_name."</span><small class='av-cat-count'> ".count($entries)." </small></span></a>";
+			$output .= '<a href="#" data-filter="all_sort" class="all_sort_button active_sort"><span class="inner_sort_button"><span>'.$first_item_name.'</span><small class="av-cat-count"> '.count($entries).' </small></span></a>';
+
 
 			foreach($categories as $category)
 			{
-				if(in_array($category->term_id, $current_page_cats, true))
+				if(in_array($category->term_id, $current_page_cats))
 				{
 					//fix for cyrillic, etc. characters - isotope does not support the % char
 					$category->category_nicename = str_replace('%', '', $category->category_nicename);
 
 					$output .= 	"<span class='text-sep ".$category->category_nicename."_sort_sep'>/</span>";
-					$output .= 		"<a href='#' data-filter='".$category->category_nicename."_sort' class='".$category->category_nicename."_sort_button' ><span class='inner_sort_button'>";
-					$output .= 			"<span>".trim($category->cat_name)."</span>";
+					$output .= 		'<a href="#" data-filter="'.$category->category_nicename.'_sort" class="'.$category->category_nicename.'_sort_button" ><span class="inner_sort_button">';
+					$output .= 			"<span>".esc_html(trim($category->cat_name))."</span>";
 					$output .= 			"<small class='av-cat-count'> ".$cat_count[$category->term_id]." </small></span>";
-					$output .= 	"</a>";
+					$output .= 		"</a>";
 				}
 			}
 

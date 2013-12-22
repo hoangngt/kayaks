@@ -151,6 +151,7 @@
 		display:inline-block;
 		max-width: 100%;
 		height:auto;
+		width:auto;
 		image-rendering: optimizeQuality;
 	}
 
@@ -368,9 +369,9 @@ max-width:100%;
 ================================================== */
 
 /*img alignment*/
-body .alignleft,  .entry-content-wrapper a:hover .alignleft{ float:left; margin:4px 10px 0px 0;  display: block; }
-body .alignright,  .entry-content-wrapper a:hover .alignright { float:right;margin:4px 0px 0px 10px;display: block; }
-body .aligncenter,  .entry-content-wrapper a:hover .aligncenter{ clear:both; display:block; margin:10px auto; padding: 10px 0; }
+body .alignleft,  .entry-content-wrapper a:hover .alignleft{ float:left; margin:4px 10px 0px 0;  display: block; position: relative; }
+body .alignright,  .entry-content-wrapper a:hover .alignright { float:right;margin:4px 0px 0px 10px;display: block; position: relative; }
+body .aligncenter,  .entry-content-wrapper a:hover .aligncenter{ clear:both; display:block; margin:10px auto; padding: 10px 0; position: relative; }
 .alignleft img, .alignright img{ display:block; }
 
 

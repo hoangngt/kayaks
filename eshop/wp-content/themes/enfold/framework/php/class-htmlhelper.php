@@ -1043,23 +1043,39 @@ if( ! class_exists( 'avia_htmlhelper' ) )
 		}
 		
 		/**
-         * 
-         * The parent_setting_import method adds the option to import settings from your parent theme
+     *
+     * The parent_setting_import method adds the option to import settings from your parent theme
+     * @param array $element the array holds data like type, value, id, class, description which are necessary to render the whole option-section
+     * @return string $output the string returned contains the html code generated within the method
+     */
+        function parent_setting_import($element)
+        {
+
+            $output = "";
+            $nonce	 = 	wp_create_nonce ('avia_nonce_import_parent_settings');
+            $output .= '<input type="hidden" name="avia-nonce-import-parent" value="'.$nonce.'" />';
+            $output .= '<span class="avia_style_wrap"><a href="#" class="avia_button avia_import_parent_button">Import Parent Theme Settings</a></span>';
+            $output .= '<span class="avia_loading avia_import_loading_parent"></span>';
+            $output .= '<div class="avia_import_parent_wait"><strong>Import started.</strong><br/>Please wait a few seconds and dont reload the page. You will be notified as soon as the import has finished! :)</div>';
+            $output .= '<div class="avia_import_result_parent"></div>';
+            return $output;
+        }
+
+
+
+        /**
+         *
+         * The theme_settings_export method adds the option to export the theme settings
          * @param array $element the array holds data like type, value, id, class, description which are necessary to render the whole option-section
          * @return string $output the string returned contains the html code generated within the method
          */
-		function parent_setting_import($element)
-		{
-			
-			$output = "";
-			$nonce	 = 	wp_create_nonce ('avia_nonce_import_parent_settings');
-			$output .= '<input type="hidden" name="avia-nonce-import-parent" value="'.$nonce.'" />';
-			$output .= '<span class="avia_style_wrap"><a href="#" class="avia_button avia_import_parent_button">Import Parent Theme Settings</a></span>';
-			$output .= '<span class="avia_loading avia_import_loading_parent"></span>';
-			$output .= '<div class="avia_import_parent_wait"><strong>Import started.</strong><br/>Please wait a few seconds and dont reload the page. You will be notified as soon as the import has finished! :)</div>';
-			$output .= '<div class="avia_import_result_parent"></div>';
-			return $output;
-		}
+        function theme_settings_export($element)
+        {
+            $url = admin_url("admin.php?page=avia&avia_export=1&avia_generate_config_file=1");
+            $output = "";
+            $output .= '<span class="avia_style_wrap"><a href="'.$url.'" class="avia_button avia_theme_settings_export_button">'.__('Export Theme Settings','avia_framework').'</a></span>';
+            return $output;
+        }
 		
 		
 		

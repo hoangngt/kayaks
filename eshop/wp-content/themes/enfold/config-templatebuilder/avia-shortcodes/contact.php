@@ -37,7 +37,7 @@ if ( !class_exists( 'avia_sc_contact' ) )
 
 						array(
 						"name" 	=> __("Your email address", 'avia_framework' ),
-						"desc" 	=> __("Enter the Email address where mails should be delivered to.", 'avia_framework' ) ." (".__("Default:", 'avia_framework' ) ." ". get_option('admin_email')."')",
+						"desc" 	=> __("Enter the Email address where mails should be delivered to.", 'avia_framework' ) ." (".__("Default:", 'avia_framework' ) ." ". get_option('admin_email').")",
 						"id" 	=> "email",
 						'container_class' =>"avia-element-fullwidth",
 						"std" 	=> get_option('admin_email'),
@@ -135,14 +135,7 @@ if ( !class_exists( 'avia_sc_contact' ) )
 						"id" 	=> "title",
 						"std" 	=> __("Send us mail", 'avia_framework' ),
 						"type" 	=> "input"),
-						
-						array(
-						"name" 	=> __("Form Description", 'avia_framework' ),
-						"desc" 	=> __("Enter a form description that is displayed under the form title", 'avia_framework' ),
-						"id" 	=> "description",
-						"std" 	=> __("This is contact form", 'avia_framework' ),
-						"type" 	=> "input"),
-						
+
 						array(
 						"name" 	=> __("Message Sent label", 'avia_framework' ),
 						"desc" 	=> __("What should be displayed once the message is sent?", 'avia_framework' ),
@@ -217,7 +210,6 @@ if ( !class_exists( 'avia_sc_contact' ) )
 			                                 'subject'		=> '',
 			                                 'sent'			=> __("Your message has been sent!", 'avia_framework' ),
 			                                 'title'		=> __("Send us mail", 'avia_framework' ),
-											 'description'	=> __("This is a contact form", 'avia_framework'),
 			                                 ), $atts);
 				extract($atts);
 
@@ -225,7 +217,6 @@ if ( !class_exists( 'avia_sc_contact' ) )
 
 				$form_args = array(
 					"heading" 				=> $title ? "<h3>".$title."</h3>" : "",
-					"description"			=> $description ? "<p>".$description."</p>" : "",
 					"success" 				=> "<h3 class='avia-form-success'>".$sent."</h3>",
 					"submit"  				=> $button,
 					"myemail" 				=> $email,
@@ -239,7 +230,8 @@ if ( !class_exists( 'avia_sc_contact' ) )
 					"multiform"  			=> true, //allows creation of multiple forms without id collision
 					"label_first"  			=> true
 				);
-
+				
+				if(trim($form_args['myemail']) == '') $form_args['myemail'] = get_option('admin_email');
 
 				//form fields passed by the user
 				$form_fields = $this->helper_array2form_fields(ShortcodeHelper::shortcode2array($content));

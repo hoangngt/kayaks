@@ -678,7 +678,74 @@ if(!function_exists('avia_ajax_delete_dynamic_element'))
 
 
 
+/**
+ * This function imports the config file
+ */
+if(!function_exists('avia_import_config_file'))
+{
+    add_action('wp_ajax_avia_ajax_import_config_file', 'avia_import_config_file');
+    function avia_import_config_file()
+    {
+        global $avia;
 
+        //check if referer is ok
+        if(function_exists('check_ajax_referer')) { check_ajax_referer('avia_nonce_save_backend'); }
+
+        //check if capability is ok
+        $cap = apply_filters('avf_file_upload_capability', 'update_plugins');
+        if(!current_user_can($cap))
+        {
+            exit( "Using this feature is reserved for Super Admins. You unfortunately don't have the necessary permissions." );
+        }
+
+        $attachment = $_POST['values'];
+        $path 		= realpath(get_attached_file($attachment['id']));
+        $options 	= @file_get_contents($path);
+
+        if($options)
+        {
+            if(!class_exists('WP_Import'))
+            {
+                if(!defined('WP_LOAD_IMPORTERS')) define('WP_LOAD_IMPORTERS', true);
+
+                $class_wp_import = AVIA_PHP . 'wordpress-importer/wordpress-importer.php';
+                if(file_exists($class_wp_import))
+                {
+                    require_once($class_wp_import);
+                }
+            }
+
+            if(class_exists('WP_Import'))
+            {
+                $class_avia_import = AVIA_PHP . 'wordpress-importer/avia-import-class.php';
+                if(file_exists($class_avia_import))
+                {
+                    require_once($class_avia_import);
+                    $avia_import = new avia_wp_import();
+                }
+
+                $options = unserialize(base64_decode($options));
+
+                if(is_array($options))
+                {
+                    foreach($avia->option_pages as $page)
+                    {
+                        $database_option[$page['parent']] = $avia_import->extract_default_values($options[$page['parent']], $page, $avia->subpages);
+                    }
+
+                    if(!empty($database_option))
+                    {
+                        update_option($avia->option_prefix, $database_option);
+                    }
+                }
+
+                wp_delete_attachment($attachment['id'], true);
+            }
+        }
+
+        exit('avia_config_file_imported');
+    }
+}
 
 
 

@@ -94,7 +94,7 @@ if(!function_exists('avia_backend_safe_string'))
 	* @param string $string to convert
 	* @return string the converted string
 	*/
-	function avia_backend_safe_string( $string , $replace = "_")
+	function avia_backend_safe_string( $string , $replace = "_", $check_spaces = false)
 	{
 		$string = strtolower($string);
 
@@ -123,6 +123,11 @@ if(!function_exists('avia_backend_safe_string'))
 		foreach ($trans as $key => $val)
 		{
 			$string = preg_replace("#".$key."#i", $val, $string);
+		}
+		
+		if($check_spaces)
+		{
+			if(str_replace('_', '', $string) == '') return;
 		}
 
 		return stripslashes($string);

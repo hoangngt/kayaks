@@ -236,7 +236,7 @@ if ( !class_exists( 'avia_slideshow' ) )
 		protected $config;	 				//base config set on initialization
 		protected $slides;	 				//attachment posts for the current slider
 		protected $slide_count = 0;			//number of slides
-
+		protected $id_array = array();
 		function __construct($config)
 		{
 
@@ -311,9 +311,16 @@ if ( !class_exists( 'avia_slideshow' ) )
 				$new_slides[$slide->ID] = $slide;
 			}
 
-			$this->slides 		= $new_slides;
-			$this->id_array 	= explode(',',$this->config['ids']);
-			$this->slide_count 	= count($this->id_array);
+			$slideshow_data = array();
+			$slideshow_data['slides'] = $new_slides;
+			$slideshow_data['id_array'] = explode(',',$this->config['ids']);
+			$slideshow_data['slide_count'] = count($slideshow_data['id_array']);
+			
+			$slideshow_data = apply_filters('avf_avia_builder_slideshow_filter', $slideshow_data);
+			
+			$this->slides = $slideshow_data['slides'];
+			$this->id_array = $slideshow_data['id_array'];
+			$this->slide_count = $slideshow_data['slide_count'];
 		}
 
 		public function set_size($size)
@@ -407,35 +414,60 @@ if ( !class_exists( 'avia_slideshow' ) )
 
 			foreach($this->id_array as $key => $id)
 			{
-				if(isset($this->slides[$id]))
+			
+				$meta = array_merge( array( 'content'		=> $this->subslides[$key]['content'],
+											'title'			=>'',
+											'link'			=>'',
+											'link_target'	=>'',
+											'position'		=>'center center',
+											'caption_pos'	=>'capt-bottom capt-left',
+											'link_apply'	=>'',
+											'button_label'	=>'',
+											'video_cover'	=>'',
+											'slide_type'	=>'',
+											'button_color'	=>'light'
+
+
+										), $this->subslides[$key]['attr']);
+				
+				extract($meta);
+				
+				
+				if(isset($this->slides[$id]) || $slide_type == 'video')
 				{
-					$slide = $this->slides[$id];
-
-					$meta = array_merge( array( 'content'		=> $this->subslides[$key]['content'],
-												'title'			=>'',
-												'link'			=>'',
-												'link_target'	=>'',
-												'position'		=>'center center',
-												'caption_pos'	=>'capt-bottom capt-left',
-												'link_apply'	=>'',
-												'button_label'	=>'',
-												'button_color'	=>'light'
-
-
-											), $this->subslides[$key]['attr']);
-
-					extract($meta);
-
-					//fetch image and link
-					$counter ++;
-					$img  			= wp_get_attachment_image_src($slide->ID, $this->config['size']);
-					$link 			= aviaHelper::get_url($link, $slide->ID);
+					$img			= array('');
+					$slide			= "";
+					$bg_slider_style= "";
+					$attachment_id	= isset($slide->ID) ? $slide->ID : false;
+					$link			= aviaHelper::get_url($link, $attachment_id);
+					$extra_class 	= "";
+					$linkdescription= "";
+					$linkalt 		= "";
+					$this->service  = false;
+					
+					if($slide_type == 'video')
+					{
+						$video 			 = $this->set_video_slide($video); // after this call this->service will be availabel
+						$extra_class 	.= " av-video-slide ".$video_cover." av-video-service-".$this->service;
+					}
+					else //img slide
+					{
+						$slide 			 = $this->slides[$id];
+						$linktitle 		 = trim($slide->post_title) ? esc_attr($slide->post_title) : "";
+                    	$linkdescription = (trim($slide->post_content) && empty($link)) ? "title='".esc_attr($slide->post_content)."'" : "";
+                    	$linkalt 		 = get_post_meta($slide->ID, '_wp_attachment_image_alt', true);
+                    	$linkalt 		 = !empty($linkalt) ? esc_attr($linkalt) : '';
+						$img   			 = wp_get_attachment_image_src($slide->ID, $this->config['size']);
+						$video			 = "";
+					}
+					
+					
 					$blank = (strpos($link_target, '_blank') !== false || $link_target == 'yes') ? ' target="_blank" ' : "";
 					$blank .= strpos($link_target, 'nofollow') !== false ? ' rel="nofollow" ' : "";
 					$tags 			= !empty($link) ? array("a href='{$link}'{$blank}",'a') : array('div','div');
 					$caption  		= "";
 					$button_html 	= "";
-
+					$counter ++;
 
 					//if we got a CTA button apply the link to the button istead of the slide
 					if($link_apply == 'button')
@@ -481,32 +513,35 @@ if ( !class_exists( 'avia_slideshow' ) )
 					}
 
 
-                    $linkalt 		 = get_post_meta($slide->ID, '_wp_attachment_image_alt', true);
-                    $linkalt 		 = !empty($linkalt) ? esc_attr($linkalt) : '';
-                    $linktitle 		 = trim($slide->post_title) ? esc_attr($slide->post_title) : "";
-                    $linkdescription = (trim($slide->post_content) && empty($link)) ? "title='".esc_attr($slide->post_content)."'" : "";
-					$bg_slider_style = $this->config['bg_slider'] == "true" ? "style='background-position:{$position};'" : "";
-
-					if($bg_slider_style)
+                   
+                    
+					
+					if(!empty($img[0]))
 					{
-						if(empty($this->ie8_fallback))
+						$bg_slider_style = $this->config['bg_slider'] == "true" ? "style='background-position:{$position};' data-img-url='".$img[0]."'" : "";
+						
+						if($bg_slider_style )
 						{
-					    	$this->ie8_fallback .= "<!--[if lte IE 8]>";
-							$this->ie8_fallback .= "<style type='text/css'>";
+							if(empty($this->ie8_fallback))
+							{
+						    	$this->ie8_fallback .= "<!--[if lte IE 8]>";
+								$this->ie8_fallback .= "<style type='text/css'>";
+							}
+							$this->ie8_fallback .= "\n #{$this->config['css_id']} .slide-{$counter}{";
+							$this->ie8_fallback .= "\n -ms-filter: \"progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$img[0]}', sizingMethod='scale')\"; ";
+						    $this->ie8_fallback .= "\n filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$img[0]}', sizingMethod='scale'); ";
+							$this->ie8_fallback .= "\n } \n";
 						}
-						$this->ie8_fallback .= "\n #{$this->config['css_id']} .slide-{$counter}{";
-						$this->ie8_fallback .= "\n -ms-filter: \"progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$img[0]}', sizingMethod='scale')\"; ";
-					    $this->ie8_fallback .= "\n filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$img[0]}', sizingMethod='scale'); ";
-						$this->ie8_fallback .= "\n } \n";
 					}
 
 
-					$html .= "<li {$bg_slider_style} class='slide-{$counter} slide-id-".$slide->ID."' data-img-url='".$img[0]."'>";
+					$html .= "<li {$bg_slider_style} class='{$extra_class} slide-{$counter} ' >";
 					$html .= "<".$tags[0]." data-rel='slideshow-".avia_slideshow::$slider."' class='avia-slide-wrap' {$linkdescription} >{$caption}";
-					if($this->config['bg_slider'] != "true")
+					if($this->config['bg_slider'] != "true" && empty($video))
 					{
 						$html .= "<img src='".$img[0]."' title='".$linktitle."' alt='".$linkalt."' $markup_url />";
 					}
+					$html .= $video;
 					$html .= "</".$tags[1].">";
 					$html .= "</li>";
 			}
@@ -565,7 +600,7 @@ if ( !class_exists( 'avia_slideshow' ) )
 		{
 			$this->config['ids']= array();
 			$this->subslides 	= array();
-
+		
 			foreach($slide_array as $key => $slide)
 			{
 				$this->subslides[$key] = $slide;
@@ -573,8 +608,72 @@ if ( !class_exists( 'avia_slideshow' ) )
 			}
 
 			$this->config['ids'] = implode(',',$this->config['ids'] );
+			
 			unset($this->config['content']);
 		}
+		
+		protected function set_video_slide($video_url)
+		{
+			$video = "";
+			$this->service = $this->which_video_service($video_url);
+			
+			switch($this->service )
+			{
+				case "html5": $video = avia_html5_video_embed($video_url); break;
+				case "iframe":$video = $video_url; break;
+				case "youtube":
+				case "vimeo":
+					
+					$uid = 'player_'.get_the_ID().'_'.mt_rand().'_'.mt_rand();
+					$video = "<video class='avia_video' id='{$uid}'><source src='{$video_url}' type='video/{$this->service}' ></video>";
+					
+				break;
+			}
+			
+			return $video;
+			
+		}
+		
+		//get the video service based on the url string fo the video
+		protected function which_video_service($video_url)
+		{
+			$service = "";
+			
+			if(avia_backend_is_file($video_url, 'html5video'))
+			{
+				$service = "html5";
+			}
+			else if(strpos($video_url,'<iframe') !== false)
+			{
+				$service = "iframe";
+			}
+			else
+			{
+				if(strpos($video_url, 'youtube.com/watch') !== false)
+				{
+					$service = "youtube";
+				}
+				else if(strpos($video_url, 'vimeo.com') !== false)
+				{
+					$service = "vimeo";
+				}
+			}
+			
+			return $service;
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 }
 
