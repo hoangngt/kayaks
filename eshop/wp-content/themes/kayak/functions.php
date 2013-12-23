@@ -216,7 +216,7 @@ function hoang_woo_sub_cat($atts) {
 		'numbers' => '4'
     ), $atts)); 
     $catpage = get_query_var( 'page' ) ? get_query_var( 'page' ) : 1;
-    $offset = ($catpage - 1) * $columns;
+    $offset = ($catpage - 1) * $numbers;
  // get list of subcategories of $cat_id
  	$args = array(
 	  'child_of'     => $cat_id,
