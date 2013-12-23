@@ -25,7 +25,7 @@ span.woocommerce-de_price_taxrate {
 @media all and (min-width: 700px) {
 	div.summary.entry-summary h1.product_title.entry-title {
 		float: left;
-		width: 65%;
+		width: 30%;
 	}
 	div.summary.entry-summary * {
 		display: inline;
