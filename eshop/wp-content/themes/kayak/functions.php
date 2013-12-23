@@ -212,7 +212,8 @@ function hoang_woo_sub_cat($atts) {
 	$product_cat = "product_cat";
 	extract(shortcode_atts(array(  
         'cat_id' => '33',  
-        'columns' => '4'
+        'columns' => '1',
+		'numbers' => '4'
     ), $atts)); 
     $catpage = get_query_var( 'page' ) ? get_query_var( 'page' ) : 1;
     $offset = ($catpage - 1) * $columns;
@@ -222,7 +223,7 @@ function hoang_woo_sub_cat($atts) {
 	  'menu_order'   => 'ASC',
 	  'hide_empty'   => 1,
 	  'hierarchical' => 1,
-	  'number'		 => $columns,
+	  'number'		 => $numbers,
 	  'offset'		 => $offset,
 	  'pad_counts'   => 1
 	);
@@ -351,7 +352,7 @@ function hoang_woo_sub_cat($atts) {
 	  'pad_counts'   => 1
 	);
 	$count = count (get_terms($product_cat,$args));		// get total amount of subcat
-	$avia_pagination = hoang_pagination(ceil($count/$columns), 'nav');
+	$avia_pagination = hoang_pagination(ceil($count/$numbers), 'nav');
 	$output .= $avia_pagination;
 	return $output;
 }
