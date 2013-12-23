@@ -19,6 +19,9 @@ Template: enfold
 /*		##################################################################
 		# custom layout for product pages
 		##################################################################	*/
+span.woocommerce-de_price_taxrate {
+	font-size: 10px;
+}
 @media all and (min-width: 700px) {
 	div.summary.entry-summary h1.product_title.entry-title {
 		float: left;
@@ -45,7 +48,7 @@ Template: enfold
 		height: 43px;
 	}
 
-	#top .price span {
+	#top .price span.amount {
 		line-height: 1.1em;
 		font-size: 34px;
 		font-weight: 800;
