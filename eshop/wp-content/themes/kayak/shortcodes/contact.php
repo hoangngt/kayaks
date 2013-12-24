@@ -218,7 +218,7 @@
 				$post_id = function_exists('avia_get_the_id') ? avia_get_the_id() : get_the_ID();
 
 				$form_args = array(
-					"heading" 				=> $title ? "<h4>".$title."</h4><br><p>".$description."</p>" : "",
+					"heading" 				=> $title ? "<h3>".$title."</h3><p>".$description."</p>" : "",
 					"success" 				=> "<h3 class='avia-form-success'>".$sent."</h3>",
 					"submit"  				=> $button,
 					"myemail" 				=> $email,

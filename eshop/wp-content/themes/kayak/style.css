@@ -15,7 +15,33 @@ Template: enfold
 		##################################################################	*/
 /*header with social icons: */
 .social_header #header_main .container, .social_header .main_menu ul:first-child > li a { height: 61px; line-height: 61px; }
-
+/*fix bug featured image too small */
+div ul.product_list_widget li img {
+	width: 132px;
+}
+	/* Layout change for Contact form */
+	.avia_ajax_form {
+		margin-top: 10px;
+	}
+	.avia_ajax_form h3 {
+		font-size: 15px;
+	}
+	.avia_ajax_form #element_avia_email_1 {
+		width:65.5%; 
+		float:left; 
+		margin-right:1%; 
+		clear: none;
+	}
+	.avia_ajax_form fieldset p:last-child {
+		float: left;
+		width: 30%;
+		clear: none;
+	}
+	.avia_ajax_form .button {
+		margin-top: 28px;
+		padding: 14px 0;
+		width:100%;
+	}
 /*		##################################################################
 		# custom layout for product pages
 		##################################################################	*/
@@ -48,7 +74,7 @@ div.shipping_de.shipping_de_string small span {
 	}
 	/* custom Layout for German-Market-Plugin */
 	
-	div.woocommerce_de_versandkosten, span.woocommerce-de_price_taxrate {
+	div.woocommerce_de_versandkosten, span.woocommerce-de_price_taxrate, #top .price span.woocommerce-de_price_taxrate{
 		float: left;
 		font-size: 15px;
 		line-height: 3.5em;
@@ -62,15 +88,7 @@ div.shipping_de.shipping_de_string small span {
 		font-weight: 800;
 		margin-right: 5px;
 	}
-	/* Layout change for Homepage */
-	.avia_ajax_form #element_avia_email_1 {
-		width:65.5%; 
-		float:left; 
-		margin-right:1%; 
-	}
-	.avia_ajax_form fieldset p:last-child {
-		width: 30%;
-	}
+
 
 }
 /*		##################################################################
