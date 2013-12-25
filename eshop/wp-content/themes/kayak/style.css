@@ -14,7 +14,9 @@ Template: enfold
 		# custom layout for homepage
 		##################################################################	*/
 /*header with social icons: */
-.social_header #header_main .container, .social_header .main_menu ul:first-child > li a { height: 61px; line-height: 61px; }
+.social_header #header_main .container, .social_header .main_menu ul:first-child > li a { height: 61px; line-height: 61px; }	/* fix site-logo in header */
+.fixed_header.social_header #main { padding-top: 93px;}
+
 /*fix bug featured image too small */
 div ul.product_list_widget li img {
 	width: 132px;
