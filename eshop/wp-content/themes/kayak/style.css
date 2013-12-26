@@ -11,6 +11,15 @@ Template: enfold
 
 /*Add your own styles here:*/
 /*		##################################################################
+		# custom layout for My Acount Page
+		##################################################################	*/
+#customer_login div {
+	background-color: transparent;
+}
+form.register p.form-row:last-child {		/*fix register-button lie out of form-box*/
+	height: 62px;
+}
+/*		##################################################################
 		# custom layout for homepage
 		##################################################################	*/
 /*header with social icons: */
@@ -18,9 +27,25 @@ Template: enfold
 .fixed_header.social_header #main { padding-top: 93px;}
 
 /*fix bug featured image too small */
-div ul.product_list_widget li img {
-	width: 132px;
+div ul.product_list_widget li {
+	float :left;
+	display: inline;
+	width: 50%;
+	list-style: none;
+	clear: none;
 }
+div ul.product_list_widget li img {
+	float: left;
+	width: 100px;
+	border: 1px solid #e1e1e1;
+}
+div ul.product_list_widget li a {
+	color: black;
+}
+div ul.product_list_widget li a:hover {
+	color: black;
+}
+
 	/* Layout change for Contact form */
 	.avia_ajax_form {
 		margin-top: 10px;
