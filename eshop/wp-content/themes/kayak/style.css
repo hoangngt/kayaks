@@ -174,3 +174,6 @@ div.upw-content p .more-link {
 	text-align: right;
 	color: black;
 }
+div.default_av_fullwidth, div.default_av_fullwidth .inner-entry, div.default_av_fullwidth .grid-image {
+	border:0px solid white;
+}
