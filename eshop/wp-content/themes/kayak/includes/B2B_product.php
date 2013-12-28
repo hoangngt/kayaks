@@ -70,6 +70,14 @@ function is_b2b_shop() {
     if ($post->post_name=='shop-b2b') return true;
     return false;
 }
+function is_b2b_product() {
+	global $post;
+	if (function_exists('get_product')){
+		$product = get_product($post->ID);
+		if ($product->is_type('b2b_product')) return true;
+	}
+	return false;
+}
 function custom_pre_get_posts_query( $q ) {
     if ( ! $q->is_post_type_archive() ) return;
     if (is_admin()) return;

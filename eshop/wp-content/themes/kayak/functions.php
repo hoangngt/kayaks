@@ -31,6 +31,9 @@ include('includes/hoang_show_filter_options.php');
 # helper functions for product pages
 ##################################################################
 
+/* hide Lieferzeit on product pages */
+remove_filter( 'woocommerce_single_product_summary',array( 'WGM_Template', 'add_template_loop_shop' ), 11 ); 
+
 /* Add "Technische Daten - Tab" to product page */
 remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20);
 add_action( 'hoang_woo_after_single_product_summary', 'woo_add_technik_tab', 1);

@@ -76,10 +76,6 @@ div ul.product_list_widget li a:hover {
 div.summary.entry-summary div.product_meta {
 		display: none;
 }
-	/* hide Lieferzeit */
-div.shipping_de.shipping_de_string small span {
-		display:none;
-}
 @media all and (min-width: 700px) {
 	div.summary.entry-summary h1.product_title.entry-title {
 		float: left;

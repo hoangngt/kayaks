@@ -37,6 +37,10 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 			 * @hooked woocommerce_template_single_meta - 40
 			 * @hooked woocommerce_template_single_sharing - 50
 			 */
+			if (is_b2b_product()) {					// hide inkl. 19% and zzgl. Versandkosten for b2b products
+				remove_filter( 'woocommerce_single_product_summary',array( 'WGM_Template', 'woocommerce_de_price_with_tax_hint_single' ) , 7 );
+				remove_filter( 'woocommerce_single_product_summary',						array( 'WGM_Template', 'show_extra_costs_eu' ) , 11 );
+			}
 			do_action( 'woocommerce_single_product_summary' );
 		?>
 
@@ -57,6 +61,9 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 		 * @hooked woocommerce_output_product_data_tabs - 10
 		 * @hooked woocommerce_output_related_products - 20
 		 */
+		if (is_b2b_product()) {								// hide related products for b2b products
+			remove_action('hoang_woo_after_single_product_summary','woocommerce_output_related_products',20);
+		}
 		do_action( 'hoang_woo_after_single_product_summary' );
 	?>
 
