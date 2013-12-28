@@ -1,4 +1,7 @@
 <?php
+// overide MegaMenu of avia
+class avia_megamenu {}			
+
 // include all custom shortcodes (if any)
 add_filter('avia_load_shortcodes', 'avia_include_shortcode_template', 15, 1);
 function avia_include_shortcode_template($paths)
