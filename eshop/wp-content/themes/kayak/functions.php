@@ -24,7 +24,7 @@ function hoang_add_product_type( $types ){
 ##################################################################
 # helper functions to show filter menus
 ##################################################################
-add_action( 'woocommerce_before_shop_loop', 'hoang_show_filter_options', 20);
+//add_action( 'woocommerce_before_shop_loop', 'hoang_show_filter_options', 20);
 include('includes/hoang_show_filter_options.php');
 
 ##################################################################

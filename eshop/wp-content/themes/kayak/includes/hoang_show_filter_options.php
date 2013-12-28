@@ -1,5 +1,7 @@
 <?php
-function avia_woocommerce_frontend_search_params(){}		//override original function of enfold
+function avia_woocommerce_frontend_search_params(){
+	hoang_show_filter_options();
+}		//override original function of enfold
 function hoang_show_filter_options()
 	{
 		global $avia_config;
