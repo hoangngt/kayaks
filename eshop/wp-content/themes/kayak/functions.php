@@ -256,6 +256,7 @@ function hoang_woo_sub_cat($atts) {
 		case "4": $grid = 'av_one_fourth'; if($preview_mode == 'auto') $image_size = 'portfolio_small'; break;
 		case "5": $grid = 'av_one_fifth';  if($preview_mode == 'auto') $image_size = 'portfolio_small'; break;
 	}
+	$output .= "<img width='100' height='119' src='http://kayakstogo.de/eshop/wp-content/uploads/2013/12/made_usa_100.png' class='' alt='Made in USA' style='margin:0 0 20px 80px'>";
 	$output .= "<div class='grid-sort-container isotope {$style_class}-container with-excerpt-container grid-total-{$total} grid-col-{$columns} grid-links-{$linking}' data-portfolio-id='{$container_id}'>";
 	foreach ($product_categories as $cat) {
 		$the_id 	= $cat->term_id;
@@ -324,13 +325,17 @@ function hoang_woo_sub_cat($atts) {
             $output .= "<".$link_markup[0]." data-rel='grid-".avia_post_grid::$grid."' class='grid-image avia-hover-fx'>".$custom_overlay. $image."</".$link_markup[1].">";
             $output .= !empty($title) || !empty($excerpt) ? "<div class='grid-content'><div class='avia-arrow'></div>" : '';
 
-            if(!empty($title))
+            if(!empty($title) && ($title != 'Emotion Kayaks'))
+            {
+            if($title != 'Santa Cruz Kayaks')
+            {
+            if($title != 'Saturn Kayaks')
             {
                 $markup = avia_markup_helper(array('context' => 'entry_title','echo'=>false));
                 $output .= '<header class="entry-content-header">';
                 $output .= "<h3 class='grid-entry-title entry-title' $markup><a href='{$title_link}' title='".esc_attr(strip_tags($title))."'>".$title."</a></h3>";
                 $output .= '</header>';
-            }
+            }}}
             $output .= !empty($excerpt) ? "<div class='grid-entry-excerpt entry-content' ".avia_markup_helper(array('context'=>'entry_content','echo'=>false)).">".$excerpt."</div>" : '';
             $output .= !empty($title) || !empty($excerpt) ? "</div>" : '';
             $output .= '<footer class="entry-footer"></footer>';

@@ -175,5 +175,8 @@ div.upw-content p .more-link {
 	color: black;
 }
 div.default_av_fullwidth, div.default_av_fullwidth .inner-entry, div.default_av_fullwidth .grid-image {
-	border:0px solid white;
+	border:none;
+}
+.grid-entry .inner-entry {
+	box-shadow: none;
 }
