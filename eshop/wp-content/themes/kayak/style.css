@@ -73,10 +73,18 @@ div ul.product_list_widget li a:hover {
 /*		##################################################################
 		# custom layout for product pages
 		##################################################################	*/
+
 div.summary.entry-summary div.product_meta {
 		display: none;
 }
+
 @media all and (min-width: 700px) {
+	div.avia-gallery-thumb {
+		width: 60%;
+	}	
+	#top #wrap_all .avia-gallery-1 .avia-gallery-thumb a {
+		width: 30%;
+	}
 	div.summary.entry-summary h1.product_title.entry-title {
 		float: left;
 		width: 30%;
@@ -105,14 +113,46 @@ div.summary.entry-summary div.product_meta {
 		height: 38px;
 		margin-right: 5px;
 	}
-	#top .price span.amount {
+	#top .price span {
 		float: left;
 		line-height: 1.1em;
 		font-size: 34px;
 		font-weight: 800;
 		margin-right: 5px;
 	}
-
+	#top div .avia-gallery {
+		clear: none;
+		display:inline;
+	}
+	#hoang_color_variant {
+		margin: 20px 0;
+		float: right;
+		height: 82px;
+		width: 300px;
+	}
+	.hoang_variant {
+		height: 52px;
+		width: 31px;
+		display: inline;
+		float: right;
+		margin: 0px 10px;
+	}
+	.hoang_variant .hoang_variant_radio {
+		margin: 0px 9px;
+	}
+	.hoang_variant img {
+		max-height:32px; 
+		max-width:32px;
+		margin: 0px auto;
+	}
+	#top .variations_form {
+		padding: 0;
+		border: none;
+		background: transparent;
+	}
+	.single_variation_wrap {
+		margin: 0;
+	}
 
 }
 /*		##################################################################

@@ -1,7 +1,13 @@
 <?php
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
-
+add_action( 'pre_get_posts', 'custom_pre_get_posts_query' );
+add_filter( 'product_type_selector', 'hoang_add_product_type',10,2 );
+add_role("B2B Kunde", "B2B Kunde");
+function hoang_add_product_type( $types ){
+       $types[ 'b2b_product' ] = __( 'B2B Product' );
+       return $types;
+}
 /**
  * Simple Product Class
  *
@@ -71,11 +77,9 @@ function is_b2b_shop() {
     return false;
 }
 function is_b2b_product() {
-	global $post;
-	if (function_exists('get_product')){
-		$product = get_product($post->ID);
-		if ($product->is_type('b2b_product')) return true;
-	}
+	global $product;
+	if ($product->is_type('b2b_product')) return true;
+	
 	return false;
 }
 function custom_pre_get_posts_query( $q ) {

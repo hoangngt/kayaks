@@ -1,4 +1,9 @@
 <?php
+remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20);
+add_action( 'hoang_woo_after_single_product_summary', 'woo_add_technik_tab', 1);
+add_action( 'hoang_woo_after_single_product_summary',  'avia_close_div', 3);
+add_action( 'hoang_woo_after_single_product_summary', 'woocommerce_upsell_display', 15 );
+add_action( 'hoang_woo_after_single_product_summary', 'woocommerce_output_related_products', 20 );
 function woo_add_technik_tab()
 {
 	global $product;
@@ -59,7 +64,7 @@ function hoang_show_enfold_product_images() {
 	$attachment_ids = implode(',',$attachment_ids);
 	$featured_img_id = get_post_thumbnail_id($product->id);
 	$shortcode = "[av_gallery ids='".$featured_img_id.",".$attachment_ids."' style='big_thumb' preview_size='shop_single' crop_big_preview_thumbnail='avia-gallery-big-crop-thumb' thumb_size='shop_single' columns='5' imagelink='avianolink noLightbox' lazyload='avia_lazyload']";
-	echo do_shortcode($shortcode);
+	echo do_shortcode($shortcode);	
 }
 function header_slider() {
 	layerslider(4);
