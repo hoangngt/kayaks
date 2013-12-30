@@ -40,8 +40,12 @@ div ul.product_list_widget li img {
 	width: 100px;
 	border: 1px solid #e1e1e1;
 }
+div ul.product_list_widget .star-rating {
+	float: right;
+}
 div ul.product_list_widget li a {
 	color: black;
+	clear:both;
 }
 div ul.product_list_widget li a:hover {
 	color: black;
