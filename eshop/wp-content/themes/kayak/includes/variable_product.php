@@ -157,6 +157,7 @@ add_action('edit_term','hoang_attribute_thumbnail_field_save', 10, 3);
 add_action ('hoang_woo_before_single_product_summary', 'hoang_color_variable', 30);
 function hoang_color_variable() {
 	global $woocommerce, $product, $post;
+	if (!$product->is_type('variable')) return;
 	$available_variations = $product->get_available_variations();
 	$attributes   		  = $product->get_variation_attributes();
 	$selected_attributes  = $product->get_variation_default_attributes();
@@ -164,9 +165,8 @@ function hoang_color_variable() {
 	$options = $attributes[$name];
 
 	$script_link = get_stylesheet_directory_uri().'/js/add-to-cart-variation-hoang.js';
-	if ($product->is_type('variable')) { 
-		wp_enqueue_script( 'hoang-add-to-cart-variation',$script_link ); 
-	} ?>
+	wp_enqueue_script( 'hoang-add-to-cart-variation',$script_link ); 
+	?>
 
 	<div id='hoang_color_variant'>
 			<?php
