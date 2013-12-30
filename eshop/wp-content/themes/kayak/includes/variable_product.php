@@ -190,10 +190,11 @@ function hoang_color_variable() {
 					foreach ( $terms as $term ) {
 						if ( ! in_array( $term->slug, $options ) )
 							continue;
+						$checked = $selected_attributes['pa_farben']==$term->slug ? 'checked':'';
 						$thumb_id = get_woocommerce_term_meta($term->term_id,'pa_farben_hoang_photo',true);
 						$thumb_src = wp_get_attachment_image_src($thumb_id)[0];
 						echo "<div class='hoang_variant'>";
-						echo '	<input class="hoang_variant_radio"type="radio" name="hoang_color" value="'.$term->slug.'">';
+						echo '	<input '.$checked.' class="hoang_variant_radio"type="radio" name="hoang_color" value="'.$term->slug.'">';
 						echo '	<img wert="'.$term->slug.'" src="'.$thumb_src.'">';
 						echo "</div>";
 		
@@ -202,6 +203,7 @@ function hoang_color_variable() {
 			}
 						?>
 	</div>
+</div>		<!-- close div id=hoang_wrapper -->
 	<div class="images"><img src="" style="display:none"/></div>
 <?php
 }

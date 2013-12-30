@@ -54,7 +54,7 @@ if (is_b2b_product()) {					// hide inkl. 19%, zzgl. Versandkosten and Related P
 			 * woocommerce_show_product_images hook
 			 *
 			 * @hooked woocommerce_show_product_sale_flash - 10
-			 * @hooked woocommerce_show_product_images - 20
+			 * @hooked hoang_show_enfold_product_images - 20
 			 */
 			do_action( 'hoang_woo_before_single_product_summary' );
 

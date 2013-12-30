@@ -79,12 +79,7 @@ div.summary.entry-summary div.product_meta {
 }
 
 @media all and (min-width: 700px) {
-	div.avia-gallery-thumb {
-		width: 60%;
-	}	
-	#top #wrap_all .avia-gallery-1 .avia-gallery-thumb a {
-		width: 30%;
-	}
+	
 	div.summary.entry-summary h1.product_title.entry-title {
 		float: left;
 		width: 30%;
@@ -124,9 +119,17 @@ div.summary.entry-summary div.product_meta {
 		clear: none;
 		display:inline;
 	}
+	#hoang_wrapper {
+		position: relative;
+	}
+	#hoang_wrapper div.avia-gallery-thumb {
+		width: 60%;
+	}
 	#hoang_color_variant {
 		margin: 20px 0;
-		float: right;
+		position: absolute;
+		top: 370px;
+		right: 0px;
 		height: 82px;
 		width: 300px;
 	}
