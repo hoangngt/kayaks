@@ -10,6 +10,11 @@ Template: enfold
 
 
 /*Add your own styles here:*/
+
+/* hide Search Lupe in Menu header */
+#menu-item-search {
+	display: none;
+}
 /*		##################################################################
 		# custom layout for My Acount Page
 		##################################################################	*/
