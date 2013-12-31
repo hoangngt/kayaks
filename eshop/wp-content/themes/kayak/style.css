@@ -97,6 +97,17 @@ div.summary.entry-summary div.product_meta {
 		float: right;
 		margin: 0px 5px;
 }
+#top .variations_form {
+	padding: 0;
+	border: none;
+	background: transparent;
+}
+.single_variation_wrap {
+	margin: 0;
+}
+#top .variations, #top .single_variation {
+	display: none;
+}
 @media all and (min-width: 700px) {
 	
 	div.summary.entry-summary h1.product_title.entry-title {
@@ -164,14 +175,7 @@ div.summary.entry-summary div.product_meta {
 		max-width:32px;
 		margin: 0px auto;
 	}
-	#top .variations_form {
-		padding: 0;
-		border: none;
-		background: transparent;
-	}
-	.single_variation_wrap {
-		margin: 0;
-	}
+
 
 }
 /*		##################################################################

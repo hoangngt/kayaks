@@ -12,8 +12,6 @@
         
         $('.avia-gallery-thumb a').css('width','30%');
         $('#hoang_color_variant').css('top',$('.avia-gallery-big').height()+10);
-    	$('.variations').hide();
-    	$('.single_variation').hide();
     	$('#hoang_color_variant').on("change",".hoang_variant_radio", function(e) {      /* whenever Customer click on color-img, do this function */
     		e.preventDefault();
     		$var_form = $('.variations select');
