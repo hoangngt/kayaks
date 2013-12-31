@@ -81,14 +81,19 @@ div ul.product_list_widget li a:hover {
 div.summary.entry-summary div.product_meta {
 		display: none;
 }
+#hoang_wrapper {
+		position: relative;
+}
 #hoang_wrapper div.avia-gallery-thumb {
 		width: 60%;
 }
-
-.hoang_variant img {
-		max-height:16px; 
-		max-width:16px;
-		margin: 0px auto;
+#hoang_color_variant {
+	margin: 20px 0;
+	position: absolute;
+	top: 370px;
+	right: 0px;
+	height: 82px;
+	width: 35%;
 }
 .hoang_variant {
 		height: 36px;
@@ -96,6 +101,14 @@ div.summary.entry-summary div.product_meta {
 		display: inline;
 		float: right;
 		margin: 0px 5px;
+}
+.hoang_variant img {
+		max-height:16px; 
+		max-width:16px;
+		margin: 0px auto;
+}
+.hoang_variant .hoang_variant_radio {
+	margin: 0px 1.5px;
 }
 #top .variations_form {
 	padding: 0;
@@ -105,10 +118,11 @@ div.summary.entry-summary div.product_meta {
 .single_variation_wrap {
 	margin: 0;
 }
-#top .variations, #top .single_variation {
+#top .variations, #top .single_variation, p.stock {
 	display: none;
 }
-@media all and (min-width: 700px) {
+
+@media all and (min-width: 768px) {
 	
 	div.summary.entry-summary h1.product_title.entry-title {
 		float: left;
@@ -149,17 +163,7 @@ div.summary.entry-summary div.product_meta {
 		clear: none;
 		display:inline;
 	}
-	#hoang_wrapper {
-		position: relative;
-	}
-	#hoang_color_variant {
-		margin: 20px 0;
-		position: absolute;
-		top: 370px;
-		right: 0px;
-		height: 82px;
-		width: 35%;
-	}
+
 	.hoang_variant {
 		height: 52px;
 		width: 31px;
