@@ -81,7 +81,22 @@ div ul.product_list_widget li a:hover {
 div.summary.entry-summary div.product_meta {
 		display: none;
 }
+#hoang_wrapper div.avia-gallery-thumb {
+		width: 60%;
+}
 
+.hoang_variant img {
+		max-height:16px; 
+		max-width:16px;
+		margin: 0px auto;
+}
+.hoang_variant {
+		height: 36px;
+		width: 16px;
+		display: inline;
+		float: right;
+		margin: 0px 5px;
+}
 @media all and (min-width: 700px) {
 	
 	div.summary.entry-summary h1.product_title.entry-title {
@@ -126,16 +141,13 @@ div.summary.entry-summary div.product_meta {
 	#hoang_wrapper {
 		position: relative;
 	}
-	#hoang_wrapper div.avia-gallery-thumb {
-		width: 60%;
-	}
 	#hoang_color_variant {
 		margin: 20px 0;
 		position: absolute;
 		top: 370px;
 		right: 0px;
 		height: 82px;
-		width: 300px;
+		width: 35%;
 	}
 	.hoang_variant {
 		height: 52px;
