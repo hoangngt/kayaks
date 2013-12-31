@@ -1,11 +1,11 @@
 <?php
 add_shortcode("hoang_woo_sub_cat", "hoang_woo_sub_cat");
 function hoang_woo_sub_cat($atts) {
-        $product_cat = "product_cat";
-        extract(shortcode_atts(array(  
+    $product_cat = "product_cat";
+    extract(shortcode_atts(array(  
         'cat_id' => '33',  
         'columns' => '1',
-                'numbers' => '4'
+        'numbers' => '4'
     ), $atts)); 
     $catpage = get_query_var( 'page' ) ? get_query_var( 'page' ) : 1;
     $offset = ($catpage - 1) * $numbers;
