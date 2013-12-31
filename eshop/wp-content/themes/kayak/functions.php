@@ -44,3 +44,12 @@ include('includes/variable_product.php');
 // create a shortcode to show all Subcategories of Kayak-Cat
 
 include('includes/hoang_woo_sub_cat.php');
+
+##################################################################
+# helper functions for tabs rename in single product
+##################################################################
+add_filter( 'woocommerce_product_tabs', 'agentwp_woo_rename_reviews_tab', 98);
+function agentwp_woo_rename_reviews_tab($tabs) {
+$tabs['reviews']['title'] = 'Bewertungen';
+return $tabs;
+}

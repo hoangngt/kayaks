@@ -223,3 +223,18 @@ div.default_av_fullwidth, div.default_av_fullwidth .inner-entry, div.default_av_
 .grid-entry .inner-entry {
 	box-shadow: none;
 }
+
+/*		##################################################################
+		# SSM Aenderungen
+		##################################################################	*/
+div#B2BLink a:hover {
+	text-decoration: none;
+	color: black;
+	background: #fbd020;
+}
+div#B2BLink a {
+	background: #303030;
+}
+div#B2BLink {
+	margin-top:10px;
+}

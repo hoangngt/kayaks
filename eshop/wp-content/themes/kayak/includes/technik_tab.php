@@ -22,7 +22,7 @@ function woo_add_technik_tab()
 
 				<div class="panel entry-content" id="tab-technik">
 					<?php 
-					$heading = apply_filters( 'woocommerce_product_additional_information_heading', __( 'Technische Daten', 'woocommerce' ) );
+					$heading = apply_filters( 'woocommerce_product_additional_information_heading', __( '', 'woocommerce' ) );
 					echo '<h2>'.$heading.'</h2>';
 					$product->list_attributes();
 					?>

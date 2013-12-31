@@ -14,13 +14,13 @@ global $woocommerce;
 $customer_id = get_current_user_id();
 
 if ( get_option('woocommerce_ship_to_billing_address_only') == 'no' ) {
-	$page_title = apply_filters( 'woocommerce_my_account_my_address_title', __( 'My Addresses', 'woocommerce' ) );
+	$page_title = apply_filters( 'woocommerce_my_account_my_address_title', __( 'Meine Adressen', 'woocommerce' ) );
 	$get_addresses    = array(
 		'billing' => __( 'Billing Address', 'woocommerce' ),
 		'shipping' => __( 'Shipping Address', 'woocommerce' )
 	);
 } else {
-	$page_title = apply_filters( 'woocommerce_my_account_my_address_title', __( 'My Address', 'woocommerce' ) );
+	$page_title = apply_filters( 'woocommerce_my_account_my_address_title', __( 'Meine Adresse', 'woocommerce' ) );
 	$get_addresses    = array(
 		'billing' =>  __( 'Billing Address', 'woocommerce' )
 	);
@@ -61,7 +61,7 @@ $col = 1;
 				$formatted_address = $woocommerce->countries->get_formatted_address( $address );
 
 				if ( ! $formatted_address )
-					_e( 'You have not set up this type of address yet.', 'woocommerce' );
+					_e( 'Sie haben hier bisher noch keine Adresse eingegeben.', 'woocommerce' );
 				else
 					echo $formatted_address;
 			?>
