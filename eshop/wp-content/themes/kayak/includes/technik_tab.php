@@ -32,26 +32,28 @@ function woo_add_technik_tab()
 		</div>	
 	</div>
 	<div class='six units single-product-summary'>
-	<div class="woocommerce-tabs">
-		<ul class="tabs">
-			<?php foreach ( $tabs as $key => $tab ) {
-					if ($key!="additional_information") {
-			?>
+		<div class="woocommerce-tabs">
+		<?php if(is_b2b_product()) unset($tabs['reviews']);		//don't show reviews tab for b2b Products
+		?>
+			<ul class="tabs">
+				<?php foreach ( $tabs as $key => $tab ) {
+						if ($key!="additional_information") {
+				?>
 
-				<li class="<?php echo $key ?>_tab">
-					<a href="#tab-<?php echo $key ?>"><?php echo apply_filters( 'woocommerce_product_' . $key . '_tab_title', $tab['title'], $key ) ?></a>
-				</li>
+					<li class="<?php echo $key ?>_tab">
+						<a href="#tab-<?php echo $key ?>"><?php echo apply_filters( 'woocommerce_product_' . $key . '_tab_title', $tab['title'], $key ) ?></a>
+					</li>
+
+				<?php } } ?>
+			</ul>
+			<?php foreach ( $tabs as $key => $tab ) { if ($key!="additional_information") {?>
+
+				<div class="panel entry-content" id="tab-<?php echo $key ?>">
+					<?php call_user_func( $tab['callback'], $key, $tab ) ?>
+				</div>
 
 			<?php } } ?>
-		</ul>
-		<?php foreach ( $tabs as $key => $tab ) { if ($key!="additional_information") {?>
-
-			<div class="panel entry-content" id="tab-<?php echo $key ?>">
-				<?php call_user_func( $tab['callback'], $key, $tab ) ?>
-			</div>
-
-		<?php } } ?>
-	</div>
+		</div>
 <?php
 	endif;
 }
