@@ -1,5 +1,23 @@
 <?php
 // change "Add to Cart"-form for Variable Product to normal form for simple Product 
+function hoang_added_to_cart_message ($message) {
+	global $post;
+	$added_text = "Produkt wurde Ihrem Warenkorb erfolgreich hinzugefügt.";
+	// Output success messages
+	if ( get_option( 'woocommerce_cart_redirect_after_add' ) == 'yes' ) :
+
+		$return_to 	= apply_filters( 'woocommerce_continue_shopping_redirect', wp_get_referer() ? wp_get_referer() : home_url() );
+
+		$message 	= sprintf('<a href="%s" class="button">%s</a> %s', $return_to, __( 'Continue Shopping &rarr;', 'woocommerce' ), $added_text );
+
+	else :
+
+		$message 	= sprintf('<a href="%s" class="button">%s</a> %s', get_permalink( woocommerce_get_page_id( 'cart' ) ), __( 'View Cart &rarr;', 'woocommerce' ), $added_text );
+
+	endif;
+	return $message ;
+}
+add_filter ('woocommerce_add_to_cart_message', 'hoang_added_to_cart_message', 999);
 // overide MegaMenu of avia
 class avia_megamenu {}			
 
