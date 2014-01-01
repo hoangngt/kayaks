@@ -163,12 +163,20 @@ function hoang_color_variable() {
 	$selected_attributes  = $product->get_variation_default_attributes();
 	$name = "pa_farben";
 	$options = $attributes[$name];
-
+	$selected_color = get_term_by("slug",$selected_attributes[$name],$name)->name;
 	$script_link = get_stylesheet_directory_uri().'/js/add-to-cart-variation-hoang.js';
 	wp_enqueue_script( 'hoang-add-to-cart-variation',$script_link ); 
 	?>
 
 	<div id='hoang_color_variant'>
+		<div id="selected_color_text">
+			<?php if ($selected_attributes[$name]!=null) {?>
+				Ausgewählte Farbe: <span id="selected_color"><?php echo $selected_color;?></span>
+			<?php }
+			else { ?>
+				Wählen Sie bitte eine Farbe aus
+			<?php } ?>
+		</div>
 			<?php
 			if ( is_array( $options ) ) {
 			// Get terms if this is a taxonomy - ordered
@@ -193,9 +201,9 @@ function hoang_color_variable() {
 						$checked = $selected_attributes['pa_farben']==$term->slug ? 'checked':'';
 						$thumb_id = get_woocommerce_term_meta($term->term_id,'pa_farben_hoang_photo',true);
 						$thumb_src = wp_get_attachment_image_src($thumb_id)[0];
-						echo "<div class='hoang_variant'>";
-						echo '	<input '.$checked.' class="hoang_variant_radio"type="radio" name="hoang_color" value="'.$term->slug.'">';
-						echo '	<img wert="'.$term->slug.'" src="'.$thumb_src.'">';
+						echo "<div class='hoang_variant' wert='".$term->slug."' color_name='".$term->name."'>";
+						echo '	<input '.$checked.' class="hoang_variant_radio"type="radio" name="hoang_color">';
+						echo '	<img alt="'.$term->name.'" src="'.$thumb_src.'">';
 						echo "</div>";
 		
 					}

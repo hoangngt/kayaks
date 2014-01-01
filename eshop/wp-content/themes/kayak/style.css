@@ -100,7 +100,11 @@ div.summary.entry-summary div.product_meta {
 	height: 82px;
 	width: 35%;
 }
+#selected_color_text {
+	text-align: right;
+}
 .hoang_variant {
+		cursor: pointer;
 		height: 36px;
 		width: 16px;
 		display: inline;
