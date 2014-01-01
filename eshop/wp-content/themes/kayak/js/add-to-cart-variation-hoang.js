@@ -14,7 +14,7 @@
     		$var_form = $('.variations select');
     		$var_form.val($(this).attr("wert"));
     		$var_form.change();                 /* change value of "Color"-select form */
-            $("#selected_color").html($(this).attr("color_name"));
+            $("#selected_color_text").html("Ausgewählte Farbe: " + $(this).attr("color_name"));
     		$('.single_variation_wrap').css('display','inline');  /* fix bug for Quantity and Add to cart button */                            /* Hide On Stock text */
             $('a.avia-gallery-big img').attr('src',$product_img.attr('src'));
     	});
