@@ -154,7 +154,7 @@ add_action('edit_term','hoang_attribute_thumbnail_field_save', 10, 3);
     	$wert = $_POST['hoang_color_thumbnail_id'];
     	update_woocommerce_term_meta($term_id,$taxonomy.'_hoang_photo',$wert);
     }
-add_action ('hoang_woo_before_single_product_summary', 'hoang_color_variable', 30);
+//add_action ('hoang_woo_before_single_product_summary', 'hoang_color_variable', 30);
 function hoang_color_variable() {
 	global $woocommerce, $product, $post;
 	if (!$product->is_type('variable')) return;
@@ -166,52 +166,48 @@ function hoang_color_variable() {
 	$selected_color = get_term_by("slug",$selected_attributes[$name],$name)->name;
 	$script_link = get_stylesheet_directory_uri().'/js/add-to-cart-variation-hoang.js';
 	wp_enqueue_script( 'hoang-add-to-cart-variation',$script_link ); 
-	?>
+	$output = "";
 
-	<div id='hoang_color_variant'>
-		<div id="selected_color_text">
-			<?php if ($selected_attributes[$name]!=null) {?>
-				Ausgewählte Farbe: <span id="selected_color"><?php echo $selected_color;?></span>
-			<?php }
-			else { ?>
-				Wählen Sie bitte eine Farbe aus
-			<?php } ?>
-		</div>
-			<?php
-			if ( is_array( $options ) ) {
-			// Get terms if this is a taxonomy - ordered
-				if ( taxonomy_exists( $name ) ) {
-					$orderby = $woocommerce->attribute_orderby( $name );
-					switch ( $orderby ) {
-						case 'name' :
-									$args = array( 'orderby' => 'name', 'hide_empty' => false, 'menu_order' => false );
-									break;
-						case 'id' :
-									$args = array( 'orderby' => 'id', 'order' => 'ASC', 'menu_order' => false );
-									break;
-						case 'menu_order' :
-									$args = array( 'menu_order' => 'ASC' );
-									break;
-					}
-					$terms = get_terms( $name, $args );
-
-					foreach ( $terms as $term ) {
-						if ( ! in_array( $term->slug, $options ) )
-							continue;
-						$checked = $selected_attributes['pa_farben']==$term->slug ? 'checked':'';
-						$thumb_id = get_woocommerce_term_meta($term->term_id,'pa_farben_hoang_photo',true);
-						$thumb_src = wp_get_attachment_image_src($thumb_id)[0];
-						echo "<div class='hoang_variant' wert='".$term->slug."' color_name='".$term->name."'>";
-						echo '	<input '.$checked.' class="hoang_variant_radio"type="radio" name="hoang_color">';
-						echo '	<img alt="'.$term->name.'" src="'.$thumb_src.'">';
-						echo "</div>";
-		
-					}
-				} 
+	$output .= "<div id='hoang_color_variant'>";
+	$output .= "	<div id='selected_color_text'>";
+	if ($selected_attributes[$name]!=null) {
+		$output .= "Ausgewählte Farbe: <span id=selected_color'>".$selected_color."</span>";
+	}
+	else { 
+		$output .= "Wählen Sie bitte eine Farbe aus";
+	} 
+	$output .= "	</div>";
+	if ( is_array( $options ) ) {
+	// Get terms if this is a taxonomy - ordered
+		if ( taxonomy_exists( $name ) ) {
+			$orderby = $woocommerce->attribute_orderby( $name );
+			switch ( $orderby ) {
+				case 'name' :
+							$args = array( 'orderby' => 'name', 'hide_empty' => false, 'menu_order' => false );
+							break;
+				case 'id' :
+							$args = array( 'orderby' => 'id', 'order' => 'ASC', 'menu_order' => false );
+							break;
+				case 'menu_order' :
+							$args = array( 'menu_order' => 'ASC' );
+							break;
 			}
-						?>
-	</div>
-</div>		<!-- close div id=hoang_wrapper -->
-	<div class="images"><img src="" style="display:none"/></div>
-<?php
+			$terms = get_terms( $name, $args );
+
+			foreach ( $terms as $term ) {
+				if ( ! in_array( $term->slug, $options ) ) continue;
+					$checked = $selected_attributes['pa_farben']==$term->slug ? 'checked':'';
+					$thumb_id = get_woocommerce_term_meta($term->term_id,'pa_farben_hoang_photo',true);
+					$thumb_src = wp_get_attachment_image_src($thumb_id)[0];
+					$output .= "<div class='hoang_variant' wert='".$term->slug."' color_name='".$term->name."'>";
+					$output .= "	<input ".$checked." class='hoang_variant_radio' type='radio' name='hoang_color'>";
+					$output .= "	<img alt='".$term->name."' src='".$thumb_src."'>";
+					$output .= "</div>";
+		
+			}
+		} 
+	}
+	$output .= "</div>";
+	$output .= "<div class='images'><img src='' style='display:none'/></div>";
+	return $output;
 }

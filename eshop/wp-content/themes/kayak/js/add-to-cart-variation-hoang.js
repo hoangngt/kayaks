@@ -9,9 +9,6 @@
         if (img_src!='') {
             $('a.avia-gallery-big img').attr('src',img_src);
         }
-        
-        $('.avia-gallery-thumb a').css('width','33%');
-        $('#hoang_color_variant').css('top',$('.avia-gallery-big').height()*1.015);
     	$(".hoang_variant").on("click", function(e) {      /* whenever Customer click on color-img, do this function */
             $(this).find('.hoang_variant_radio').prop("checked", true);
     		$var_form = $('.variations select');

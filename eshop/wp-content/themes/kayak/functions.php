@@ -49,7 +49,8 @@ include('includes/hoang_show_filter_options.php');
 
 /* hide Lieferzeit on product pages */
 remove_filter( 'woocommerce_single_product_summary',array( 'WGM_Template', 'add_template_loop_shop' ), 11 ); 
-
+/* Change default product gallery to Enfold gallery */
+include('includes/product_gallery.php');
 /* Add "Technische Daten - Tab" to product page */
 include('includes/technik_tab.php');
 

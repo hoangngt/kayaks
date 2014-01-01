@@ -58,19 +58,6 @@ function woo_add_technik_tab()
 	endif;
 }
 
-/* Change default product gallery to Enfold gallery */
-add_action('hoang_woo_before_single_product_summary', 'hoang_show_enfold_product_images', 20);
-function hoang_show_enfold_product_images() {
-	global $product;
-	$attachment_ids = $product->get_gallery_attachment_ids();
-	$attachment_ids = implode(',',$attachment_ids);
-	$featured_img_id = get_post_thumbnail_id($product->id);
-	if ($product->is_type("variable")) {
-		echo "<div id='hoang_wrapper'>";
-	}
-	$shortcode = "[av_gallery ids='".$featured_img_id.",".$attachment_ids."' style='big_thumb' preview_size='shop_single' crop_big_preview_thumbnail='avia-gallery-big-crop-thumb' thumb_size='shop_single' columns='5' imagelink='avianolink noLightbox' lazyload='avia_lazyload']";
-	echo do_shortcode($shortcode);	
-}
 function header_slider() {
 	layerslider(4);
 }
