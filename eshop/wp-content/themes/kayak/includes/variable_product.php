@@ -171,7 +171,7 @@ function hoang_color_variable() {
 	$output .= "<div id='hoang_color_variant'>";
 	$output .= "	<div id='selected_color_text'>";
 	if ($selected_attributes[$name]!=null) {
-		$output .= "Ausgewählte Farbe: <span id=selected_color'>".$selected_color."</span>";
+		$output .= "Ausgewählte Farbe: <span id='selected_color'>".$selected_color."</span>";
 	}
 	else { 
 		$output .= "Wählen Sie bitte eine Farbe aus";
