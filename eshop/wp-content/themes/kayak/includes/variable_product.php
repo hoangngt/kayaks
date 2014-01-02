@@ -164,8 +164,7 @@ function hoang_color_variable() {
 	$name = "pa_farben";
 	$options = $attributes[$name];
 	$selected_color = get_term_by("slug",$selected_attributes[$name],$name)->name;
-	$script_link = get_stylesheet_directory_uri().'/js/add-to-cart-variation-hoang.js';
-	wp_enqueue_script( 'hoang-add-to-cart-variation',$script_link ); 
+	hoang_include_js("add-to-cart-variation-hoang");
 	$output = "";
 
 	$output .= "<div id='hoang_color_variant'>";

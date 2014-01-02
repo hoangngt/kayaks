@@ -24,6 +24,9 @@ Template: enfold
 form.register p.form-row:last-child {		/*fix register-button lie out of form-box*/
 	height: 62px;
 }
+#show_registration_form {
+	cursor: pointer;
+}
 /*		##################################################################
 		# custom layout for homepage
 		##################################################################	*/
