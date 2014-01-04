@@ -196,7 +196,7 @@ div.summary.entry-summary div.product_meta {
 /*		##################################################################
 		# custom layout for Shop-page
 		##################################################################	*/
-.widget_layered_nav , .widget_price_filter{
+.widget_price_filter{
 	display:none;
 }
 div.product-sorting ul.sort-param.sort-param-shop {
