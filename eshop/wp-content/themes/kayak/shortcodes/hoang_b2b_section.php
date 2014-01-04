@@ -6,7 +6,7 @@ function hoang_b2b_section($atts) {
         'items' => '10'
     ), $atts));
     if (is_b2b()) {
-       echo do_shortcode("[av_productgrid columns='".$columns."2' items='".$items."' offset='0' sort='dropdown' paginate='yes']");
+       echo do_shortcode("[av_productgrid columns='".$columns."' items='".$items."' offset='0' sort='dropdown' paginate='yes']");
     }
     else echo "Dieses Bereich ist nur für Geschäftskunden sichtbar";
 }
