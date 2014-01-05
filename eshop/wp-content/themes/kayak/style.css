@@ -30,6 +30,10 @@ form.register p.form-row:last-child {		/*fix register-button lie out of form-box
 /*		##################################################################
 		# custom layout for homepage
 		##################################################################	*/
+
+/* remove enfold hover effect */
+.image-overlay { display: none!important; }
+
 /*header with social icons: */
 .social_header #header_main .container, .social_header .main_menu ul:first-child > li a { height: 61px; line-height: 61px; }	/* fix site-logo in header */
 .fixed_header.social_header #main { padding-top: 93px;}
