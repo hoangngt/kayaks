@@ -44,6 +44,9 @@ define('WOOCOMMERCE_USE_CSS', false);
 
 
 
+
+
+
 ######################################################################
 # config
 ######################################################################
@@ -928,7 +931,7 @@ function avia_add_summary_div()
 
 
 
-/* we don't use this function, because we don't need this sorting menus
+
 
 #
 # displays a front end interface for modifying the shoplist query parameters like sorting order, product count etc
@@ -942,8 +945,8 @@ if(!function_exists('avia_woocommerce_frontend_search_params'))
 		global $avia_config;
 
 		if(!empty($avia_config['woocommerce']['disable_sorting_options'])) return false;
-		
-/*		$product_order['default'] 	= __("Default Order",'avia_framework');
+
+		$product_order['default'] 	= __("Default Order",'avia_framework');
 		$product_order['title'] 	= __("Name",'avia_framework');
 		$product_order['price'] 	= __("Price",'avia_framework');
 		$product_order['date'] 		= __("Date",'avia_framework');
@@ -952,17 +955,20 @@ if(!function_exists('avia_woocommerce_frontend_search_params'))
 		$product_sort['asc'] 		= __("Click to order products ascending",  'avia_framework');
 		$product_sort['desc'] 		= __("Click to order products descending",  'avia_framework');
 
-		$per_page_string 		 	= __("Products per page",'avia_framework');	
-		
+		$per_page_string 		 	= __("Products per page",'avia_framework');
+
+
 		$per_page 		 		 	= get_option('avia_woocommerce_product_count');
 		if(!$per_page) $per_page 	= get_option('posts_per_page');
 		if(!empty($avia_config['woocommerce']['default_posts_per_page'])) $per_page = $avia_config['woocommerce']['default_posts_per_page'];
-		$preis_interval = array("500-800", "800-1000", "1000-1500", "1500-2000");
+
+
 		parse_str($_SERVER['QUERY_STRING'], $params);
 
 		$po_key = !empty($avia_config['woocommerce']['product_order']) ? $avia_config['woocommerce']['product_order'] : 'default';
 		$ps_key = !empty($avia_config['woocommerce']['product_sort'])  ? $avia_config['woocommerce']['product_sort'] : 'asc';
 		$pc_key = !empty($avia_config['woocommerce']['product_count']) ? $avia_config['woocommerce']['product_count'] : $per_page;
+
 		$ps_key = strtolower($ps_key);
 
 		//generate markup
@@ -979,7 +985,14 @@ if(!function_exists('avia_woocommerce_frontend_search_params'))
 		$output .= "    	</ul>";
 		$output .= "    	</li>";
 		$output .= "    </ul>";
-		
+
+		$output .= "    <ul class='sort-param sort-param-sort'>";
+		$output .= "    	<li>";
+		if($ps_key == 'desc') 	$output .= "    		<a title='".$product_sort['asc']."' class='sort-param-asc'  href='".avia_woo_build_query_string($params, 'product_sort', 'asc')."'>".$product_sort['desc']."</a>";
+		if($ps_key == 'asc') 	$output .= "    		<a title='".$product_sort['desc']."' class='sort-param-desc' href='".avia_woo_build_query_string($params, 'product_sort', 'desc')."'>".$product_sort['asc']."</a>";
+		$output .= "    	</li>";
+		$output .= "    </ul>";
+
 		$output .= "    <ul class='sort-param sort-param-count'>";
 		$output .= "    	<li><span class='currently-selected'>".__("Display",'avia_framework')." <strong>".$pc_key." ".$per_page_string."</strong></span>";
 		$output .= "    	<ul>";
@@ -990,12 +1003,13 @@ if(!function_exists('avia_woocommerce_frontend_search_params'))
 		$output .= "    	</li>";
 		$output .= "	</ul>";
 
-		
+
+
 		$output .= "</div>";
 		echo $output;
 	}
 }
-*/
+
 //helper function to create the active list class
 if(!function_exists('avia_woo_active_class'))
 {
@@ -1059,6 +1073,8 @@ if(!function_exists('avia_woocommerce_overwrite_catalog_ordering'))
 				default : $orderby = 'menu_order title'; $order = 'asc'; $meta_key = ''; break;
 			}
 		}
+
+
 
 		// set the product count
 		if(!empty($product_count) && is_numeric($product_count))
@@ -1142,5 +1158,35 @@ if(!function_exists('avia_woocommerce_echo_password'))
 		{
 			echo get_the_password_form();
 		}
+	}
+}
+
+
+
+if(!function_exists('avia_woocommerce_image_description'))
+{
+	add_filter('woocommerce_single_product_image_html','avia_woocommerce_image_description', 10, 2);
+	function avia_woocommerce_image_description($img, $post_id){
+		global $post, $woocommerce, $product;
+
+		if(has_post_thumbnail())
+		{
+			$image_title = esc_attr(get_post_field('post_content', get_post_thumbnail_id()));
+			$image_link  = wp_get_attachment_url( get_post_thumbnail_id() );
+			$image  = get_the_post_thumbnail( $post->ID, apply_filters( 'single_product_large_thumbnail_size', 'shop_single' ), array(
+				'title' => $image_title
+				) );
+			$attachment_count = count( $product->get_gallery_attachment_ids() );
+
+			if ( $attachment_count > 0 ) {
+				$gallery = '[product-gallery]';
+			} else {
+				$gallery = '';
+			}
+
+			return sprintf( '<a href="%s" itemprop="image" class="woocommerce-main-image zoom" title="%s"  rel="prettyPhoto' . $gallery . '">%s</a>', $image_link, $image_title, $image);
+		}
+
+		return $img;
 	}
 }

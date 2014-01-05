@@ -41,6 +41,11 @@ if( !class_exists( 'avia_wp_export' ) )
 			
 			//export of options
 			$export = base64_encode(serialize($export));
+
+            if(isset($_GET['avia_generate_config_file']))
+            {
+                $this->generate_export_file($export);
+            }
 			
 			//export of dynamic pages
 			$export_dynamic_pages = get_option($this->db_prefix.'_dynamic_pages');
@@ -49,7 +54,7 @@ if( !class_exists( 'avia_wp_export' ) )
 			//export of dynamic elements
 			$export_dynamic_elements = get_option($this->db_prefix.'_dynamic_elements');
 			if($export_dynamic_elements) $export_dynamic_elements = base64_encode(serialize($export_dynamic_elements));
-			
+
 			echo '<pre>&#60?php '."\n\n";
 			echo '/*this is a base64 encoded option set for the default dummy data. If you choose to import the dummy.xml file with the help of the framework importer this options will also be imported*/'."\n\n";
 			echo '$options = "';
@@ -68,6 +73,24 @@ if( !class_exists( 'avia_wp_export' ) )
 
 			exit();
 		}
+
+
+        function generate_export_file($export_data)
+        {
+            $today = getdate();
+            $today_str = $today['year'].'-'.$today['mon'].'-'.$today['mday'];
+            $export_file = THEMENAME.'-theme-settings-'.$today_str.'.txt';
+            header("Content-Description: File Transfer");
+            header("Content-Disposition: attachment; filename=" . urlencode($export_file));
+            header("Content-Type: application/force-download");
+            header("Content-Type: application/octet-stream");
+            header("Content-Type: application/download");
+            header("Pragma: no-cache");
+            header("Expires: 0");
+
+            print $export_data;
+            die();
+        }
 		
 		
 		

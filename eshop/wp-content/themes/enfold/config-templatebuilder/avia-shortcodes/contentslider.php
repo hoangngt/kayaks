@@ -219,7 +219,7 @@ if ( !class_exists( 'avia_sc_content_slider' ) )
 				'heading'		=> '',
                 'columns'       => 3,
 				'handle'		=> $shortcodename,
-				'content'		=> ShortcodeHelper::shortcode2array($content),
+				'content'		=> ShortcodeHelper::shortcode2array($content, 1),
 				'class'			=> $meta['el_class']
 				), $atts);
 
@@ -321,7 +321,7 @@ if ( !class_exists( 'avia_content_slider' ) )
 
                 foreach($content as $key => $value)
                 {
-
+					$link = $linktarget = "";
 
                     extract($value['attr']);
 

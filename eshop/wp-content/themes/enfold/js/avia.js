@@ -4,15 +4,15 @@
 
     $(document).ready(function()
     {
+        var aviabodyclasses = AviaBrowserDetection('html');
 
-		$.avia_utilities = $.avia_utilities || {};
+	$.avia_utilities = $.avia_utilities || {};
 
-    	avia_responsive_menu();
+        //check if user uses IE7 - if yes don't execute the function or the menu will break
+        if(aviabodyclasses.indexOf("avia-msie-7") == -1) avia_responsive_menu();
 
     	//Resize menu if logo is overlapped by th menu items
-        //check if user uses IE7 - if yes don't execute the function or the menu will break
-        if(navigator.appVersion.indexOf("MSIE 7.") == -1)
-    	avia_resize_menu();
+        avia_resize_menu();
 
         // decreases header size when user scrolls down
         avia_header_size();
@@ -37,12 +37,7 @@
 		//activates the mega menu javascript
 		if($.fn.aviaMegamenu)
 		$(".main_menu .menu").aviaMegamenu({modify_position:true});
-
-
-		$('a.avianolink').on('click', function(){return false;});
-        $('a.aviablank').attr('target', '_blank');
-
-
+		
 		$.avia_utilities.avia_ajax_call();
     });
 
@@ -51,9 +46,26 @@
 	$.avia_utilities.avia_ajax_call = function(container)
 	{
 		if(typeof container == 'undefined'){ container = 'body';};
+		
+		
+		$('a.avianolink').on('click', function(e){ e.preventDefault(); });
+        	$('a.aviablank').attr('target', '_blank');
 
         //activates the prettyphoto lightbox
         $(container).avia_activate_lightbox({callback:'avia_lightbox_callback'});
+        
+        //scrollspy for main menu. must be located before smoothscrolling
+		if($.fn.avia_scrollspy)
+		{
+			if(container == 'body')
+			{
+				$('body').avia_scrollspy({target:'.main_menu .menu li > a'});
+			}
+			else
+			{
+				$('body').avia_scrollspy('refresh');
+			}
+		}
 
 		//smooth scrooling
 		if($.fn.avia_smoothscroll)
@@ -68,9 +80,207 @@
 		//activate html5 video player
 		if($.fn.avia_html5_activation && $.fn.mediaelementplayer)
 		$(".avia_video, .avia_audio", container).avia_html5_activation({ratio:'16:9'});
+		
+		
+		
 
 	}
 
+
+
+	// -------------------------------------------------------------------------------------------
+	// modified SCROLLSPY by bootstrap
+	// -------------------------------------------------------------------------------------------
+
+	
+	  function AviaScrollSpy(element, options)
+	  {
+	  	var self = this;
+	  
+		    var process = $.proxy(self.process, self)
+		      , refresh = $.proxy(self.refresh, self)
+		      , $element = $(element).is('body') ? $(window) : $(element)
+		      , href
+		    self.$body = $('body')
+		    self.options = $.extend({}, $.fn.avia_scrollspy.defaults, options)
+		    self.selector = (self.options.target
+		      || ((href = $(element).attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')) //strip for ie7
+		      || '')
+		    
+		   	self.activation_true = false;
+		   	
+		    if(self.$body.find(self.selector + "[href*=#]").length)
+		    {
+		    	self.$scrollElement = $element.on('scroll.scroll-spy.data-api', process);
+		    	self.$body.on('av_resize_finished', refresh);
+		    	self.activation_true = true;
+		    	self.checkFirst();
+		    	
+		    	setTimeout(function()
+	  			{
+		    		self.refresh()
+		    		self.process()
+		    		
+		    	},100);
+		    }
+	    
+	  }
+	
+	  AviaScrollSpy.prototype = {
+	
+	      constructor: AviaScrollSpy
+		, checkFirst: function () {
+		
+			var current = window.location.href.split('#')[0],
+				matching_link = this.$body.find(this.selector + "[href='"+current+"']").attr('href',current+'#top');
+		}
+	    , refresh: function () {
+	    
+	    if(!this.activation_true) return;
+	    
+	        var self = this
+	          , $targets
+	
+	        this.offsets = $([])
+	        this.targets = $([])
+	
+	        $targets = this.$body
+	          .find(this.selector)
+	          .map(function () {
+	            var $el = $(this)
+	              , href = $el.data('target') || $el.attr('href')
+	              , $href = /^#\w/.test(this.hash) && $(this.hash)
+	             
+	            return ( $href
+	              && $href.length
+	              && [[ $href.position().top + (!$.isWindow(self.$scrollElement.get(0)) && self.$scrollElement.scrollTop()), href ]] ) || null
+	          })
+	          .sort(function (a, b) { return a[0] - b[0] })
+	          .each(function () {
+	            self.offsets.push(this[0])
+	            self.targets.push(this[1])
+	          })
+	          
+	      }
+	
+	    , process: function () {
+	    	
+	    	if(!this.offsets) return;
+	    	
+	        var scrollTop = this.$scrollElement.scrollTop() + this.options.offset
+	          , scrollHeight = this.$scrollElement[0].scrollHeight || this.$body[0].scrollHeight
+	          , maxScroll = scrollHeight - this.$scrollElement.height()
+	          , offsets = this.offsets
+	          , targets = this.targets
+	          , activeTarget = this.activeTarget
+	          , i
+
+	        if (scrollTop >= maxScroll) {
+	          return activeTarget != (i = targets.last()[0])
+	            && this.activate ( i )
+	        }
+	
+	        for (i = offsets.length; i--;) {
+	          activeTarget != targets[i]
+	            && scrollTop >= offsets[i]
+	            && (!offsets[i + 1] || scrollTop <= offsets[i + 1])
+	            && this.activate( targets[i] )
+	        }
+	      }
+	
+	    , activate: function (target) {
+	        var active
+	          , selector
+	
+	        this.activeTarget = target
+	
+	        $(this.selector)
+	          .parent('.' + this.options.applyClass)
+	          .removeClass(this.options.applyClass)
+	
+	        selector = this.selector
+	          + '[data-target="' + target + '"],'
+	          + this.selector + '[href="' + target + '"]'
+	
+	        active = $(selector)
+	          .parent('li')
+	          .addClass(this.options.applyClass)
+	
+	        if (active.parent('.dropdown-menu').length)  {
+	          active = active.closest('li.dropdown').addClass(this.options.applyClass)
+	        }
+	
+	        active.trigger('activate')
+	      }
+	
+	  }
+	
+	
+	 /* AviaScrollSpy PLUGIN DEFINITION
+	  * =========================== */
+	
+	  $.fn.avia_scrollspy = function (option) {
+	    return this.each(function () {
+	      var $this = $(this)
+	        , data = $this.data('scrollspy')
+	        , options = typeof option == 'object' && option
+	      if (!data) $this.data('scrollspy', (data = new AviaScrollSpy(this, options)))
+	      if (typeof option == 'string') data[option]()
+	    })
+	  }
+	
+	  $.fn.avia_scrollspy.Constructor = AviaScrollSpy
+	
+	  $.fn.avia_scrollspy.defaults = {
+	    offset: (parseInt($('.fixed_header #header').height(), 10)) + parseInt($('html').css('margin-top'),10),
+	    applyClass: 'current-menu-item'
+	  }
+
+
+
+
+
+
+    // -------------------------------------------------------------------------------------------
+    // detect browser and add class to body
+    // -------------------------------------------------------------------------------------------
+
+    function AviaBrowserDetection(outputClassElement)
+    {
+        if(typeof($.browser) !== 'undefined')
+        {
+            var bodyclass = '';
+
+            if($.browser.msie){
+                bodyclass += 'avia-msie';
+            }else if($.browser.webkit){
+                bodyclass += 'avia-webkit';
+            }else if($.browser.mozilla)
+            {
+                bodyclass += 'avia-mozilla';
+            }
+
+            if($.browser.version) bodyclass += ' ' + bodyclass + '-' + parseInt($.browser.version) + ' ';
+
+            if($.browser.ipad){
+                bodyclass += ' avia-ipad ';
+            }else if($.browser.iphone){
+                bodyclass += ' avia-iphone ';
+            }else if($.browser.android){
+                bodyclass += ' avia-android ';
+            }else if($.browser.win){
+                bodyclass += ' avia-windows ';
+            }else if($.browser.mac){
+                bodyclass += ' avia-mac ';
+            }else if($.browser.linux){
+                bodyclass += ' avia-linux ';
+            }
+        }
+
+        if(outputClassElement) $(outputClassElement).addClass(bodyclass)
+        
+        return bodyclass;
+    }
 
 
 
@@ -229,7 +439,12 @@
                     logo_offset = logo.offset(),
                     menu_offset = menu.offset();
 
-                    if(logo_offset.left < menu_offset.left)
+                    if(typeof logo_offset == "undefined" || typeof menu_offset == "undefined")
+                    {
+                    	var offset_right = 0,
+                            offset_left = 0;
+                    }
+                    else if(logo_offset.left < menu_offset.left)
                     {
                         var offset_left =  logo_offset.left - headercontainer_offset.left,
                             offset_right = header_width - (menu_offset.left - headercontainer_offset.left + menu_width);
@@ -380,7 +595,7 @@
 		var fv 			= $(this),
 	      	id_to_apply = '#' + fv.attr('id'),
 	      	posterImg 	= fv.attr('poster');
-
+		
 
 		fv.mediaelementplayer({
 		    // if the <video width> is not specified, this is the default
@@ -402,7 +617,7 @@
 		    // enables Flash and Silverlight to resize to content size
 		    enableAutosize: true,
 		    // the order of controls you want on the control bar (and other plugins below)
-		    features: ['playpause','progress','current','duration','tracks','volume','fullscreen'],
+		    features: ['playpause','progress','current','duration','tracks','volume'],
 		    // Hide controls when playing and mouse is not over the video
 		    alwaysShowControls: false,
 		    // force iPad's native controls
@@ -421,11 +636,32 @@
 		    enableKeyboard: true,
 		    // when this player starts, it will pause other players
 		    pauseOtherPlayers: true,
+		    poster: posterImg,
+		    success: function (mediaElement, domObject) { 
+         	
+				if (mediaElement.pluginType == 'flash') 
+				{	
+					mediaElement.addEventListener('canplay', function() { fv.trigger('av-video-loaded'); }, false);
+				}
+				else
+				{
+			        fv.trigger('av-video-loaded');
+				}
+			         
+			     mediaElement.addEventListener('ended', function() { fv.trigger('av-video-ended'); }, false);  
+		         
+		    },
+		    // fires when a problem is detected
+		    error: function () { 
+		     
+		    },
+		    
 		    // array of keyboard commands
 		    keyActions: []
 
 				});
 			});
+	
 		}
 
 
@@ -547,8 +783,8 @@
 						   var target = container.offset().top - fixedMainPadding,
 							   oldLocation=window.location.href.replace(window.location.hash, ''),
 							   newLocation=this,
-							   duration= data.duration || 800,
-							   easing= data.easing || 'easeOutQuint';
+							   duration= data.duration || 1200,
+							   easing= data.easing || 'easeInOutQuint';
 
 						   // make sure it's the same location
 						   if(oldLocation+newHash==newLocation)
@@ -970,7 +1206,8 @@
 
 		return this.each(function()
 		{
-			var container		= $(this),
+			var the_body		= $('body'),
+				container		= $(this),
 				portfolio_id	= container.data('portfolio-id'),
 				parentContainer	= container.parents('.entry-content-wrapper'),
 				filter			= parentContainer.find('.sort_width_container[data-portfolio-id="' + portfolio_id + '"]').find('#js_sort_items').css({visibility:"visible", opacity:0}),
@@ -986,6 +1223,7 @@
 				}, function()
 				{
 					container.css({overflow:'visible'});
+					the_body.trigger('av_resize_finished');
 				});
 
 				isoActive = true;
@@ -1006,6 +1244,7 @@
 					container.isotope({ layoutMode : 'customMode', itemSelector : '.flex_column' , filter: '.'+selector}, function()
 					{
 						container.css({overflow:'visible'});
+						the_body.trigger('av_resize_finished');
 					});
 
 					return false;
@@ -1074,7 +1313,7 @@
 
         	if(!header.length) return false;
 
-            if(isMobile)
+            if(isMobile || $('body').hasClass('avia_deactivate_menu_resize'))
             {
                 return false;
             }
@@ -1571,3 +1810,19 @@ Dual licensed under the MIT license and GPL license.
 https://github.com/imakewebthings/jquery-waypoints/blob/master/licenses.txt
 */
 (function(){var t=[].indexOf||function(t){for(var e=0,n=this.length;e<n;e++){if(e in this&&this[e]===t)return e}return-1},e=[].slice;(function(t,e){if(typeof define==="function"&&define.amd){return define("waypoints",["jquery"],function(n){return e(n,t)})}else{return e(t.jQuery,t)}})(this,function(n,r){var i,o,l,s,f,u,a,c,h,d,p,y,v,w,g,m;i=n(r);c=t.call(r,"ontouchstart")>=0;s={horizontal:{},vertical:{}};f=1;a={};u="waypoints-context-id";p="resize.waypoints";y="scroll.waypoints";v=1;w="waypoints-waypoint-ids";g="waypoint";m="waypoints";o=function(){function t(t){var e=this;this.$element=t;this.element=t[0];this.didResize=false;this.didScroll=false;this.id="context"+f++;this.oldScroll={x:t.scrollLeft(),y:t.scrollTop()};this.waypoints={horizontal:{},vertical:{}};t.data(u,this.id);a[this.id]=this;t.bind(y,function(){var t;if(!(e.didScroll||c)){e.didScroll=true;t=function(){e.doScroll();return e.didScroll=false};return r.setTimeout(t,n[m].settings.scrollThrottle)}});t.bind(p,function(){var t;if(!e.didResize){e.didResize=true;t=function(){n[m]("refresh");return e.didResize=false};return r.setTimeout(t,n[m].settings.resizeThrottle)}})}t.prototype.doScroll=function(){var t,e=this;t={horizontal:{newScroll:this.$element.scrollLeft(),oldScroll:this.oldScroll.x,forward:"right",backward:"left"},vertical:{newScroll:this.$element.scrollTop(),oldScroll:this.oldScroll.y,forward:"down",backward:"up"}};if(c&&(!t.vertical.oldScroll||!t.vertical.newScroll)){n[m]("refresh")}n.each(t,function(t,r){var i,o,l;l=[];o=r.newScroll>r.oldScroll;i=o?r.forward:r.backward;n.each(e.waypoints[t],function(t,e){var n,i;if(r.oldScroll<(n=e.offset)&&n<=r.newScroll){return l.push(e)}else if(r.newScroll<(i=e.offset)&&i<=r.oldScroll){return l.push(e)}});l.sort(function(t,e){return t.offset-e.offset});if(!o){l.reverse()}return n.each(l,function(t,e){if(e.options.continuous||t===l.length-1){return e.trigger([i])}})});return this.oldScroll={x:t.horizontal.newScroll,y:t.vertical.newScroll}};t.prototype.refresh=function(){var t,e,r,i=this;r=n.isWindow(this.element);e=this.$element.offset();this.doScroll();t={horizontal:{contextOffset:r?0:e.left,contextScroll:r?0:this.oldScroll.x,contextDimension:this.$element.width(),oldScroll:this.oldScroll.x,forward:"right",backward:"left",offsetProp:"left"},vertical:{contextOffset:r?0:e.top,contextScroll:r?0:this.oldScroll.y,contextDimension:r?n[m]("viewportHeight"):this.$element.height(),oldScroll:this.oldScroll.y,forward:"down",backward:"up",offsetProp:"top"}};return n.each(t,function(t,e){return n.each(i.waypoints[t],function(t,r){var i,o,l,s,f;i=r.options.offset;l=r.offset;o=n.isWindow(r.element)?0:r.$element.offset()[e.offsetProp];if(n.isFunction(i)){i=i.apply(r.element)}else if(typeof i==="string"){i=parseFloat(i);if(r.options.offset.indexOf("%")>-1){i=Math.ceil(e.contextDimension*i/100)}}r.offset=o-e.contextOffset+e.contextScroll-i;if(r.options.onlyOnScroll&&l!=null||!r.enabled){return}if(l!==null&&l<(s=e.oldScroll)&&s<=r.offset){return r.trigger([e.backward])}else if(l!==null&&l>(f=e.oldScroll)&&f>=r.offset){return r.trigger([e.forward])}else if(l===null&&e.oldScroll>=r.offset){return r.trigger([e.forward])}})})};t.prototype.checkEmpty=function(){if(n.isEmptyObject(this.waypoints.horizontal)&&n.isEmptyObject(this.waypoints.vertical)){this.$element.unbind([p,y].join(" "));return delete a[this.id]}};return t}();l=function(){function t(t,e,r){var i,o;r=n.extend({},n.fn[g].defaults,r);if(r.offset==="bottom-in-view"){r.offset=function(){var t;t=n[m]("viewportHeight");if(!n.isWindow(e.element)){t=e.$element.height()}return t-n(this).outerHeight()}}this.$element=t;this.element=t[0];this.axis=r.horizontal?"horizontal":"vertical";this.callback=r.handler;this.context=e;this.enabled=r.enabled;this.id="waypoints"+v++;this.offset=null;this.options=r;e.waypoints[this.axis][this.id]=this;s[this.axis][this.id]=this;i=(o=t.data(w))!=null?o:[];i.push(this.id);t.data(w,i)}t.prototype.trigger=function(t){if(!this.enabled){return}if(this.callback!=null){this.callback.apply(this.element,t)}if(this.options.triggerOnce){return this.destroy()}};t.prototype.disable=function(){return this.enabled=false};t.prototype.enable=function(){this.context.refresh();return this.enabled=true};t.prototype.destroy=function(){delete s[this.axis][this.id];delete this.context.waypoints[this.axis][this.id];return this.context.checkEmpty()};t.getWaypointsByElement=function(t){var e,r;r=n(t).data(w);if(!r){return[]}e=n.extend({},s.horizontal,s.vertical);return n.map(r,function(t){return e[t]})};return t}();d={init:function(t,e){var r;if(e==null){e={}}if((r=e.handler)==null){e.handler=t}this.each(function(){var t,r,i,s;t=n(this);i=(s=e.context)!=null?s:n.fn[g].defaults.context;if(!n.isWindow(i)){i=t.closest(i)}i=n(i);r=a[i.data(u)];if(!r){r=new o(i)}return new l(t,r,e)});n[m]("refresh");return this},disable:function(){return d._invoke(this,"disable")},enable:function(){return d._invoke(this,"enable")},destroy:function(){return d._invoke(this,"destroy")},prev:function(t,e){return d._traverse.call(this,t,e,function(t,e,n){if(e>0){return t.push(n[e-1])}})},next:function(t,e){return d._traverse.call(this,t,e,function(t,e,n){if(e<n.length-1){return t.push(n[e+1])}})},_traverse:function(t,e,i){var o,l;if(t==null){t="vertical"}if(e==null){e=r}l=h.aggregate(e);o=[];this.each(function(){var e;e=n.inArray(this,l[t]);return i(o,e,l[t])});return this.pushStack(o)},_invoke:function(t,e){t.each(function(){var t;t=l.getWaypointsByElement(this);return n.each(t,function(t,n){n[e]();return true})});return this}};n.fn[g]=function(){var t,r;r=arguments[0],t=2<=arguments.length?e.call(arguments,1):[];if(d[r]){return d[r].apply(this,t)}else if(n.isFunction(r)){return d.init.apply(this,arguments)}else if(n.isPlainObject(r)){return d.init.apply(this,[null,r])}else if(!r){return n.error("jQuery Waypoints needs a callback function or handler option.")}else{return n.error("The "+r+" method does not exist in jQuery Waypoints.")}};n.fn[g].defaults={context:r,continuous:true,enabled:true,horizontal:false,offset:0,triggerOnce:false};h={refresh:function(){return n.each(a,function(t,e){return e.refresh()})},viewportHeight:function(){var t;return(t=r.innerHeight)!=null?t:i.height()},aggregate:function(t){var e,r,i;e=s;if(t){e=(i=a[n(t).data(u)])!=null?i.waypoints:void 0}if(!e){return[]}r={horizontal:[],vertical:[]};n.each(r,function(t,i){n.each(e[t],function(t,e){return i.push(e)});i.sort(function(t,e){return t.offset-e.offset});r[t]=n.map(i,function(t){return t.element});return r[t]=n.unique(r[t])});return r},above:function(t){if(t==null){t=r}return h._filter(t,"vertical",function(t,e){return e.offset<=t.oldScroll.y})},below:function(t){if(t==null){t=r}return h._filter(t,"vertical",function(t,e){return e.offset>t.oldScroll.y})},left:function(t){if(t==null){t=r}return h._filter(t,"horizontal",function(t,e){return e.offset<=t.oldScroll.x})},right:function(t){if(t==null){t=r}return h._filter(t,"horizontal",function(t,e){return e.offset>t.oldScroll.x})},enable:function(){return h._invoke("enable")},disable:function(){return h._invoke("disable")},destroy:function(){return h._invoke("destroy")},extendFn:function(t,e){return d[t]=e},_invoke:function(t){var e;e=n.extend({},s.vertical,s.horizontal);return n.each(e,function(e,n){n[t]();return true})},_filter:function(t,e,r){var i,o;i=a[n(t).data(u)];if(!i){return[]}o=[];n.each(i.waypoints[e],function(t,e){if(r(i,e)){return o.push(e)}});o.sort(function(t,e){return t.offset-e.offset});return n.map(o,function(t){return t.element})}};n[m]=function(){var t,n;n=arguments[0],t=2<=arguments.length?e.call(arguments,1):[];if(h[n]){return h[n].apply(null,t)}else{return h.aggregate.call(null,n)}};n[m].settings={resizeThrottle:100,scrollThrottle:30};return i.load(function(){return n[m]("refresh")})})}).call(this);
+
+
+
+/*!
+ * jQuery Browser Plugin v0.0.3
+ * https://github.com/gabceb/jquery-browser-plugin
+ *
+ * Original jquery-browser code Copyright 2005, 2013 jQuery Foundation, Inc. and other contributors
+ * http://jquery.org/license
+ *
+ * Modifications Copyright 2013 Gabriel Cebrian
+ * https://github.com/gabceb
+ *
+ * Released under the MIT license
+ */
+(function(e,t,n){"use strict";var r,i;e.uaMatch=function(e){e=e.toLowerCase();var t=/(opr)[\/]([\w.]+)/.exec(e)||/(chrome)[ \/]([\w.]+)/.exec(e)||/(webkit)[ \/]([\w.]+)/.exec(e)||/(opera)(?:.*version|)[ \/]([\w.]+)/.exec(e)||/(msie) ([\w.]+)/.exec(e)||e.indexOf("trident")>=0&&/(rv)(?::| )([\w.]+)/.exec(e)||e.indexOf("compatible")<0&&/(mozilla)(?:.*? rv:([\w.]+)|)/.exec(e)||[];var n=/(ipad)/.exec(e)||/(iphone)/.exec(e)||/(android)/.exec(e)||/(win)/.exec(e)||/(mac)/.exec(e)||/(linux)/.exec(e)||[];return{browser:t[1]||"",version:t[2]||"0",platform:n[0]||""}};r=e.uaMatch(t.navigator.userAgent);i={};if(r.browser){i[r.browser]=true;i.version=r.version}if(r.platform){i[r.platform]=true}if(i.chrome||i.opr){i.webkit=true}else if(i.webkit){i.safari=true}if(i.rv){i.msie=true}if(i.opr){i.opera=true}e.browser=i})(jQuery,window);

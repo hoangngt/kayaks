@@ -35,44 +35,46 @@
 	            button.onRenderMenu.add(function (button, menu) 
 	            {
 	            	var shortcode_array = avia_globals.sc[av_key].config,
-		            		submenu = [];
+		            		submenu = [],
+		            		sub_count = 0;
 	            	
-	            	
-	            	//dont create tab submenus if modal window is open //todo: build finer controll which tabs to include when
-            		if(open_modal.length == 0)
-            		{
-		            	//get all tabs
-		            	for(var i in shortcode_array)
-		            	{
-		            		submenu[shortcode_array[i].tab] = [];
-		            	}
-		            	
-		            	//create sub menus
-		            	for(var title in submenu)
-		            	{
-		            		if( title != 'undefined')
-		            		{
-			            		submenu[title] = menu.addMenu({
-			                        title: title
-			                    });
-		            		}
-		            	}
-		            	
-		            	menu.addSeparator();
+	            	//dont create tab submenus if modal window is open. only for elements that dont have any tabs (inline elements) and elements that have the tinymce.tiny_always flag
+            		
+	            	//get all tabs
+	            	for(var i in shortcode_array)
+	            	{
+	            		if(open_modal.length == 0 || ( typeof shortcode_array[i].tinyMCE != 'undefined' && typeof shortcode_array[i].tinyMCE.tiny_always != 'undefined'))
+        				{
+	            			submenu[shortcode_array[i].tab] = [];
+	            		}
 	            	}
+	            	
+	            	//create sub menus
+	            	for(var title in submenu)
+	            	{
+	            		if(title != 'undefined')
+	            		{
+	            			sub_count++;
+		            		submenu[title] = menu.addMenu({
+		                        title: title
+		                    });
+	            		}
+	            	}
+	            	
+	            	if(open_modal.length == 0 || sub_count > 0) menu.addSeparator();
 	            	
 	            	
 	            	//add items to sub menus. based on the config tinymce array add an instant insert or modal popup button
 	            	for(var z in shortcode_array)
 	            	{
+	            		//set a default
+		            	shortcode_array[z].tinyMCE = shortcode_array[z].tinyMCE || {};
+	            	
 	            		//only render subset of elements if modal window is open
-	            		if(open_modal.length == 0 || !shortcode_array[z].tab)
-	            		{
-		            		//set a default
-		            		shortcode_array[z].tinyMCE = shortcode_array[z].tinyMCE || {};
-		            		
+	            		if(open_modal.length == 0 || !shortcode_array[z].tab || typeof shortcode_array[z].tinyMCE.tiny_always != 'undefined')
+	            		{		            		
 		            		var current_menu = shortcode_array[z].tab ? submenu[shortcode_array[z].tab] : menu;
-		            	
+		            		
 		            		if(typeof shortcode_array[z].tinyMCE.instantInsert != 'undefined')
 		            		{
 		            			cur_plugin.instantInsert(current_menu, shortcode_array[z]);

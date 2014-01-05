@@ -292,7 +292,21 @@ if ( !class_exists( 'avia_post_slider' ) )
 					$permalink = '<div class="read-more-link"><a href="'.get_permalink($the_id).'" class="more-link">'.__('Read more','avia_framework').'<span class="more-link-arrow">  &rarr;</span></a></div>';
 					$prepare_excerpt = !empty($entry->post_excerpt) ? $entry->post_excerpt : avia_backend_truncate($entry->post_content, apply_filters( 'avf_postgrid_excerpt_length' , 60) , apply_filters( 'avf_postgrid_excerpt_delimiter' , " "), "…", true, '');
 
-
+		                  	if($format == 'link')
+		                   	{
+			                        $current_post = array();
+			                        $current_post['content'] = $entry->post_content;
+			                        $current_post['title'] =  $entry->post_title;
+			                        
+			                        if(function_exists('avia_link_content_filter'))
+			                        {
+			                            $current_post = avia_link_content_filter($current_post);
+			                        }
+			
+			                        $link = $current_post['url'];
+		                    	}
+		                    
+                    
 					switch($contents)
 					{
 						case "excerpt":

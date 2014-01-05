@@ -63,6 +63,10 @@ if (have_posts()) :
 
         //default link for preview images
         $link = get_permalink();
+        
+        //preview image description
+        $featured_img_desc = get_post_field('post_content', get_post_thumbnail_id());
+        $featured_img_desc = trim($featured_img_desc) ? esc_attr($featured_img_desc) : "";
 
         //on single page replace the link with a fullscreen image
         if(is_singular())
@@ -74,7 +78,7 @@ if (have_posts()) :
         //echo preview image
         if(strpos($blog_style, 'big') !== false)
         {
-            if($slider) $slider = '<a href="'.$link.'">'.$slider.'</a>';
+            if($slider) $slider = '<a href="'.$link.'" title="'.$featured_img_desc.'">'.$slider.'</a>';
             if($slider) echo '<div class="big-preview '.$blog_style.'">'.$slider.'</div>';
         }
 
@@ -92,7 +96,7 @@ if (have_posts()) :
                 $link = get_post_format_link($post_format);
                 if($post_format == 'standard')
                 {
-                    $gravatar = get_avatar( get_the_author_meta('email'), '75', "blank" );
+                    $gravatar = get_avatar( get_the_author_meta('email'), '81', "blank" );
                     $link = get_author_posts_url($post->post_author);
                 }
 
@@ -100,7 +104,7 @@ if (have_posts()) :
             }
             else if(strpos($blog_style, 'small')  !== false)
             {
-                $blog_meta_output = "<a href='{$link}' class='small-preview'>".$slider.$icon."</a>";
+                $blog_meta_output = "<a href='{$link}' class='small-preview' title='{$featured_img_desc}'>".$slider.$icon."</a>";
             }
 
         echo apply_filters('avf_loop_index_blog_meta', $blog_meta_output);
@@ -171,10 +175,14 @@ if (have_posts()) :
 
             echo '<footer class="entry-footer">';
 
-            wp_link_pages(array('before' =>'<div class="pagination_split_post">',
-                                    'after'  =>'</div>',
-                                    'pagelink' => '<span>%</span>'
-                                    ));
+            $avia_wp_link_pages_args = apply_filters('avf_wp_link_pages_args', array(
+                                                                                    'before' =>'<nav class="pagination_split_post">'.__('Pages:','avia_framework'),
+                                                                                    'after'  =>'</nav>',
+                                                                                    'pagelink' => '<span>%</span>',
+                                                                                    'separator'        => ' ',
+                                                                                    ));
+
+            wp_link_pages($avia_wp_link_pages_args);
 
             if(has_tag() && is_single() && !post_password_required())
             {

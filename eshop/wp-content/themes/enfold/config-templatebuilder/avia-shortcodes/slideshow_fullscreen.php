@@ -44,6 +44,8 @@ if ( !class_exists( 'avia_sc_slider_fullscreen' ) )
 							"id" 			=> "content",
 							'container_class' =>"avia-element-fullwidth avia-multi-img",
 							"modal_title" 	=> __("Edit Form Element", 'avia_framework' ),
+							//"add_label"		=>  __("Add single image or video", 'avia_framework' ),
+							"add_label"		=>  __("Add single image", 'avia_framework' ),
 							"std"			=> array(),
 							
 							'creator'		=>array(
@@ -58,13 +60,26 @@ if ( !class_exists( 'avia_sc_slider_fullscreen' ) )
 										),
 															
 							'subelements' 	=> array(
-								
+									
+									/*
+array(	
+										"name" 	=> __("Which type of slide is this?",'avia_framework' ),
+										"id" 	=> "slide_type",
+										"type" 	=> "select",
+										"std" 	=> "",
+										"subtype" => array(   __('Image Slide','avia_framework' )	=>'image',
+										                      __('Video Slide','avia_framework' )	=>'video',
+										                      )
+								    ),
+*/
+									
 									array(	
 									"name" 	=> __("Choose another Image",'avia_framework' ),
 									"desc" 	=> __("Either upload a new, or choose an existing image from your media library",'avia_framework' ),
 									"id" 	=> "id",
 									"fetch" => "id",
 									"type" 	=> "image",
+									//"required"=> array('slide_type','is_empty_or','image'),
 									"title" => __("Change Image",'avia_framework' ),
 									"button" => __("Change Image",'avia_framework' ),
 									"std" 	=> ""),
@@ -75,7 +90,7 @@ if ( !class_exists( 'avia_sc_slider_fullscreen' ) )
 										"id" 	=> "position",
 										"type" 	=> "select",
 										"std" 	=> "Center Center",
-				                        "required" => array('id','not',''),
+										"required"=> array('slide_type','is_empty_or','image'),
 										"subtype" => array(   __('Top Left','avia_framework' )       =>'top left',
 										                      __('Top Center','avia_framework' )     =>'top center',
 										                      __('Top Right','avia_framework' )      =>'top right', 
@@ -87,6 +102,37 @@ if ( !class_exists( 'avia_sc_slider_fullscreen' ) )
 										                      __('Center Right','avia_framework' )   =>'center right'
 										                      )
 								    ),
+									
+									/*
+array(	
+									"name" 	=> __("Video URL", 'avia_framework' ),
+									"desc" 	=> __('Enter the URL to the Video. A list of all supported Video Services can be found here:', 'avia_framework' ) .
+									' <a href="http://codex.wordpress.org/Embeds#Okay.2C_So_What_Sites_Can_I_Embed_From.3F" target="_blank">Wordpress &amp; Videos</a><br/> <br/>'.
+									__('Working examples:', 'avia_framework' ).'<br/>
+								<strong>http://vimeo.com/64927358</strong><br/> 
+								<strong>http://www.youtube.com/watch?v=G0k3kHtyoqc</strong><br/>',
+									"required"=> array('slide_type','equals','video'),
+									"id" 	=> "video",
+									"std" 	=> "http://",
+									"type" 	=> "input"),
+									
+									 array(	
+										"name" 	=> __("Video Display",'avia_framework' ),
+										"desc" 	=> __('You can either make sure that the whole video is visible and no cropping occurs or that the video is stretched to display full screen', 'avia_framework' ),
+										"id" 	=> "video_cover",
+										"type" 	=> "select",
+										"std" 	=> "",
+									"	required"=> array('slide_type','equals','video'),
+										"subtype" => array(   
+															__('Display Video in default mode, borders may occur but the whole video will be visible','avia_framework' )       =>'',
+										                    __('Stretch Video so it covers the whole slideshow (Video must be 16:9 for this option to work properly)','avia_framework' )     =>'av-element-cover',
+										                      )
+								    ),
+*/
+									
+									
+									
+									
 									
 									array(	
 									"name" 	=> __("Caption Title", 'avia_framework' ),

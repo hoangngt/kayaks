@@ -70,7 +70,12 @@
 		
 		//fontello font manager
 		$("body").on('click', '.avia_iconfont_manager .avia-del-font', $.AviaElementBehavior.fontello_remove);
+
+
+        //config file upload
+        $("body").on('av_config_file_insert', $.AviaElementBehavior.config_file_insert);
 	});
+
 
 
 /************************************************************************
@@ -206,6 +211,57 @@ EXTRA FUNCTIONS, NOT NECESSARY FOR THE DEFAULT UPLOAD
 	}
 
 
+
+    $.AviaElementBehavior.config_file_insert = function(event, selection, options)
+    {
+        // clean the options field, we dont need to save a value
+        options.input_target.val("");
+
+        if(selection.subtype !== 'plain')
+        {
+            $('body').avia_alert({the_class:'error', text:'Please upload a valid config file.<br/>You can create the file by clicking on the "Export Theme Settings" button'});
+            return;
+        }
+
+        // send request to server to extract the zip file, re arrange the content and save a config file
+        $.ajax({
+            type: "POST",
+            url: ajaxurl,
+            data:
+            {
+                action: 'avia_ajax_import_config_file',
+                values: selection,
+                _wpnonce: $('input[name=avia-nonce]').val()
+            },
+            beforeSend: function()
+            {
+                $('.avia_upload_loading').css({opacity:0, display:"block", visibility:'visible'}).animate({opacity:1});
+            },
+            error: function()
+            {
+                $('body').avia_alert({the_class:'error', text:'Couldn\'t import the config because the server didn’t respond.<br/>Please reload the page, then try again'});
+            },
+            success: function(response)
+            {
+                if(response.match(/avia_config_file_imported/))
+                {
+
+                }
+                else
+                {
+                    $('body').avia_alert({the_class:'error', show:6500 , text:'Couldn\'t import the font file.<br/>The script returned the following error: '+"<br/><br/>"+response});
+                }
+
+                if(typeof console != 'undefined') console.log(response);
+
+            },
+            complete: function(response)
+            {
+                $('.avia_upload_loading').fadeOut();
+                window.location.reload(true);
+            }
+        });
+    }
 
 
 

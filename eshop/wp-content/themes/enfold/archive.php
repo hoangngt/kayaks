@@ -20,26 +20,33 @@
                     </div>
 
                     <?php
-
-                    if(avia_get_option('blog_style','multi-big') == 'blog-grid')
+                    $blog_layout = apply_filters('avf_blog_style', avia_get_option('blog_style','multi-big'), 'archive');
+                    if($blog_layout == 'blog-grid')
                     {
                         global $posts;
                         $post_ids = array();
                         foreach($posts as $post) $post_ids[] = $post->ID;
 
-                        $atts   = array(
-                            'type' => 'grid',
-                            'items' => get_option('posts_per_page'),
-                            'columns' => 3,
-                            'class' => 'avia-builder-el-no-sibling',
-                            'paginate' => 'yes',
-                            'use_main_query_pagination' => 'yes',
-                            'custom_query' => array( 'post__in'=>$post_ids, 'post_type'=>get_post_types() )
-                        );
+                        if(!empty($post_ids))
+                        {
+                            $atts   = array(
+                                'type' => 'grid',
+                                'items' => get_option('posts_per_page'),
+                                'columns' => 3,
+                                'class' => 'avia-builder-el-no-sibling',
+                                'paginate' => 'yes',
+                                'use_main_query_pagination' => 'yes',
+                                'custom_query' => array( 'post__in'=>$post_ids, 'post_type'=>get_post_types() )
+                            );
 
-                        $blog = new avia_post_slider($atts);
-                        $blog->query_entries();
-                        echo "<div class='entry-content-wrapper'>".$blog->html()."</div>";
+                            $blog = new avia_post_slider($atts);
+                            $blog->query_entries();
+                            echo "<div class='entry-content-wrapper'>".$blog->html()."</div>";
+                        }
+                        else
+                        {
+                            get_template_part( 'includes/loop', 'index' );
+                        }
                     }
                     else
                     {

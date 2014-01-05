@@ -218,8 +218,11 @@ if ( !class_exists( 'AviaHtmlHelper' ) ) {
 			}
 			
 			
+			$label = isset($element['add_label']) ? $element['add_label'] : __('Add','avia_framework' );
+			$label_class = isset($element['add_label']) ? "avia-custom-label" : "";
+			
 			$output .= "</div>";
-			$output .= "<a class='avia-attach-modal-element-add avia-add'>".__('Add','avia_framework' )."</a>";
+			$output .= "<a class='avia-attach-modal-element-add avia-add {$label_class}'>".$label."</a>";
 			
 			//go the new wordpress way and instead of ajax-loading new items, prepare an empty js template
 			$output .= '	<script type="text/html" class="avia-tmpl-modal-element">';

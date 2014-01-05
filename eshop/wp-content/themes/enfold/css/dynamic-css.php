@@ -107,7 +107,10 @@ $key .meta-color, $key .sidebar, $key .sidebar a, $key .minor-meta, $key .minor-
 color: $meta;
 }
 
-$key a, $key .widget_first, $key strong, $key b, $key b a, $key strong a, $key #js_sort_items a:hover, $key #js_sort_items a.active_sort, $key .av-sort-by-term a.active_sort, $key .special_amp, $key .taglist a.activeFilter{
+$key .special-heading-inner-border{ border-color: $color; }
+$key .meta-heading .special-heading-inner-border{ border-color: $meta; }
+
+$key a, $key .widget_first, $key strong, $key b, $key b a, $key strong a, $key #js_sort_items a:hover, $key #js_sort_items a.active_sort, $key .av-sort-by-term a.active_sort, $key .special_amp, $key .taglist a.activeFilter, $key #commentform .required, #top $key .av-no-color.av-icon-style-border a.av-icon-char{
 color:$primary;
 }
 
@@ -142,7 +145,7 @@ background: $bg2;
 background-color:$secondary;
 }
 
-$key blockquote, $key .avia-bullet{
+$key blockquote, $key .avia-bullet, $key .av-no-color.av-icon-style-border a.av-icon-char{
 border-color:$primary;
 }
 
@@ -721,7 +724,7 @@ $avia_config['style'] = array(
 
 		//google webfonts
 		array(
-		'elements'	=> 'h1, h2, h3, h4, h5, h6, tr.pricing-row td, #top .portfolio-title, .callout .content-area, .avia-big-box .avia-innerbox, .av-special-font',
+		'elements'	=> 'h1, h2, h3, h4, h5, h6, #top .title_container .main-title, tr.pricing-row td, #top .portfolio-title, .callout .content-area, .avia-big-box .avia-innerbox, .av-special-font',
 		'key'	=>	'google_webfont',
 		'value'		=> avia_get_option('google_webfont')
 		),

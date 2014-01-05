@@ -22,7 +22,7 @@ jQuery(document).ready(function($) {
 	
 	setTimeout(first_load_amount, 10);
 	$('body').bind('added_to_cart', update_cart_dropdown);
-	
+		
 	
 		
 });

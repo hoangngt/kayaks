@@ -40,6 +40,27 @@ $avia_elements[] =	array(
 					"type" 	=> "parent_setting_import");
 }
 
+if(current_theme_supports('avia_enable_export')){ // hidden until heavily tested. display it by default in enfold 2.5 or 2.6
+$avia_elements[] =	array(
+    "slug"	=> "avia",
+    "name" 	=> "Export Theme Settings",
+    "desc" 	=> "Click the button to generate and download a config file which contains the theme settings. You can use the config file to import the theme settings on another sever.",
+    "id" 	=> "theme_settings_export",
+    "type" 	=> "theme_settings_export");
+
+$avia_elements[] =	array(
+    "slug"		=> "avia",
+    "name" 		=> "Import Theme Settings",
+    "desc" 		=> "Upload an Enfold theme configuration file here. Note that the configuration file settings will overwrite your current configuration and you can't restore the current configuration afterwards.",
+    "id" 		=> "config_file_upload",
+    "title" 	=> "Upload Settings File",
+    "button" 	=> "Insert Settings File",
+    "trigger" 	=> "av_config_file_insert",
+    // "fopen_check" 	=> "true",
+    "std"	  	=> "",
+    "type" 		=> "file_upload");
+}
+
 $avia_elements[] =	array(
 					"slug"	=> "avia",
 					"name" 	=> "Frontpage Settings",
@@ -720,7 +741,8 @@ $avia_elements[] =	array(
     "std" 	=> "single-big",
     "no_first"=>true,
     "subtype" => array( 'Single post with small preview image (featured image)' =>'single-small',
-        'Single post with big preview image (featured image)' =>'single-big'
+        'Single post with big preview image (featured image)' =>'single-big',
+        'Multi Author Blog (displays Gravatar of the article author beside the entry and feature images above)' =>'multi-big'
     ));
 
 
@@ -993,7 +1015,7 @@ $avia_elements[] =	array(
 										
 
 
-
+/*
 $avia_elements[] =	array(
 					"slug"	=> "layout",
 					"name" 	=> "Portfolio: Enter a page slug that should be used for your portfolio single items",
@@ -1001,7 +1023,7 @@ $avia_elements[] =	array(
 					"id" 	=> "portfolio-slug",
 					"std" 	=> "portfolio-item",
 					"type" 	=> "text");
-					
+*/					
 					
 $avia_elements[] =	array(
 					"slug"		=> "layout",

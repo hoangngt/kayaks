@@ -148,7 +148,10 @@ if ( !class_exists( 'avia_sc_productslider' )  && class_exists( 'woocommerce' ) 
 		function shortcode_handler($atts, $content = "", $shortcodename = "", $meta = "")
 		{
 			$atts['class'] = $meta['el_class'];
-
+			
+			//fix for seo plugins which execute the do_shortcode() function before the WooCommerce plugin is loaded
+			if(!class_exists('WC_Query')) return;
+			
 			$slider = new avia_product_slider($atts);
 			$slider->query_entries();
 			return $slider->html();

@@ -75,7 +75,7 @@
 			// you can filter and remove the backlink with an add_filter function
 			// from your themes (or child themes) functions.php file if you dont want to edit this file
 			// you can also just keep that link. I really do appreciate it ;)
-			//$kriesi_at_backlink =	apply_filters("kriesi_backlink", " - <a href='http://www.kriesi.at'>Enfold Theme by Kriesi</a>");
+			$kriesi_at_backlink =	apply_filters("kriesi_backlink", " - <a href='http://www.kriesi.at'>Enfold Theme by Kriesi</a>");
 
 
 			//you can also remove the kriesi.at backlink by adding [nolink] to your custom copyright field in the admin area
@@ -94,8 +94,6 @@
                     <div class='container'>
 
                         <span class='copyright'><?php echo $copyright . $kriesi_at_backlink; ?></span>
-
-                        <div style="float:left; margin-left:100px;"><a href="impressum"></a></div>
 
                         <?php
                             echo "<nav class='sub_menu_socket' ".avia_markup_helper(array('context' => 'nav', 'echo' => false)).">";
@@ -167,7 +165,7 @@
 
 
 ?>
-<a href='#top' id='scroll-top-link' <?php echo av_icon_string( 'scrolltop' ); ?>></a>
+<a href='#top' title='<?php _e('Scroll to top','avia_framework'); ?>' id='scroll-top-link' <?php echo av_icon_string( 'scrolltop' ); ?>></a>
 <div id="fb-root"></div>
 </body>
 </html>

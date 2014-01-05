@@ -115,6 +115,8 @@ $avia_config['selectableImgSize'] = array(
 	'gallery' 	=> __('Gallery','avia_framework'),
 	'entry_with_sidebar' 	=> __('Entry with Sidebar','avia_framework'),
 	'entry_without_sidebar' 	=> __('Entry without Sidebar','avia_framework'),
+	'extra_large' 	=> __('Fullscreen Sections/Sliders','avia_framework'),
+	
 );
 
 avia_backend_add_thumbnail_size($avia_config);
@@ -258,7 +260,7 @@ if(!function_exists('avia_register_frontend_scripts'))
 		wp_register_script( 'avia-default', $template_url.'/js/avia.js', array('jquery'), 1, true );
 		wp_register_script( 'avia-shortcodes', $template_url.'/js/shortcodes.js', array('jquery'), 1, true );
 		wp_register_script( 'avia-prettyPhoto',  $template_url.'/js/prettyPhoto/js/jquery.prettyPhoto.js', 'jquery', "3.1.5", true);
-		wp_register_script( 'wp-mediaelement',  $template_url.'/js/mediaelement/mediaelement-and-player.min.js', 'jquery', "1", true);
+		// wp_register_script( 'wp-mediaelement',  $template_url.'/js/mediaelement/mediaelement-and-player.min.js', 'jquery', "1", true);
 
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'avia-compat' );
@@ -327,7 +329,7 @@ if(!function_exists('avia_remove_default_video_styling'))
 	{
 		//remove default style for videos
 		wp_dequeue_style( 'mediaelement' );
-		wp_dequeue_style( 'wp-mediaelement' );
+		//wp_dequeue_style( 'wp-mediaelement' );
 	}
 }
 
@@ -465,4 +467,3 @@ add_theme_support('force-post-thumbnails-in-widget');
  */
 
 require_once( 'functions-enfold.php');
-require_once( 'functions-hoang.php');

@@ -34,7 +34,8 @@
 
                     <?php
 
-                    if(avia_get_option('blog_style','multi-big') == 'blog-grid')
+                    $blog_layout = apply_filters('avf_blog_style', avia_get_option('blog_style','multi-big'), 'blog');
+                    if($blog_layout == 'blog-grid')
                     {
                         $atts 	= array('type' => 'grid', 'items' => get_option('posts_per_page'), 'columns'=> 3, 'class'=>'avia-builder-el-no-sibling', 'paginate'=>'yes');
                         $blog = new avia_post_slider($atts);

@@ -31,7 +31,18 @@ global $avia_config, $post;
 	 }
 	
 	$content = apply_filters('the_content', $content);
+	$content = apply_filters('avf_template_builder_content', $content);
 	echo $content;
+
+
+	$avia_wp_link_pages_args = apply_filters('avf_wp_link_pages_args', array(
+																			'before' =>'<nav class="pagination_split_post">'.__('Pages:','avia_framework'),
+														                    'after'  =>'</nav>',
+														                    'pagelink' => '<span>%</span>',
+														                    'separator'        => ' ',
+														                    ));
+
+	wp_link_pages($avia_wp_link_pages_args);
 
 	
 	

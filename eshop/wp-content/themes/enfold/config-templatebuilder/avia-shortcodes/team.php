@@ -215,12 +215,12 @@ if ( !class_exists( 'avia_sc_team' ) )
 				$output  = "";
                 $markup = avia_markup_helper(array('context' => 'person','echo'=>false));
 
-				$output .= "<section class='avia-team-member ".$meta['el_class']."' xmlns:v='http://rdf.data-vocabulary.org/#' typeof='v:Person' $markup>";
+				$output .= "<section class='avia-team-member ".$meta['el_class']."' $markup>";
 				if($src)
 				{
 					$output.= "<div class='team-img-container'>";
                     $markup = avia_markup_helper(array('context' => 'single_image','echo'=>false));
-					$output.= "<img property='v:photo' class='avia_image avia_image_team' src='".$src."' alt='".esc_attr($name)."' $markup />";
+					$output.= "<img class='avia_image avia_image_team' src='".$src."' alt='".esc_attr($name)."' $markup />";
 
 
 					if(!empty($socials))
@@ -269,13 +269,13 @@ if ( !class_exists( 'avia_sc_team' ) )
 				if($name)
 				{
                     $markup = avia_markup_helper(array('context' => 'name','echo'=>false));
-					$output.= "<h3 class='team-member-name' property='v:name' $markup>{$name}</h3>";
+					$output.= "<h3 class='team-member-name' $markup>{$name}</h3>";
 				}
 
 				if($job)
 				{
                     $markup = avia_markup_helper(array('context' => 'job','echo'=>false));
-					$output.= "<div class='team-member-job-title' property='v:title' $markup>{$job}</div>";
+					$output.= "<div class='team-member-job-title' $markup>{$job}</div>";
 				}
 
 				if($description)
@@ -285,7 +285,7 @@ if ( !class_exists( 'avia_sc_team' ) )
 				}
 
                 $markup = avia_markup_helper(array('context' => 'affiliation','echo'=>false));
-				$output .= "<span class='hidden team-member-affiliation' property='v:affiliation' $markup>".get_bloginfo('name')."</span>";
+				$output .= "<span class='hidden team-member-affiliation' $markup>".get_bloginfo('name')."</span>";
 				$output .= "</section>";
 				return $output;
 			}

@@ -1850,7 +1850,7 @@ div .widget_layered_nav ul small.count{float:right;margin-left:6px;font-size:1em
 /*product_list_widget*/
 div ul.product_list_widget li{padding:8px 0; margin:0; overflow:hidden; zoom:1; font-size: 11px; border-top-style: dotted; border-top-width:1px;}
 div ul.product_list_widget li a{display:block; font-weight:bold; font-size: 12px; line-height: 18px; }
-div ul.product_list_widget li img{float:right; margin-left:4px;  width:132px; padding:2px;  height:auto;}
+div ul.product_list_widget li img{float:right; margin-left:4px;  width:32px; padding:2px;  height:auto;}
 div ul.product_list_widget .star-rating{float:none;  position: relative; margin:3px 0 0 0;}
 
 /*shopping cart widget*/

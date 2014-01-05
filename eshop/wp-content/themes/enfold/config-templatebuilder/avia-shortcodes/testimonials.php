@@ -224,11 +224,11 @@ array(
 				if(avia_sc_testimonial::$counter == avia_sc_testimonial::$columns) $class .= "avia-last-testimonial";
 				if($link && !$linktext) $linktext = $link;
 
-                $markup = avia_markup_helper(array('context' => 'person','echo'=>false));
+                
 
 				if(avia_sc_testimonial::$counter == 1)
                 {
-				    $output .= "<section class ='avia-testimonial-row' xmlns:v='http://rdf.data-vocabulary.org/#' typeof='v:Person' $markup>";
+				    $output .= "<section class ='avia-testimonial-row'>";
 				}
 
 
@@ -237,7 +237,7 @@ array(
 
 	//avatar
                 $markup = avia_markup_helper(array('context' => 'single_image','echo'=>false));
-	if($src)	$avatar  = "<div class='avia-testimonial-image' property='v:photo' $markup>".wp_get_attachment_image( $src , $avatar_size , false, array('alt'=>esc_attr(strip_tags($name))))."</div>";
+	if($src)	$avatar  = "<div class='avia-testimonial-image' $markup>".wp_get_attachment_image( $src , $avatar_size , false, array('alt'=>esc_attr(strip_tags($name))))."</div>";
 
 	//meta
                 $markup_text = avia_markup_helper(array('context' => 'entry','echo'=>false));
@@ -253,8 +253,10 @@ array(
                 }
 
 	//final output
-
-				$output .= "<div class='avia-testimonial {$class}'>";
+				
+				$markup = avia_markup_helper(array('context' => 'person','echo'=>false));
+				
+				$output .= "<div class='avia-testimonial {$class}' $markup>";
 				$output .= "<div class='avia-testimonial_inner'>";
 	if($grid)   $output .= $avatar;
 				$output .= 		"<div class='avia-testimonial-content' $markup_text>";
@@ -263,10 +265,10 @@ array(
 				$output .= 			"<div class='avia-testimonial-meta'><div class='avia-testimonial-arrow-wrap'><div class='avia-arrow'></div></div>";
 	if(!$grid)  $output .=  $avatar;
 				$output .= 				"<div class='avia-testimonial-meta-mini'>";
-	if($name)	$output .= 					"<strong  class='avia-testimonial-name' property='v:name' {$markup_name}>{$name}</strong>";
-if($subtitle)	$output .= 					"<span  class='avia-testimonial-subtitle' property='v:title' {$markup_job}>{$subtitle}</span>";
-    if($link)	$output .= 					"<span class='hidden avia-testimonial-markup-link' {$markup_url}>{$link}</span>";
-	if($link)	$output .= 					" &ndash; <a class='aviablank avia-testimonial-link' href='{$link}' rel='v:url'>{$linktext}</a>";
+	if($name)	$output .= 					"<strong  class='avia-testimonial-name'  {$markup_name}>{$name}</strong>";
+if($subtitle)	$output .= 					"<span  class='avia-testimonial-subtitle'  {$markup_job}>{$subtitle}</span>";
+    if($link)	$output .= 					"<span class='hidden avia-testimonial-markup-link'  {$markup_url}>{$link}</span>";
+	if($link)	$output .= 					" &ndash; <a class='aviablank avia-testimonial-link' href='{$link}' >{$linktext}</a>";
 				$output .= 				"</div>";
 				$output .= 			"</div>";
 				$output .= "</div>";

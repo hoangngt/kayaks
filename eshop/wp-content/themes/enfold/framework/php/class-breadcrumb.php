@@ -278,18 +278,24 @@ function avia_breadcrumbs( $args = array() ) {
 			}
 		}
 
-		if('post' == $post_type)
-		{
-			$category = get_the_category();
-			$ID = $category[0]->cat_ID;
+                if('post' == $post_type)
+                {
+                        $category = get_the_category();
 
-			 $parents = get_category_parents($ID, TRUE, '$$$', FALSE );
-			 $parents = explode("$$$", $parents);
-			 foreach ($parents as $parent_item)
-			 {
-			 	if($parent_item) $trail[] = $parent_item;
-			 }
-		}
+                        foreach($category as $cat)
+                        {
+                                if(!empty($cat->parent))
+                                {
+                                    $parents = get_category_parents($cat->cat_ID, TRUE, '$$$', FALSE );
+                                    $parents = explode("$$$", $parents);
+                                    foreach ($parents as $parent_item)
+                                    {
+                                        if($parent_item) $trail[] = $parent_item;
+                                    }
+                                    break;
+                                }
+                        }
+                }
 
 		if($post_type == 'portfolio')
 		{

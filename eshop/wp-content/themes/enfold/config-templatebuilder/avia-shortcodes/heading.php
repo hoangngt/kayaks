@@ -63,8 +63,19 @@ if ( !class_exists( 'avia_sc_heading' ) )
 							"id" 	=> "color",
 							"type" 	=> "select",
 							"std" 	=> "",
-							"subtype" => array("Default Color"=>'',"Meta Color"=>'meta-heading')
+							"subtype" => array("Default Color"=>'',"Meta Color"=>'meta-heading', "Custom Color"=>'custom-color-heading')
 							), 	
+					
+					array(	
+							"name" 	=> __("Custom Font Color", 'avia_framework' ),
+							"desc" 	=> __("Select a custom font color for your Heading here", 'avia_framework' ),
+							"id" 	=> "custom_font",
+							"type" 	=> "colorpicker",
+							"std" 	=> "",
+							"required" => array('color','equals','custom-color-heading')
+						),		
+
+
 					
 					array(	
 							"name" 	=> __("Heading Style", 'avia_framework' ),
@@ -72,16 +83,50 @@ if ( !class_exists( 'avia_sc_heading' ) )
 							"id" 	=> "style",
 							"type" 	=> "select",
 							"std" 	=> "",
-							"subtype" => array("Default Style"=>'', "Quote Style Modern"=>'blockquote modern-quote', "Quote Style Classic"=>'blockquote classic-quote')
-							), 	
-								   							
+							"subtype" => array("Default Style"=>'',  "Heading Style Modern (left)"=>'blockquote modern-quote' , "Heading Style Modern (centered)"=>'blockquote modern-quote modern-centered', "Heading Style Classic (centered, italic)"=>'blockquote classic-quote')
+							),   
+				            
+							
+					array(	"name" 	=> __("Heading Size", 'avia_framework' ),
+							"desc" 	=> __("Size of your Heading in Pixel", 'avia_framework' ),
+				            "id" 	=> "size",
+				            "type" 	=> "select",
+				            "subtype" => AviaHtmlHelper::number_array(20,90,1, array('Default Size'=>'')),
+				            "required" => array('style','not',''),
+				            "std" => ""),
+				            				            
+				     array(	
+							"name" 	=> __("Subheading", 'avia_framework' ),
+							"desc" 	=> __("Add an extra descriptive subheading above or bellow the actual heading", 'avia_framework' ),
+							"id" 	=> "subheading_active",
+							"type" 	=> "select",
+							"std" 	=> "",
+				            "required" => array('style','not',''),
+							"subtype" => array("No Subheading"=>'',  "Display subheading above"=>'subheading_above',  "Display subheading below"=>'subheading_below'),
+							),  
+							  
+				      array(
+						"name" 	=> __("Subheading Text",'avia_framework' ),
+						"desc" 	=> __("Add your subheading here",'avia_framework' ),
+						"id" 	=> "content",
+						"type" 	=> "textarea",
+						"required" => array('subheading_active','not',''),
+						"std" 	=> __("", "avia_framework" )),   
+						
+					array(	"name" 	=> __("Subheading Size", 'avia_framework' ),
+							"desc" 	=> __("Size of your subeading in Pixel", 'avia_framework' ),
+				            "id" 	=> "subheading_size",
+				            "type" 	=> "select",
+				            "subtype" => AviaHtmlHelper::number_array(10,40,1),
+				            "required" => array('subheading_active','not',''),
+				            "std" => "15"), 
+				            	
                     array(	"name" 	=> __("Padding Bottom", 'avia_framework' ),
 							"desc" 	=> __("Bottom Padding in pixel", 'avia_framework' ),
 				            "id" 	=> "padding",
 				            "type" 	=> "select",
-				            "subtype" => AviaHtmlHelper::number_array(0,60,1),
-				            "std" => "10"),
-				            
+				            "subtype" => AviaHtmlHelper::number_array(0,120,1),
+				            "std" => "10"),  
 				  
 				);
 
@@ -99,8 +144,21 @@ if ( !class_exists( 'avia_sc_heading' ) )
 			 */
 			function editor_element($params)
 			{
+				$params['args'] = shortcode_atts(array('tag' => 'h3', 'padding' => '5', 'heading'=>'', 'color'=>'', 'style'=>'', 'custom_font'=>'', 'size'=>'', 'subheading_active' => '', 'subheading_size'=>''), $params['args']);
+				
+				$templateNAME  	= $this->update_template("name", "{{name}}");
+			
 				$params['class'] = "";
-				$params['innerHtml'] = "<div class='avia_textblock avia_textblock_style avia-special-heading' data-update_with='heading'>".stripslashes(trim(htmlspecialchars_decode($params['args']['heading'])))."</div>";
+				$params['innerHtml']  = "<div class='avia_textblock avia_textblock_style avia-special-heading' >";
+				
+				$params['innerHtml'] .= 	"<div ".$this->class_by_arguments('tag, style, color, subheading_active' ,$params['args']).">";
+				$params['innerHtml'] .= 		"<div class='av-subheading-top av-subheading' data-update_with='content'>".$params['content']."</div>";
+				$params['innerHtml'] .= 		"<div data-update_with='heading'>";
+				$params['innerHtml'] .= 		stripslashes(trim(htmlspecialchars_decode($params['args']['heading'])));
+				$params['innerHtml'] .= 		"</div>";
+				$params['innerHtml'] .= 		"<div class='av-subheading-bottom av-subheading' data-update_with='content'>".$params['content']."</div>";
+				$params['innerHtml'] .= 	"</div>";
+				$params['innerHtml'] .= "</div>";
 				return $params;
 			}
 			
@@ -114,18 +172,65 @@ if ( !class_exists( 'avia_sc_heading' ) )
 			 */
 			function shortcode_handler($atts, $content = "", $shortcodename = "", $meta = "")
 			{
-			    extract(shortcode_atts(array('tag' => 'h3', 'padding' => '5', 'heading'=>'', 'color'=>'', 'style'=>''), $atts));
+			    extract(shortcode_atts(array('tag' => 'h3', 'padding' => '5', 'heading'=>'', 'color'=>'', 'style'=>'', 'custom_font'=>'', 'size'=>'', 'subheading_active' => '', 'subheading_size'=>''), $atts));
 			
         		$output  = "";
+        		$styling = "";
+        		$subheading = "";
+        		$border_styling = "";
+        		$before = $after = "";
         		$class   = $meta['el_class'];
         		
         		if($heading)
         		{
+        			// add seo markup
                     $markup = avia_markup_helper(array('context' => 'entry_title','echo'=>false));
-
-        			$heading = apply_filters('avia_ampersand', $heading);
-	        		$styling = "style='padding-bottom:{$padding}px'";
-	        		$output .= "<div {$styling} class='av-special-heading av-special-heading-{$tag} {$color} {$style} {$class}'><{$tag} $markup>{$heading}</{$tag}><div class='special-heading-border'><div class='special-heading-inner-border'></div></div></div>";
+					
+					// filter heading for & symbol and convert them					
+        			$heading = apply_filters('avia_ampersand', wptexturize($heading));
+        			
+        			//if the heading contains a strong tag make apply a custom class that makes the rest of the font appear smaller for a better effect
+        			if( strpos($heading, '<strong>') !== false ) $class .= " av-thin-font";
+        			
+        			//apply the padding bottom styling
+	        		$styling .= "padding-bottom:{$padding}px;";
+	        		
+	        		// if the color is a custom hex value add the styling for both border and font
+	        		if($color == "custom-color-heading" && $custom_font)  
+	        		{
+	        			$styling .= "color:{$custom_font};";
+	        			$border_styling = "style='border-color:{$custom_font}'";
+	        		}
+	        		
+	        		// if a custom font size is set apply it to the container and also apply the inherit class so the actual heading uses the size
+	        		if(!empty($style) && !empty($size)) { $styling .= "font-size:{$size}px;"; $class .= " av-inherit-size";}
+	        		
+	        		//finish up the styling string
+	        		if(!empty($styling)) $styling = "style='{$styling}'";
+	        		
+	        		//check if we got a subheading
+	        		if(!empty($subheading_active) && !empty($content))
+	        		{
+	        			
+	        			$content = "<div class ='av-subheading av-subheading-top' style='font-size:{$subheading_size}px;'>".ShortcodeHelper::avia_apply_autop(ShortcodeHelper::avia_remove_autop($content) )."</div>";
+	        		
+	        			if($subheading_active == "subheading_above")
+	        			{
+	        				$before = $content;
+	        			}
+	        			else
+	        			{
+	        				$after = $content;
+	        			}
+	        		}
+	        	
+	        		//html markup
+	        		$output .= "<div {$styling} class='av-special-heading av-special-heading-{$tag} {$color} {$style} {$class}'>";
+	        		$output .= 		$before;
+	        		$output .= 		"<{$tag} class='av-special-heading-tag' $markup>{$heading}</{$tag}>";
+	        		$output .= 		$after;
+	        		$output .= 		"<div class='special-heading-border'><div class='special-heading-inner-border' {$border_styling}></div></div>";
+	        		$output .= "</div>";
         		}
         		
         		return $output;
