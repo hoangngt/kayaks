@@ -5,12 +5,21 @@
  *
  * The default product type kinda product.
  *
- * @class       WC_Product_Simple
- * @version     2.0.0
- * @package     WooCommerce/Classes/Products
+ * @class       WC_Product_B2B
+ * @version     1.0.0
  * @category    Class
- * @author      WooThemes
+ * @author      Ta Hoang
  */
+
+
+add_action( 'pre_get_posts', 'custom_pre_get_posts_query' );
+add_filter( 'product_type_selector', 'hoang_add_product_type',10,2 );
+add_role("B2B Kunde", "B2B Kunde");
+function hoang_add_product_type( $types ){
+       $types[ 'b2b_product' ] = __( 'B2B Product' );
+       return $types;
+}
+
 class WC_Product_B2b_product extends WC_Product {
 
     /**
@@ -74,9 +83,44 @@ function is_b2b_product() {
 	
 	return false;
 }
+function hoang_filter() {
+   global $woocommerce;
+   $filtered = false;
+   $filtered_posts = array();
+  
+   $tax_queries = array();
+   $attribute_taxonomies = $woocommerce->get_attribute_taxonomies();
+   if ( $attribute_taxonomies ) {
+       foreach ( $attribute_taxonomies as $tax ) {
+           $attribute = sanitize_title( $tax->attribute_name );
+           $taxonomy = $woocommerce->attribute_taxonomy_name( $attribute );
+               // create an array of product attribute taxonomies
+           $_attributes_array[] = $taxonomy;
+           $name = 'filter_' . $attribute;
+           if ( ! empty( $_GET[ $name ] ) && taxonomy_exists( $taxonomy ) ) {
+               $filtered = true;
+               $tax_query = array(
+                    'taxonomy' => 'pa_' . $attribute,
+                    'field' => 'id',
+                    'terms' => array($_GET[ $name ]),
+                    'operator' => 'IN'
+                );
+               array_push($tax_queries, $tax_query);                 
+           }
+       }
+   }     
+    array_push($tax_queries, array(
+            'taxonomy' => 'product_type',
+            'field' => 'slug',
+            'terms' => array( 'b2b_product' ), // Display only b2b-products on the B2B page
+            'operator' => 'IN'
+        )) ;
+   return $tax_queries;
+}
+
 function custom_pre_get_posts_query( $q ) {
     if ( ! $q->is_post_type_archive() ) return;
-    if ( ! $q->is_main_query() && !is_b2b_shop()) return;
+    if ( !$q->is_main_query() && !is_b2b_shop()) return;
     if (is_admin()) return;
     if (!is_b2b_shop()) {
         $q->set( 'tax_query', array(array(
@@ -87,12 +131,8 @@ function custom_pre_get_posts_query( $q ) {
         )));    
     }
     if (is_b2b_shop()) {
-        $q->set( 'tax_query', array(array(
-            'taxonomy' => 'product_type',
-            'field' => 'slug',
-            'terms' => array( 'b2b_product' ), // Display only b2b-products on the B2B page
-            'operator' => 'IN'
-        )));    
+        $tax_queries = hoang_filter();
+        $q->set( 'tax_query', $tax_queries);  
     }
  
 }
