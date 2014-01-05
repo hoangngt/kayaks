@@ -194,6 +194,14 @@ div.summary.entry-summary div.product_meta {
 
 }
 /*		##################################################################
+		# custom layout for B2BShop-page
+		##################################################################	*/
+#b2b_shop_wrapper .sort-param-filter-preis {
+	display: none;
+
+}
+
+/*		##################################################################
 		# custom layout for Shop-page
 		##################################################################	*/
 .widget_price_filter{
