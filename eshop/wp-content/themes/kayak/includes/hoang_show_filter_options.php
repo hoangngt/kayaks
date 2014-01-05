@@ -1,53 +1,5 @@
 <?php
-add_filter('loop_shop_post_in', 'hoang_filter');
-function hoang_filter($posts) {
-	global $woocommerce;
-	$filtered = false;
-	$filtered_posts = array();
-	$posts = get_posts(
-						array(
-							'post_type' 	=> 'product',
-							'numberposts' 	=> -1,
-							'post_status' 	=> 'publish',
-							'fields' 		=> 'ids',
-							'no_found_rows' => true							
-						)
-	);
-	$chosen_atts = array();
-	$attribute_taxonomies = $woocommerce->get_attribute_taxonomies();
-	if ( $attribute_taxonomies ) {
-		foreach ( $attribute_taxonomies as $tax ) {
-	    	$attribute = sanitize_title( $tax->attribute_name );
-	    	$taxonomy = $woocommerce->attribute_taxonomy_name( $attribute );
-				// create an array of product attribute taxonomies
-			$_attributes_array[] = $taxonomy;
-	    	$name = 'filter_' . $attribute;
-	    	$chosen_posts = array();
-	    	if ( ! empty( $_GET[ $name ] ) && taxonomy_exists( $taxonomy ) ) {
-	    		$filtered = true;
-	    		foreach ($posts as $key => $value) {
-					if (!$colors = get_the_terms($value,'pa_'.$attribute )) continue;
-					foreach ($colors as $k => $color) {
-						if ($color->term_id==$_GET[$name]) {
-							array_push($chosen_posts, $value);
-						}	
-					}
-			
-				}
-	    	$chosen_atts[$name] = $chosen_posts;
-	    	}
-	    }
-	}	
-	
-	if (sizeof($chosen_atts)>0) {
-		$filtered_posts = array_pop($chosen_atts);
-		foreach ($chosen_atts as $chosen) {
-			$filtered_posts = array_intersect($filtered_posts, $chosen);
-		}
-	}
-	if (sizeof($filtered_posts)==0 && $filtered) $filtered_posts = array(null);
-	return (array)$filtered_posts;
-}
+
 add_action( 'woocommerce_before_shop_loop', 'avia_woocommerce_frontend_search_params', 20);
 function avia_woocommerce_frontend_search_params(){
 	hoang_show_filter_options();

@@ -76,6 +76,7 @@ function is_b2b_product() {
 }
 function custom_pre_get_posts_query( $q ) {
     if ( ! $q->is_post_type_archive() ) return;
+    if ( ! $q->is_main_query() && !is_b2b_shop()) return;
     if (is_admin()) return;
     if (!is_b2b_shop()) {
         $q->set( 'tax_query', array(array(
