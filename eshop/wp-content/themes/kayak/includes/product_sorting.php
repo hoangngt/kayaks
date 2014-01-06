@@ -95,20 +95,14 @@ function hoang_show_custom_sort_menu() {
 /**
  *  Defines the criteria for sorting with options defined in the method below
  */
-add_filter('woocommerce_get_catalog_ordering_args', 'custom_woocommerce_get_catalog_ordering_args');
+function avia_woocommerce_overwrite_catalog_ordering() {}
+add_action('woocommerce_get_catalog_ordering_args', 'custom_woocommerce_get_catalog_ordering_args', 20);
  
 function custom_woocommerce_get_catalog_ordering_args( $args ) {
-    global $wp_query;
-        // Changed the $_SESSION to $_GET
-    if (isset($_GET['orderby'])) {
-        switch ($_GET['orderby']) :
-            case 'pa_pub-year' :
-                $args['order'] = 'ASC';
-                $args['meta_key'] = 'pa_custom_sort';
-                $args['orderby'] = 'meta_value_num';
-            break;
-        endswitch;
-    }
+
+    $args['order'] = 'asc';
+    $args['meta_key'] = 'pa_custom_sort';
+    $args['orderby'] = 'meta_value_num';
     return $args;
 }
  
