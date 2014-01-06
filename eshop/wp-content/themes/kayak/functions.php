@@ -1,5 +1,14 @@
 <?php
-// change "Add to Cart"-form for Variable Product to normal form for simple Product 
+
+/* redirect b2b kunden to b2b Katalog after login */
+add_filter('woocommerce_login_redirect', 'hoang_login_redirect', 1, 2);
+
+function hoang_login_redirect( $redirect_to, $user ) {
+	foreach ($user->roles as $role) {
+		if ($role=='B2B Kunde') $redirect_to = home_url("/shop-b2b" );
+	}
+    return $redirect_to;
+}
 function hoang_include_js($scriptname) {
 	$script_link = get_stylesheet_directory_uri().'/js/'.$scriptname.'.js';
 	wp_enqueue_script($scriptname, $script_link ); 
