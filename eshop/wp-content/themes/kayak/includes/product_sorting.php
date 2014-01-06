@@ -50,7 +50,7 @@ function hoang_show_custom_sort_menu() {
 	$submiturl = str_replace( '%7E', '~', $_SERVER['REQUEST_URI']);
 	$hoang_custom_order = get_option( "hoang_custom_order" );
 	if ($_POST!=null) {
-		if ($_POST['reset']) hoang_reupdate_post();
+		hoang_reupdate_post();
 		update_option('hoang_custom_order',array(
 												'type' 	=> $_POST['type'],
 												'brand'	=> $_POST['brand']
@@ -82,7 +82,6 @@ function hoang_show_custom_sort_menu() {
 		echo '</tr>';
 	}
 	echo "	</table>";
-	echo "	<input type='radio' name='reset' value='true'>Re-update all Posts<br>";
 	echo "	<p class='submit'>";
 	echo " 		<input type='submit' class='button button-primary' value='Save Changes'>";
 	echo "	</p>";
