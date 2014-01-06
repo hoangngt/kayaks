@@ -91,7 +91,10 @@ div ul.product_list_widget li a:hover {
 /*		##################################################################
 		# custom layout for product pages
 		##################################################################	*/
-
+#top #tab-technik th {
+	width: 250px;
+}
+		
 div.summary.entry-summary div.product_meta {
 		display: none;
 }
