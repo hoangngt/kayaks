@@ -1,5 +1,36 @@
 <?php
+/* checkout page */
 
+remove_filter( 'woocommerce_checkout_item_subtotal', array( 'WGM_Template', 'add_mwst_rate_to_product_item' ), 10 ,3 );
+add_filter( 'woocommerce_checkout_item_subtotal', 'hoang_checkout', 10, 3 );
+function hoang_checkout( $amount, $item, $item_id  ) {
+	global $woocommerce;
+
+		$_product = get_product( $item['variation_id'] ? $item['variation_id'] : $item['product_id'] );
+
+		if( ! $_product->is_taxable() )
+			return $amount;
+
+		$_tax = new WC_Tax();
+
+		$t = $_tax->find_rates( array(
+			'country' 	=>  $woocommerce->customer->get_country(),
+			'state' 	=> $woocommerce->customer->get_state(),
+			'tax_class' => $_product->tax_class
+		) );
+
+		$tax = array_shift( $t );
+
+
+		$tax_string = woocommerce_price( $item[ 'line_tax' ] );
+
+
+		$template = '%s <span class="product-tax">'.__( '(Enthält %s %s)', Woocommerce_German_Market::get_textdomain() ).' </span>';
+
+		$item = sprintf( $template, $amount, $tax_string, $tax['label'] );
+
+		return $item;
+}
 /* redirect b2b kunden to b2b Katalog after login */
 add_filter('woocommerce_login_redirect', 'hoang_login_redirect', 1, 2);
 
