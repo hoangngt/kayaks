@@ -34,8 +34,7 @@ function hoang_reupdate_post() {
 			$brand_slug = array_shift($brand)->slug;
 		if ($lange = get_the_terms($product->ID, 'pa_laenge', true)) 
 			$lenght = explode('-', array_shift($lange)->slug)[0];
-		if ($brand_slug>0) 
-			$brand_slug = $custom_order['brand'][$brand_slug];
+		if ($brand_slug>0) $brand_slug = $custom_order['brand'][$brand_slug];
 		else $brand_slug = 1000;
 		if ($cat_id>0) $cat_id = $custom_order['type'][$cat_id];
 		else $cat_id = 1000;
