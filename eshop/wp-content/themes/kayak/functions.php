@@ -48,10 +48,11 @@ require_once('shortcodes/hoang_product_gallery.php');
 require_once ("includes/B2B_product.php");
 
 ##################################################################
-# helper functions to show filter menus
+# helper functions for Shop page
 ##################################################################
 
 require_once('includes/hoang_show_filter_options.php');
+require_once('includes/product_sorting.php');
 
 ##################################################################
 # helper functions for product pages
