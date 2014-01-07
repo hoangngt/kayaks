@@ -11,6 +11,8 @@ Template: enfold
 
 /*Add your own styles here:*/
 
+/* hide page thumb for Categories pages */
+.page-thumb { display: none; }
 /* hide Search Lupe in Menu header */
 #menu-item-search {
 	display: none;
@@ -30,6 +32,10 @@ form.register p.form-row:last-child {		/*fix register-button lie out of form-box
 /*		##################################################################
 		# custom layout for homepage
 		##################################################################	*/
+
+/* remove enfold hover effect */
+.image-overlay { display: none!important; }
+
 /*header with social icons: */
 .social_header #header_main .container, .social_header .main_menu ul:first-child > li a { height: 61px; line-height: 61px; }	/* fix site-logo in header */
 .fixed_header.social_header #main { padding-top: 93px;}
@@ -85,7 +91,10 @@ div ul.product_list_widget li a:hover {
 /*		##################################################################
 		# custom layout for product pages
 		##################################################################	*/
-
+#top #tab-technik th {
+	width: 250px;
+}
+		
 div.summary.entry-summary div.product_meta {
 		display: none;
 }
