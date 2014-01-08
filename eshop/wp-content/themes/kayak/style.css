@@ -1,0 +1,288 @@
+/*
+Theme Name: Kayak
+Description: Theme for kayakstogo.de
+Version: 1.0
+Author: Hoang Ta
+Author URI: http://talamhoang.com
+Template: enfold
+*/
+
+
+
+/*Add your own styles here:*/
+
+/* hide page thumb for Categories pages */
+.page-thumb { display: none; }
+/* hide Search Lupe in Menu header */
+#menu-item-search {
+	display: none;
+}
+/*		##################################################################
+		# custom layout for My Acount Page
+		##################################################################	*/
+#customer_login div {
+	background-color: transparent;
+}
+form.register p.form-row:last-child {		/*fix register-button lie out of form-box*/
+	height: 62px;
+}
+#show_registration_form {
+	cursor: pointer;
+}
+/*		##################################################################
+		# custom layout for homepage
+		##################################################################	*/
+
+/* remove enfold hover effect */
+.image-overlay { display: none!important; }
+
+/*header with social icons: */
+.social_header #header_main .container, .social_header .main_menu ul:first-child > li a { height: 61px; line-height: 61px; }	/* fix site-logo in header */
+.fixed_header.social_header #main { padding-top: 93px;}
+
+/*fix bug featured image too small */
+div ul.product_list_widget li {
+	float :left;
+	display: inline;
+	width: 50%;
+	height: 80px;
+	list-style: none;
+	clear: none;
+}
+div ul.product_list_widget li img {
+	float: left;
+	width: 100px;
+	border: 1px solid #e1e1e1;
+}
+div ul.product_list_widget .star-rating {
+	float: right;
+}
+div ul.product_list_widget li a {
+	color: black;
+	clear:both;
+}
+div ul.product_list_widget li a:hover {
+	color: black;
+}
+
+	/* Layout change for Contact form */
+	.avia_ajax_form {
+		margin-top: 10px;
+	}
+	.avia_ajax_form h3 {
+		font-size: 15px;
+	}
+	.avia_ajax_form #element_avia_e-mail_1 {
+		width:65.5%; 
+		float:left; 
+		margin-right:1%; 
+		clear: none;
+	}
+	.avia_ajax_form fieldset p:last-child {
+		float: left;
+		width: 30%;
+		clear: none;
+	}
+	.avia_ajax_form .button {
+		margin-top: 28px;
+		padding: 14px 0;
+		width:100%;
+	}
+/*		##################################################################
+		# custom layout for product pages
+		##################################################################	*/
+#top #tab-technik th {
+	width: 250px;
+}
+		
+div.summary.entry-summary div.product_meta {
+		display: none;
+}
+#top div .avia-gallery {
+	clear: none;
+	display:inline;
+}
+#hoang_wrapper div.avia-gallery-thumb {
+		width: 60%;
+		float: left;
+}
+#hoang_color_variant {
+	float: right;
+	margin: 20px 0;
+	right: 0px;
+	height: 82px;
+	width: 35%;
+}
+#selected_color_text {
+	text-align: right;
+}
+.hoang_variant {
+		cursor: pointer;
+		height: 36px;
+		width: 16px;
+		display: inline;
+		float: right;
+		margin: 0px 5px;
+}
+#top div .hoang_variant img {
+		max-height:16px; 
+		max-width:16px;
+		margin: 0px auto;
+		border-style: none;
+		padding: 0px;
+}
+.hoang_variant .hoang_variant_radio {
+	margin: 0px 1.5px;
+}
+#top .variations_form {
+	padding: 0;
+	border: none;
+	background: transparent;
+}
+.single_variation_wrap {
+	margin: 0;
+}
+#top .variations, #top .single_variation, p.stock {
+	display: none;
+}
+
+@media all and (min-width: 768px) {
+	
+	div.summary.entry-summary h1.product_title.entry-title {
+		float: left;
+		width: 30%;
+	}
+	div.summary.entry-summary * {
+		display: inline;
+
+	}
+	div.summary.entry-summary form.cart {
+		clear: none;
+		float: right;
+		width: 28.1%;
+		margin-right: -2%;
+	}
+
+	div.summary.entry-summary form.cart button {
+		margin : 0;
+		height: 43px;
+	}
+	/* custom Layout for German-Market-Plugin */
+	
+	div.woocommerce_de_versandkosten, span.woocommerce-de_price_taxrate, #top .price span.woocommerce-de_price_taxrate{
+		float: left;
+		font-size: 15px;
+		line-height: 3.5em;
+		height: 38px;
+		margin-right: 5px;
+	}
+	#top .price span {
+		float: left;
+		line-height: 1.1em;
+		font-size: 34px;
+		font-weight: 800;
+		margin-right: 5px;
+	}
+
+	.hoang_variant {
+		height: 52px;
+		width: 31px;
+		display: inline;
+		float: right;
+		margin: 0px 10px;
+	}
+	.hoang_variant .hoang_variant_radio {
+		margin: 0px 9px;
+	}
+	#top div .hoang_variant img {
+		max-height:32px; 
+		max-width:32px;
+		margin: 0px auto;
+	}
+
+
+}
+/*		##################################################################
+		# custom layout for B2BShop-page
+		##################################################################	*/
+#b2b_shop_wrapper .sort-param-filter-preis {
+	display: none;
+
+}
+
+/*		##################################################################
+		# custom layout for Shop-page
+		##################################################################	*/
+.widget_price_filter{
+	display:none;
+}
+div.product-sorting ul.sort-param.sort-param-shop {
+	width: 133px;
+
+}
+div.product-sorting ul.sort-param.sort-param-shop li span.shop-yellow {
+	text-align: center;
+	padding-right: 10px;
+	background: rgb(251,208,38);	
+}
+#top .inner_product_header {
+	min-height: 88px;
+}
+div.inner_product a .inner_product_header .avia-arrow {
+	display: none;
+}
+#top .inner_product_header {
+	border-top-style: hidden;
+}
+#top .main_color .price {
+	color: rgb(70,114,158);
+}
+
+/*		##################################################################
+		# custom layout for Category Post Plugin
+		##################################################################	*/
+div.widget_ultimate_posts h3.widgettitle {
+	font-size: 150%;
+	text-transform: none;
+	font-weight: 900;
+}
+div.upw-content {
+	color: black;
+	font-weight: bold;
+}
+div.upw-content  p.post-title a{
+	margin : 1.2em 0 0 0;
+	display: block;
+	color: black;
+	font-size: 110%;
+	font-weight: bold;
+}
+div.upw-content  .post-excerpt {
+	display: inline;
+}
+div.upw-content p .more-link {
+	display: block;
+	text-align: right;
+	color: black;
+}
+div.default_av_fullwidth, div.default_av_fullwidth .inner-entry, div.default_av_fullwidth .grid-image {
+	border:none;
+}
+.grid-entry .inner-entry {
+	box-shadow: none;
+}
+
+/*		##################################################################
+		# SSM Aenderungen
+		##################################################################	*/
+div#B2BLink a:hover {
+	text-decoration: none;
+	color: black;
+	background: #fbd020;
+}
+div#B2BLink a {
+	background: #303030;
+}
+div#B2BLink {
+	margin-top:10px;
+}
